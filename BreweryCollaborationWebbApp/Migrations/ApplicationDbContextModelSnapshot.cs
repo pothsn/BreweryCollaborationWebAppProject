@@ -170,17 +170,15 @@ namespace BreweryCollaborationWebbApp.Migrations
 
             modelBuilder.Entity("BreweryCollaborationWebbApp.Models.Review", b =>
                 {
-                    b.Property<int>("Id");
-
-                    b.Property<int?>("FanId");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("Rating");
 
                     b.Property<string>("ReviewText");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("FanId");
 
                     b.ToTable("Review");
                 });
@@ -374,29 +372,6 @@ namespace BreweryCollaborationWebbApp.Migrations
                     b.HasOne("BreweryCollaborationWebbApp.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
                         .HasForeignKey("ApplicationId");
-                });
-
-            modelBuilder.Entity("BreweryCollaborationWebbApp.Models.FanFollow", b =>
-                {
-                    b.HasOne("BreweryCollaborationWebbApp.Models.Brewery", "Brewery")
-                        .WithMany()
-                        .HasForeignKey("BreweryId");
-
-                    b.HasOne("BreweryCollaborationWebbApp.Models.Fan", "Fan")
-                        .WithMany()
-                        .HasForeignKey("FanId");
-                });
-
-            modelBuilder.Entity("BreweryCollaborationWebbApp.Models.Review", b =>
-                {
-                    b.HasOne("BreweryCollaborationWebbApp.Models.Fan", "Fan")
-                        .WithMany()
-                        .HasForeignKey("FanId");
-
-                    b.HasOne("BreweryCollaborationWebbApp.Models.Collaboration", "BeerCollaboration")
-                        .WithMany()
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

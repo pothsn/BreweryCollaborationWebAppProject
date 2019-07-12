@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BreweryCollaborationWebbApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190712142247_initial")]
-    partial class initial
+    [Migration("20190712162037_seedingBeerStyles")]
+    partial class seedingBeerStyles
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,15 +27,7 @@ namespace BreweryCollaborationWebbApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("FanId");
-
-                    b.Property<int?>("StyleId");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("FanId");
-
-                    b.HasIndex("StyleId");
 
                     b.ToTable("BeerFanTaste");
                 });
@@ -92,17 +84,13 @@ namespace BreweryCollaborationWebbApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("BreweryId");
+                    b.Property<int>("BreweryId");
 
                     b.Property<string>("Name");
 
-                    b.Property<int?>("StyleId");
+                    b.Property<int>("StylesId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BreweryId");
-
-                    b.HasIndex("StyleId");
 
                     b.ToTable("BreweryBeer");
                 });
@@ -113,15 +101,7 @@ namespace BreweryCollaborationWebbApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("FollowerBreweryId");
-
-                    b.Property<int?>("FollowingBreweryId");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("FollowerBreweryId");
-
-                    b.HasIndex("FollowingBreweryId");
 
                     b.ToTable("BreweryFollow");
                 });
@@ -134,11 +114,7 @@ namespace BreweryCollaborationWebbApp.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<int?>("StyleId");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("StyleId");
 
                     b.ToTable("Collaboration");
                 });
@@ -149,15 +125,7 @@ namespace BreweryCollaborationWebbApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("BeerCollaborationId");
-
-                    b.Property<int?>("BreweryId");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("BeerCollaborationId");
-
-                    b.HasIndex("BreweryId");
 
                     b.ToTable("CollaborationJunction");
                 });
@@ -197,32 +165,22 @@ namespace BreweryCollaborationWebbApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("BreweryId");
-
-                    b.Property<int?>("FanId");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("BreweryId");
-
-                    b.HasIndex("FanId");
 
                     b.ToTable("FanFollow");
                 });
 
             modelBuilder.Entity("BreweryCollaborationWebbApp.Models.Review", b =>
                 {
-                    b.Property<int>("Id");
-
-                    b.Property<int?>("FanId");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("Rating");
 
                     b.Property<string>("ReviewText");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("FanId");
 
                     b.ToTable("Review");
                 });
@@ -404,17 +362,6 @@ namespace BreweryCollaborationWebbApp.Migrations
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });
 
-            modelBuilder.Entity("BreweryCollaborationWebbApp.Models.BeerFanTaste", b =>
-                {
-                    b.HasOne("BreweryCollaborationWebbApp.Models.Fan", "Fan")
-                        .WithMany()
-                        .HasForeignKey("FanId");
-
-                    b.HasOne("BreweryCollaborationWebbApp.Models.BeerStyle", "BeerStyle")
-                        .WithMany()
-                        .HasForeignKey("StyleId");
-                });
-
             modelBuilder.Entity("BreweryCollaborationWebbApp.Models.Brewery", b =>
                 {
                     b.HasOne("BreweryCollaborationWebbApp.Models.ApplicationUser", "ApplicationUser")
@@ -422,74 +369,11 @@ namespace BreweryCollaborationWebbApp.Migrations
                         .HasForeignKey("ApplicationId");
                 });
 
-            modelBuilder.Entity("BreweryCollaborationWebbApp.Models.BreweryBeer", b =>
-                {
-                    b.HasOne("BreweryCollaborationWebbApp.Models.Brewery", "Brewery")
-                        .WithMany()
-                        .HasForeignKey("BreweryId");
-
-                    b.HasOne("BreweryCollaborationWebbApp.Models.BeerStyle", "BeerStyle")
-                        .WithMany()
-                        .HasForeignKey("StyleId");
-                });
-
-            modelBuilder.Entity("BreweryCollaborationWebbApp.Models.BreweryFollow", b =>
-                {
-                    b.HasOne("BreweryCollaborationWebbApp.Models.Brewery", "FollowerBrewery")
-                        .WithMany()
-                        .HasForeignKey("FollowerBreweryId");
-
-                    b.HasOne("BreweryCollaborationWebbApp.Models.Brewery", "FollowingBrewery")
-                        .WithMany()
-                        .HasForeignKey("FollowingBreweryId");
-                });
-
-            modelBuilder.Entity("BreweryCollaborationWebbApp.Models.Collaboration", b =>
-                {
-                    b.HasOne("BreweryCollaborationWebbApp.Models.BeerStyle", "BeerStyle")
-                        .WithMany()
-                        .HasForeignKey("StyleId");
-                });
-
-            modelBuilder.Entity("BreweryCollaborationWebbApp.Models.CollaborationJunction", b =>
-                {
-                    b.HasOne("BreweryCollaborationWebbApp.Models.Collaboration", "BeerCollaboration")
-                        .WithMany()
-                        .HasForeignKey("BeerCollaborationId");
-
-                    b.HasOne("BreweryCollaborationWebbApp.Models.Brewery", "Brewery")
-                        .WithMany()
-                        .HasForeignKey("BreweryId");
-                });
-
             modelBuilder.Entity("BreweryCollaborationWebbApp.Models.Fan", b =>
                 {
                     b.HasOne("BreweryCollaborationWebbApp.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
                         .HasForeignKey("ApplicationId");
-                });
-
-            modelBuilder.Entity("BreweryCollaborationWebbApp.Models.FanFollow", b =>
-                {
-                    b.HasOne("BreweryCollaborationWebbApp.Models.Brewery", "Brewery")
-                        .WithMany()
-                        .HasForeignKey("BreweryId");
-
-                    b.HasOne("BreweryCollaborationWebbApp.Models.Fan", "Fan")
-                        .WithMany()
-                        .HasForeignKey("FanId");
-                });
-
-            modelBuilder.Entity("BreweryCollaborationWebbApp.Models.Review", b =>
-                {
-                    b.HasOne("BreweryCollaborationWebbApp.Models.Fan", "Fan")
-                        .WithMany()
-                        .HasForeignKey("FanId");
-
-                    b.HasOne("BreweryCollaborationWebbApp.Models.Collaboration", "BeerCollaboration")
-                        .WithMany()
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

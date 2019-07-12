@@ -65,7 +65,7 @@ namespace BreweryCollaborationWebbApp.Controllers
                 // assign ApplicationId a la TrashCollector
                 brewery.ApplicationId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 _context.Add(brewery);
-                await Geocode(brewery);
+                
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -83,28 +83,16 @@ namespace BreweryCollaborationWebbApp.Controllers
                 response.EnsureSuccessStatusCode();
                 string responseBody = await response.Content.ReadAsStringAsync();
 
-                var jsonOutput = JsonConvert.DeserializeObject<Brewery>(responseBody);
-                
-                brewery.latitude = jsonOutput.geometry.location.lat;
-                brewery.longitude = jsonOutput.geometry.location.lng;
+                JOject o = responseBody.Parse(json);
+
+                brewery.latitude = o.geometry.location.lat;
+                brewery.longitude = o.geometry.location.lng;
             }
             catch (HttpRequestException e)
             {
                 Console.WriteLine("\nException Caught!");
                 Console.WriteLine("Message :{0} ", e.Message);
             }
-        }
-
-
-        public IActionResult AddBeer()
-        {
-
-            return View();
-            //List<BeerStyle> li = new List<BeerStyle>();
-            //li = _context.BeerStyle.ToList();
-            //ViewBag.listofitems = li;
-
-            //return View(li);
         }
 
         // POST: Breweries/Create
