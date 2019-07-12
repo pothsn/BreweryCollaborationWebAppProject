@@ -1,0 +1,45 @@
+﻿@model BreweryCollaborationWebbApp.Models.BreweryBeer
+
+@{
+    ViewData["Title"] = "AddBeer";
+}
+
+<h2>Add A Beer</h2>
+
+<h4>Brewery Beer</h4>
+
+
+@*<label asp-for="Name"></label>
+<select asp-for="BeerStyle" asp-items="@(new SelectList(ViewBag.listofitems, "Id","Name"))">  </select>*@
+
+    
+<div class=" row">
+    <div class="col-md-4">
+        <form asp-action="AddBeer">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class=" form-group">
+                <label asp-for="Name" class="control-label">Beer Name</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+</div>
+            <div class="form-group">
+                <label asp-for="BeerStyles" class="control-label">Beer Style</label>
+                <input asp-for="BeerStyles" class="form-control" />
+                <span asp-validation-for="BeerStyles" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+    </div>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }

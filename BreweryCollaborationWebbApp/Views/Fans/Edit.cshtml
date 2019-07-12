@@ -1,0 +1,69 @@
+﻿@model BreweryCollaborationWebbApp.Models.Fan
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>Fan</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address" class="control-label"></label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="State" class="control-label"></label>
+                <input asp-for="State" class="form-control" />
+                <span asp-validation-for="State" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Zipcode" class="control-label"></label>
+                <input asp-for="Zipcode" class="form-control" />
+                <span asp-validation-for="Zipcode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div id="checkboxes">
+                <label>User Beer Style Preference. Select as many as you like?!!?</label>
+                <ul>
+                    <li><input type="checkbox"> Amber Lager</li>
+                    <li><input type="checkbox"> Amber Ale</li>
+                    <li><input type="checkbox"> Pilsner</li>
+                    <li><input type="checkbox"> Porter</li>
+                    <li><input type="checkbox"> Stout</li>
+                    <li><input type="checkbox"> Wheat</li>
+                    <li><input type="checkbox"> Sour</li>
+                    <li><input type="checkbox"> IPA</li>
+                    <li><input type="checkbox"> Pale Ale</li>
+                    <li><input type="checkbox"> Dark Lager</li>
+                </ul>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
