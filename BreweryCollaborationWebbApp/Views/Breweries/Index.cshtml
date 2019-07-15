@@ -16,20 +16,27 @@
 <div class="row">
     <div id="map"></div>
     <script>
-// Initialize and add the map
-function initMap() {
-    // The location of Uluru
-    var uluru = {lat: -25.344, lng: 131.036};
-    // The map, centered at Uluru
-    var map = new google.maps.Map(
-      document.getElementById('map'), {zoom: 4, center: uluru});
-    // The marker, positioned at Uluru
-    var marker = new google.maps.Marker({position: uluru, map: map});
-}
+        var breweries = @Html.Raw(Json.Serialize(Model));
+        console.log("test", breweries);
+        // Initialize and add the map
+        function initMap() {
+            var milwaukee = { lat: 43.038, lng: -87.906 };
+            var map = new google.maps.Map(
+                document.getElementById('map'), { zoom: 10, center: milwaukee });
+            for (var i = 0; i < breweries.length; i++) {
+                console.log("brewery", breweries[i]);
+                var marker = new google.maps.Marker({
+                    position: { lat: breweries[i].latitude, lng: breweries[i].longitude },
+                    map: map
+                });
+            }
+        };
+
     </script>
-    <script async defer
-            src="APIKeys.GoogleAPI">
-    </script>
+    
+    <script src=@($"https://maps.googleapis.com/maps/api/js?key={@ViewBag.GoogleMapsAPIKey}&callback=initMap")
+            async defer></script>
+    
 </div>
 
 <table class="table">

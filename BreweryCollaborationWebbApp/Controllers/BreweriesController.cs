@@ -18,7 +18,8 @@ namespace BreweryCollaborationWebbApp.Controllers
     {
         private readonly ApplicationDbContext _context;
         static readonly HttpClient client = new HttpClient();
-        
+        public List<Brewery> breweries = new List<Brewery>();
+
 
         public BreweriesController(ApplicationDbContext context)
         {
@@ -28,12 +29,14 @@ namespace BreweryCollaborationWebbApp.Controllers
         // GET: Breweries
         public async Task<IActionResult> Index()
         {
+            ViewBag.GoogleMapsAPIKey = APIKeys.GoogleMapsAPIKey;
             return View(await _context.Brewery.ToListAsync());
         }
 
         // GET: Breweries/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+
             if (id == null)
             {
                 return NotFound();
@@ -64,11 +67,14 @@ namespace BreweryCollaborationWebbApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                
+
                 // assign ApplicationId a la TrashCollector
                 brewery.ApplicationId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 _context.Add(brewery);
                 await Geocode(brewery);
                 await _context.SaveChangesAsync();
+                
                 return RedirectToAction(nameof(Index));
             }
             return View(brewery);
@@ -77,7 +83,7 @@ namespace BreweryCollaborationWebbApp.Controllers
         static async Task Geocode(Brewery brewery)
         {
 
-            string breweryURL = ("https://maps.googleapis.com/maps/api/geocode/json?address=" + brewery.Address + brewery.City + brewery.State + APIKeys.GoogleAPI);
+            string breweryURL = ("https://maps.googleapis.com/maps/api/geocode/json?address=" + brewery.Address + brewery.City + brewery.State + APIKeys.GoogleGeocodingAPI);
 
             try
             {
