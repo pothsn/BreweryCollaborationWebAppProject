@@ -12,8 +12,8 @@ namespace BreweryCollaborationWebbApp.Models
 
         [Key]
 
-        //[NotMapped]
-        //public List<BreweryBeer> BreweryBeers { get; set; }
+        [NotMapped]
+        public IEnumerable<BreweryBeer> BreweryBeers { get; set; }
         public int Id { get; set; }
         public string Name { get; set; }
 

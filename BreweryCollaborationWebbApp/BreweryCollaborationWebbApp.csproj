@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\Migrations\**" />
+    <Content Remove="Data\Migrations\**" />
+    <EmbeddedResource Remove="Data\Migrations\**" />
+    <None Remove="Data\Migrations\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.11" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.9" />
@@ -34,7 +41,6 @@
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Folder Include="Areas\Identity\Services\" />
-    <Folder Include="Data\Migrations\" />
   </ItemGroup>
 
 </Project>

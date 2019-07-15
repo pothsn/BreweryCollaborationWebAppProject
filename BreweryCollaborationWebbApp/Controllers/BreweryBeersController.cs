@@ -47,7 +47,18 @@ namespace BreweryCollaborationWebbApp.Controllers
         // GET: BreweryBeers/Create
         public IActionResult Create()
         {
-            return View();
+            List<BeerStyle> li = new List<BeerStyle>();
+            li = _context.BeerStyle.ToList();
+            ViewBag.listofitems = li;
+
+            //IEnumerable<Models.BeerStyle> beerStyles = _context.BeerStyle.ToList();
+            ViewModels.BreweryBeersViewModel breweryBeersViewModel = new ViewModels.BreweryBeersViewModel
+            {
+
+                BeerStyles = li
+            };
+
+            return View(breweryBeersViewModel);
         }
 
         // POST: BreweryBeers/Create
@@ -55,13 +66,19 @@ namespace BreweryCollaborationWebbApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] BreweryBeer breweryBeer)
+        public async Task<IActionResult> Create([Bind("Id,Name")] BreweryBeer breweryBeer, Brewery brewery)
         {
+
+
+
+
             if (ModelState.IsValid)
             {
+
                 _context.Add(breweryBeer);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "breweries");
+                //return RedirectToAction(nameof(Index));
             }
             return View(breweryBeer);
         }

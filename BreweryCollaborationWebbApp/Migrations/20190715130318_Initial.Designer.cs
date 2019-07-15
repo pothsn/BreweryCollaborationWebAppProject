@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BreweryCollaborationWebbApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190712161909_initial")]
-    partial class initial
+    [Migration("20190715130318_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

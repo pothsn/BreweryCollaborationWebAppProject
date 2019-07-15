@@ -72,28 +72,28 @@ namespace BreweryCollaborationWebbApp.Controllers
             return View(brewery);
         }
 
-        static async Task Geocode(Brewery brewery)
-        {
-            string breweryURL = ("https://maps.googleapis.com/maps/api/geocode/json?address=" + brewery.Address + brewery.City + brewery.State + APIKeys.GoogleAPI);
+        //static async Task Geocode(Brewery brewery)
+        //{
+        //    string breweryURL = ("https://maps.googleapis.com/maps/api/geocode/json?address=" + brewery.Address + brewery.City + brewery.State + APIKeys.GoogleAPI);
 
-            try
-            {
-                APIKeys.GoogleAPI;
-                HttpResponseMessage response = await client.GetAsync(breweryURL);
-                response.EnsureSuccessStatusCode();
-                string responseBody = await response.Content.ReadAsStringAsync();
+        //    try
+        //    {
+        //        APIKeys.GoogleAPI;
+        //        HttpResponseMessage response = await client.GetAsync(breweryURL);
+        //        response.EnsureSuccessStatusCode();
+        //        string responseBody = await response.Content.ReadAsStringAsync();
 
-                JOject o = responseBody.Parse(json);
+        //        JOject o = responseBody.Parse(json);
 
-                brewery.latitude = o.geometry.location.lat;
-                brewery.longitude = o.geometry.location.lng;
-            }
-            catch (HttpRequestException e)
-            {
-                Console.WriteLine("\nException Caught!");
-                Console.WriteLine("Message :{0} ", e.Message);
-            }
-        }
+        //        brewery.latitude = o.geometry.location.lat;
+        //        brewery.longitude = o.geometry.location.lng;
+        //    }
+        //    catch (HttpRequestException e)
+        //    {
+        //        Console.WriteLine("\nException Caught!");
+        //        Console.WriteLine("Message :{0} ", e.Message);
+        //    }
+        //}
 
         // POST: Breweries/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
