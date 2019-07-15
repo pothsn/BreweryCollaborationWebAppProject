@@ -21,7 +21,7 @@
                 <label asp-for="BeerName" class="control-label"></label>
                 <input asp-for="BeerName" class="form-control" />
                 <label asp-for="BeerStyle" class="control-label"> Beer Style</label>
-                <select asp-for="BeerStyle" class="form-control" asp-items="@(new SelectList(ViewBag.listofitems, "Id","Name"))">  </select>
+                <select asp-for="BeerStyle.Id" class="form-control" asp-items="@(new SelectList(ViewBag.listofitems, "Id","Name"))">  </select>
 
                 <span asp-validation-for="BeerName" class="text-danger"></span>
             </div>

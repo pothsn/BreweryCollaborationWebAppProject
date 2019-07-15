@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using BreweryCollaborationWebbApp.Data;
 using BreweryCollaborationWebbApp.Models;
 using System.Security.Claims;
+using BreweryCollaborationWebbApp.ViewModels;
 
 namespace BreweryCollaborationWebbApp.Controllers
 {
@@ -65,24 +66,46 @@ namespace BreweryCollaborationWebbApp.Controllers
         // POST: BreweryBeers/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create(BreweryBeer breweryBeer )
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        //        Brewery loggedInBrewery = _context.Brewery.Where(i => i.ApplicationId == userId).SingleOrDefault();
+        //        breweryBeer.BreweryId = loggedInBrewery.Id;
+
+
+        //        _context.Add(breweryBeer);
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction("Index", "breweries");
+        //        //return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(breweryBeer);
+        //}
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(int BreweryBeer, int BeerStyle)
+        public async Task<IActionResult> Create(BreweryBeersViewModel breweryBeersViewModel)
         {
-            var breweryBeer = new BreweryBeer();
-
-
-
             if (ModelState.IsValid)
             {
-                breweryBeer.BreweryId = User.Identity.GetHashCode();
+                BreweryBeer newBeer = new BreweryBeer();
 
-                _context.Add(breweryBeer);
+                string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                Brewery loggedInBrewery = _context.Brewery.Where(i => i.ApplicationId == userId).SingleOrDefault();
+                newBeer.BreweryId = loggedInBrewery.Id;
+                newBeer.StyleId = breweryBeersViewModel.BeerStyle.Id;
+                newBeer.Name = breweryBeersViewModel.BeerName;
+
+
+                 _context.Add(newBeer);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index", "breweries");
-                //return RedirectToAction(nameof(Index));
             }
-            return View(breweryBeer);
+            // return View(breweryBeer);
+            return null;
         }
 
         // GET: BreweryBeers/Edit/5

@@ -20,7 +20,6 @@ namespace BreweryCollaborationWebbApp.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // modelBuilder.Entity<Brewery>().
 
             base.OnModelCreating(modelBuilder);
 

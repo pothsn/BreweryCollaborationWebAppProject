@@ -12,8 +12,7 @@ namespace BreweryCollaborationWebbApp.Models
 
         [Key]
         public int Id { get; set; }
-        //[NotMapped]
-        //public IEnumerable<BreweryBeer> BreweryBeers { get; set; }
+
 
         public string Name { get; set; }
         public virtual ICollection<BreweryBeer> BreweryBeers { get; set; }
