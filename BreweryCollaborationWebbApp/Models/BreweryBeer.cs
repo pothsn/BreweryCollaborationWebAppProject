@@ -9,21 +9,18 @@ namespace BreweryCollaborationWebbApp.Models
 {
     public class BreweryBeer
     {
+
         [Key]
-        public int Id { get; set; }
+        public int Id{ get; set; }
 
         public string Name { get; set; }
 
-        public int StylesId { get; set; }
-        //public BeerStyle BeerStyle { get; set; }
-        [NotMapped]
-        public List<BeerStyle> BeerStyles { get; set; }
+        [ForeignKey("BeerStyle")]
+        public int StyleId { get; set; }
+        public BeerStyle BeerStyle { get; set; }
 
+        [ForeignKey("Brewery")]
         public int BreweryId { get; set; }
-        //public Brewery Brewery { get; set; }
-        [NotMapped]
-        public List<Brewery> Breweries { get; set; }
-
-
+        public Brewery Brewery { get; set; }
     }
 }

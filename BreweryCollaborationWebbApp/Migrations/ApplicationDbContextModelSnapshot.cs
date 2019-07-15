@@ -86,9 +86,13 @@ namespace BreweryCollaborationWebbApp.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<int>("StylesId");
+                    b.Property<int>("StyleId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BreweryId");
+
+                    b.HasIndex("StyleId");
 
                     b.ToTable("BreweryBeer");
                 });
@@ -365,6 +369,19 @@ namespace BreweryCollaborationWebbApp.Migrations
                     b.HasOne("BreweryCollaborationWebbApp.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
                         .HasForeignKey("ApplicationId");
+                });
+
+            modelBuilder.Entity("BreweryCollaborationWebbApp.Models.BreweryBeer", b =>
+                {
+                    b.HasOne("BreweryCollaborationWebbApp.Models.Brewery", "Brewery")
+                        .WithMany("BreweryBeers")
+                        .HasForeignKey("BreweryId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BreweryCollaborationWebbApp.Models.BeerStyle", "BeerStyle")
+                        .WithMany("BreweryBeers")
+                        .HasForeignKey("StyleId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("BreweryCollaborationWebbApp.Models.Fan", b =>

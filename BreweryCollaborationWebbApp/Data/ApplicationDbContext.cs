@@ -18,6 +18,13 @@ namespace BreweryCollaborationWebbApp.Data
 
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+
+            base.OnModelCreating(modelBuilder);
+
+        }
+
 
         public DbSet<BeerFanTaste> BeerFanTaste { get; set; }
         public DbSet<BeerStyle> BeerStyle { get; set; }    

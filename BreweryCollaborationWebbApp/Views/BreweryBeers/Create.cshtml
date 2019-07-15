@@ -1,10 +1,15 @@
-﻿@model BreweryCollaborationWebbApp.Models.BreweryBeer
+﻿@*@model BreweryCollaborationWebbApp.Models.BreweryBeer*@
+@model BreweryCollaborationWebbApp.ViewModels.BreweryBeersViewModel
 
 @{
     ViewData["Title"] = "Create";
 }
 
 <h2>Create</h2>
+
+
+
+
 
 <h4>BreweryBeer</h4>
 <hr />
@@ -13,9 +18,12 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="BeerName" class="control-label"></label>
+                <input asp-for="BeerName" class="form-control" />
+                <label asp-for="BeerStyle" class="control-label"> Beer Style</label>
+                <select asp-for="BeerStyle.Id" class="form-control" asp-items="@(new SelectList(ViewBag.listofitems, "Id","Name"))">  </select>
+
+                <span asp-validation-for="BeerName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />

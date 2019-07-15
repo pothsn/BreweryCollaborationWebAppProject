@@ -2,7 +2,7 @@
 
 namespace BreweryCollaborationWebbApp.Migrations
 {
-    public partial class seedingBeerStyles : Migration
+    public partial class seedBeerStyles : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -16,6 +16,7 @@ namespace BreweryCollaborationWebbApp.Migrations
             migrationBuilder.Sql("SET Identity_Insert BeerStyle ON INSERT INTO BeerStyle (Id, Name) VALUES (8, 'Porter')");
             migrationBuilder.Sql("SET Identity_Insert BeerStyle ON INSERT INTO BeerStyle (Id, Name) VALUES (9, 'Sour')");
             migrationBuilder.Sql("SET Identity_Insert BeerStyle ON INSERT INTO BeerStyle (Id, Name) VALUES (10, 'Saison')");
+
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

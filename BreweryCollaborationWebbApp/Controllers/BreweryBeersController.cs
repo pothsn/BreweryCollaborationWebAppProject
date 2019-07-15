@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BreweryCollaborationWebbApp.Data;
 using BreweryCollaborationWebbApp.Models;
+using System.Security.Claims;
+using BreweryCollaborationWebbApp.ViewModels;
 
 namespace BreweryCollaborationWebbApp.Controllers
 {
@@ -47,23 +49,63 @@ namespace BreweryCollaborationWebbApp.Controllers
         // GET: BreweryBeers/Create
         public IActionResult Create()
         {
-            return View();
+            List<BeerStyle> li = new List<BeerStyle>();
+            li = _context.BeerStyle.ToList();
+            ViewBag.listofitems = li;
+
+            //IEnumerable<Models.BeerStyle> beerStyles = _context.BeerStyle.ToList();
+            ViewModels.BreweryBeersViewModel breweryBeersViewModel = new ViewModels.BreweryBeersViewModel
+            {
+
+                BeerStyles = li
+            };
+
+            return View(breweryBeersViewModel);
         }
 
         // POST: BreweryBeers/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create(BreweryBeer breweryBeer )
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        //        Brewery loggedInBrewery = _context.Brewery.Where(i => i.ApplicationId == userId).SingleOrDefault();
+        //        breweryBeer.BreweryId = loggedInBrewery.Id;
+
+
+        //        _context.Add(breweryBeer);
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction("Index", "breweries");
+        //        //return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(breweryBeer);
+        //}
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] BreweryBeer breweryBeer)
+        public async Task<IActionResult> Create(BreweryBeersViewModel breweryBeersViewModel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(breweryBeer);
+                BreweryBeer newBeer = new BreweryBeer();
+
+                string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                Brewery loggedInBrewery = _context.Brewery.Where(i => i.ApplicationId == userId).SingleOrDefault();
+                newBeer.BreweryId = loggedInBrewery.Id;
+                newBeer.StyleId = breweryBeersViewModel.BeerStyle.Id;
+                newBeer.Name = breweryBeersViewModel.BeerName;
+
+
+                 _context.Add(newBeer);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "breweries");
             }
-            return View(breweryBeer);
+            // return View(breweryBeer);
+            return null;
         }
 
         // GET: BreweryBeers/Edit/5

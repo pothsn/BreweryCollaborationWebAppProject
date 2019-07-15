@@ -9,10 +9,9 @@
 <h4>Brewery Beer</h4>
 
 
-@*<label asp-for="Name"></label>
-<select asp-for="BeerStyle" asp-items="@(new SelectList(ViewBag.listofitems, "Id","Name"))">  </select>*@
 
-    
+
+
 <div class=" row">
     <div class="col-md-4">
         <form asp-action="AddBeer">
@@ -22,11 +21,11 @@
                 <label asp-for="Name" class="control-label">Beer Name</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
-</div>
+            </div>
             <div class="form-group">
-                <label asp-for="BeerStyles" class="control-label">Beer Style</label>
-                <input asp-for="BeerStyles" class="form-control" />
-                <span asp-validation-for="BeerStyles" class="text-danger"></span>
+                <label asp-for="BeerStyle" class="control-label">Beer Style</label>
+                <input asp-for="BeerStyle" class="form-control" />
+                <span asp-validation-for="BeerStyle" class="text-danger"></span>
             </div>
 
             <div class="form-group">
@@ -34,12 +33,12 @@
             </div>
         </form>
     </div>
-    </div>
+</div>
 
-    <div>
-        <a asp-action="Index">Back to List</a>
-    </div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
 
-    @section Scripts {
-        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    }
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

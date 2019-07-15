@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BreweryCollaborationWebbApp.Migrations
 {
-    public partial class initial : Migration
+    public partial class BreweryBeerUpdate1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -72,21 +72,6 @@ namespace BreweryCollaborationWebbApp.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_BeerStyle", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "BreweryBeer",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true),
-                    StylesId = table.Column<int>(nullable: false),
-                    BreweryId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BreweryBeer", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -312,6 +297,33 @@ namespace BreweryCollaborationWebbApp.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "BreweryBeer",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    StyleId = table.Column<int>(nullable: false),
+                    BreweryId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BreweryBeer", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BreweryBeer_Brewery_BreweryId",
+                        column: x => x.BreweryId,
+                        principalTable: "Brewery",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BreweryBeer_BeerStyle_StyleId",
+                        column: x => x.StyleId,
+                        principalTable: "BeerStyle",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -357,6 +369,16 @@ namespace BreweryCollaborationWebbApp.Migrations
                 column: "ApplicationId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_BreweryBeer_BreweryId",
+                table: "BreweryBeer",
+                column: "BreweryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BreweryBeer_StyleId",
+                table: "BreweryBeer",
+                column: "StyleId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Fan_ApplicationId",
                 table: "Fan",
                 column: "ApplicationId");
@@ -383,12 +405,6 @@ namespace BreweryCollaborationWebbApp.Migrations
                 name: "BeerFanTaste");
 
             migrationBuilder.DropTable(
-                name: "BeerStyle");
-
-            migrationBuilder.DropTable(
-                name: "Brewery");
-
-            migrationBuilder.DropTable(
                 name: "BreweryBeer");
 
             migrationBuilder.DropTable(
@@ -411,6 +427,12 @@ namespace BreweryCollaborationWebbApp.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Brewery");
+
+            migrationBuilder.DropTable(
+                name: "BeerStyle");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

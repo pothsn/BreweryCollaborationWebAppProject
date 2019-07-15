@@ -80,6 +80,7 @@ namespace BreweryCollaborationWebbApp.Controllers
             return View(brewery);
         }
 
+
         static async Task Geocode(Brewery brewery)
         {
 
