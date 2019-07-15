@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BreweryCollaborationWebbApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190715130318_Initial")]
-    partial class Initial
+    [Migration("20190715194414_BreweryBeerUpdate1")]
+    partial class BreweryBeerUpdate1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -88,9 +88,13 @@ namespace BreweryCollaborationWebbApp.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<int>("StylesId");
+                    b.Property<int>("StyleId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BreweryId");
+
+                    b.HasIndex("StyleId");
 
                     b.ToTable("BreweryBeer");
                 });
@@ -367,6 +371,19 @@ namespace BreweryCollaborationWebbApp.Migrations
                     b.HasOne("BreweryCollaborationWebbApp.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
                         .HasForeignKey("ApplicationId");
+                });
+
+            modelBuilder.Entity("BreweryCollaborationWebbApp.Models.BreweryBeer", b =>
+                {
+                    b.HasOne("BreweryCollaborationWebbApp.Models.Brewery", "Brewery")
+                        .WithMany("BreweryBeers")
+                        .HasForeignKey("BreweryId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BreweryCollaborationWebbApp.Models.BeerStyle", "BeerStyle")
+                        .WithMany("BreweryBeers")
+                        .HasForeignKey("StyleId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("BreweryCollaborationWebbApp.Models.Fan", b =>

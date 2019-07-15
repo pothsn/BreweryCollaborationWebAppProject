@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BreweryCollaborationWebbApp.Data;
 using BreweryCollaborationWebbApp.Models;
+using System.Security.Claims;
 
 namespace BreweryCollaborationWebbApp.Controllers
 {
@@ -66,14 +67,15 @@ namespace BreweryCollaborationWebbApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] BreweryBeer breweryBeer, Brewery brewery)
+        public async Task<IActionResult> Create(int BreweryBeer, int BeerStyle)
         {
-
+            var breweryBeer = new BreweryBeer();
 
 
 
             if (ModelState.IsValid)
             {
+                breweryBeer.BreweryId = User.Identity.GetHashCode();
 
                 _context.Add(breweryBeer);
                 await _context.SaveChangesAsync();
