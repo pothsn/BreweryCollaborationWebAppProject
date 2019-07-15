@@ -10,6 +10,7 @@ using BreweryCollaborationWebbApp.Models;
 using System.Security.Claims;
 using System.Net.Http;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace BreweryCollaborationWebbApp.Controllers
 {
@@ -17,6 +18,7 @@ namespace BreweryCollaborationWebbApp.Controllers
     {
         private readonly ApplicationDbContext _context;
         static readonly HttpClient client = new HttpClient();
+        
 
         public BreweriesController(ApplicationDbContext context)
         {
@@ -65,35 +67,36 @@ namespace BreweryCollaborationWebbApp.Controllers
                 // assign ApplicationId a la TrashCollector
                 brewery.ApplicationId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 _context.Add(brewery);
-                
+                await Geocode(brewery);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(brewery);
         }
 
-        //static async Task Geocode(Brewery brewery)
-        //{
-        //    string breweryURL = ("https://maps.googleapis.com/maps/api/geocode/json?address=" + brewery.Address + brewery.City + brewery.State + APIKeys.GoogleAPI);
 
-        //    try
-        //    {
-        //        APIKeys.GoogleAPI;
-        //        HttpResponseMessage response = await client.GetAsync(breweryURL);
-        //        response.EnsureSuccessStatusCode();
-        //        string responseBody = await response.Content.ReadAsStringAsync();
+        static async Task Geocode(Brewery brewery)
+        {
 
-        //        JOject o = responseBody.Parse(json);
+            string breweryURL = ("https://maps.googleapis.com/maps/api/geocode/json?address=" + brewery.Address + brewery.City + brewery.State + APIKeys.GoogleAPI);
 
-        //        brewery.latitude = o.geometry.location.lat;
-        //        brewery.longitude = o.geometry.location.lng;
-        //    }
-        //    catch (HttpRequestException e)
-        //    {
-        //        Console.WriteLine("\nException Caught!");
-        //        Console.WriteLine("Message :{0} ", e.Message);
-        //    }
-        //}
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync(breweryURL);
+                response.EnsureSuccessStatusCode();
+                string responseBody = await response.Content.ReadAsStringAsync();
+                var thisResult = JsonConvert.DeserializeObject<JObject>(responseBody);
+                var latitude = thisResult["results"][0]["geometry"]["location"]["lat"];
+                brewery.latitude = latitude.ToObject<double>();
+                var longitude = thisResult["results"][0]["geometry"]["location"]["lng"];
+                brewery.longitude = longitude.ToObject<double>();
+            }
+            catch (HttpRequestException e)
+            {
+                Console.WriteLine("\nException Caught!");
+                Console.WriteLine("Message :{0} ", e.Message);
+            }
+        }
 
         // POST: Breweries/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
