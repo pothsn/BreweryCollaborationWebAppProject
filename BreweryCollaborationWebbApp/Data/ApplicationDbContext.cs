@@ -28,13 +28,12 @@ namespace BreweryCollaborationWebbApp.Data
         public DbSet<BeerFanTaste> BeerFanTaste { get; set; }
         public DbSet<BeerStyle> BeerStyle { get; set; }    
         public DbSet<BreweryBeer> BreweryBeer { get; set; }
-        public DbSet<BreweryFollow> BreweryFollow { get; set; }
         public DbSet<Collaboration> Collaboration { get; set; }
         public DbSet<CollaborationRequest> CollaborationRequest { get; set; }
-        public DbSet<Fan> Fan { get; set; }
-        public DbSet<FanFollow> FanFollow { get; set; }
+        public DbSet<Fan> Fan { get; set; }      
         public DbSet<Review> Review { get; set; }
         public DbSet<Brewery> Brewery { get; set; }
         public DbSet<ApplicationUser> ApplicationUser { get; set; }
+        public DbSet<BreweryCollaborationWebbApp.Models.Follow> Follow { get; set; }
     }
 }

@@ -11,12 +11,16 @@ namespace BreweryCollaborationWebbApp.Models
     {
         [Key]
         public int Id { get; set; }
-        public string Name { get; set; }
 
+        public string Name { get; set; }
 
         [ForeignKey("BeerStyle")]
         public int StyleId { get; set; }
         public BeerStyle BeerStyle { get; set; }
+
+        [ForeignKey("CollaborationRequest")]
+        public int CollaborationRequestId { get; set; }
+        public CollaborationRequest CollaborationRequest { get; set; }
 
     }
 }

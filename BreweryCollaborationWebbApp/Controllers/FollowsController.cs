@@ -10,22 +10,23 @@ using BreweryCollaborationWebbApp.Models;
 
 namespace BreweryCollaborationWebbApp.Controllers
 {
-    public class BreweryFollowsController : Controller
+    public class FollowsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public BreweryFollowsController(ApplicationDbContext context)
+        public FollowsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: BreweryFollows
+        // GET: Follows
         public async Task<IActionResult> Index()
         {
-            return View(await _context.BreweryFollow.ToListAsync());
+            var applicationDbContext = _context.Follow.Include(f => f.ApplicationUser).Include(f => f.brewery);
+            return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: BreweryFollows/Details/5
+        // GET: Follows/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +34,45 @@ namespace BreweryCollaborationWebbApp.Controllers
                 return NotFound();
             }
 
-            var breweryFollow = await _context.BreweryFollow
+            var follow = await _context.Follow
+                .Include(f => f.ApplicationUser)
+                .Include(f => f.brewery)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (breweryFollow == null)
+            if (follow == null)
             {
                 return NotFound();
             }
 
-            return View(breweryFollow);
+            return View(follow);
         }
 
-        // GET: BreweryFollows/Create
+        // GET: Follows/Create
         public IActionResult Create()
         {
+            ViewData["ApplicationId"] = new SelectList(_context.ApplicationUser, "Id", "Id");
+            ViewData["BreweryId"] = new SelectList(_context.Brewery, "Id", "Id");
             return View();
         }
 
-        // POST: BreweryFollows/Create
+        // POST: Follows/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id")] BreweryFollow breweryFollow)
+        public async Task<IActionResult> Create([Bind("Id,BreweryId,ApplicationId")] Follow follow)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(breweryFollow);
+                _context.Add(follow);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(breweryFollow);
+            ViewData["ApplicationId"] = new SelectList(_context.ApplicationUser, "Id", "Id", follow.ApplicationId);
+            ViewData["BreweryId"] = new SelectList(_context.Brewery, "Id", "Id", follow.BreweryId);
+            return View(follow);
         }
 
-        // GET: BreweryFollows/Edit/5
+        // GET: Follows/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +80,24 @@ namespace BreweryCollaborationWebbApp.Controllers
                 return NotFound();
             }
 
-            var breweryFollow = await _context.BreweryFollow.FindAsync(id);
-            if (breweryFollow == null)
+            var follow = await _context.Follow.FindAsync(id);
+            if (follow == null)
             {
                 return NotFound();
             }
-            return View(breweryFollow);
+            ViewData["ApplicationId"] = new SelectList(_context.ApplicationUser, "Id", "Id", follow.ApplicationId);
+            ViewData["BreweryId"] = new SelectList(_context.Brewery, "Id", "Id", follow.BreweryId);
+            return View(follow);
         }
 
-        // POST: BreweryFollows/Edit/5
+        // POST: Follows/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id")] BreweryFollow breweryFollow)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,BreweryId,ApplicationId")] Follow follow)
         {
-            if (id != breweryFollow.Id)
+            if (id != follow.Id)
             {
                 return NotFound();
             }
@@ -97,12 +106,12 @@ namespace BreweryCollaborationWebbApp.Controllers
             {
                 try
                 {
-                    _context.Update(breweryFollow);
+                    _context.Update(follow);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!BreweryFollowExists(breweryFollow.Id))
+                    if (!FollowExists(follow.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +122,12 @@ namespace BreweryCollaborationWebbApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(breweryFollow);
+            ViewData["ApplicationId"] = new SelectList(_context.ApplicationUser, "Id", "Id", follow.ApplicationId);
+            ViewData["BreweryId"] = new SelectList(_context.Brewery, "Id", "Id", follow.BreweryId);
+            return View(follow);
         }
 
-        // GET: BreweryFollows/Delete/5
+        // GET: Follows/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +135,32 @@ namespace BreweryCollaborationWebbApp.Controllers
                 return NotFound();
             }
 
-            var breweryFollow = await _context.BreweryFollow
+            var follow = await _context.Follow
+                .Include(f => f.ApplicationUser)
+                .Include(f => f.brewery)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (breweryFollow == null)
+            if (follow == null)
             {
                 return NotFound();
             }
 
-            return View(breweryFollow);
+            return View(follow);
         }
 
-        // POST: BreweryFollows/Delete/5
+        // POST: Follows/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var breweryFollow = await _context.BreweryFollow.FindAsync(id);
-            _context.BreweryFollow.Remove(breweryFollow);
+            var follow = await _context.Follow.FindAsync(id);
+            _context.Follow.Remove(follow);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool BreweryFollowExists(int id)
+        private bool FollowExists(int id)
         {
-            return _context.BreweryFollow.Any(e => e.Id == id);
+            return _context.Follow.Any(e => e.Id == id);
         }
     }
 }

@@ -22,7 +22,8 @@ namespace BreweryCollaborationWebbApp.Controllers
         // GET: Collaborations
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Collaboration.ToListAsync());
+            var applicationDbContext = _context.Collaboration.Include(c => c.BeerStyle).Include(c => c.CollaborationRequest);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Collaborations/Details/5
@@ -34,6 +35,8 @@ namespace BreweryCollaborationWebbApp.Controllers
             }
 
             var collaboration = await _context.Collaboration
+                .Include(c => c.BeerStyle)
+                .Include(c => c.CollaborationRequest)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (collaboration == null)
             {
@@ -46,6 +49,8 @@ namespace BreweryCollaborationWebbApp.Controllers
         // GET: Collaborations/Create
         public IActionResult Create()
         {
+            ViewData["StyleId"] = new SelectList(_context.BeerStyle, "Id", "Id");
+            ViewData["CollaborationRequestId"] = new SelectList(_context.CollaborationRequest, "Id", "Id");
             return View();
         }
 
@@ -54,7 +59,7 @@ namespace BreweryCollaborationWebbApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] Collaboration collaboration)
+        public async Task<IActionResult> Create([Bind("Id,Name,StyleId,CollaborationRequestId")] Collaboration collaboration)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +67,8 @@ namespace BreweryCollaborationWebbApp.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["StyleId"] = new SelectList(_context.BeerStyle, "Id", "Id", collaboration.StyleId);
+            ViewData["CollaborationRequestId"] = new SelectList(_context.CollaborationRequest, "Id", "Id", collaboration.CollaborationRequestId);
             return View(collaboration);
         }
 
@@ -78,6 +85,8 @@ namespace BreweryCollaborationWebbApp.Controllers
             {
                 return NotFound();
             }
+            ViewData["StyleId"] = new SelectList(_context.BeerStyle, "Id", "Id", collaboration.StyleId);
+            ViewData["CollaborationRequestId"] = new SelectList(_context.CollaborationRequest, "Id", "Id", collaboration.CollaborationRequestId);
             return View(collaboration);
         }
 
@@ -86,7 +95,7 @@ namespace BreweryCollaborationWebbApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Collaboration collaboration)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,StyleId,CollaborationRequestId")] Collaboration collaboration)
         {
             if (id != collaboration.Id)
             {
@@ -113,6 +122,8 @@ namespace BreweryCollaborationWebbApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["StyleId"] = new SelectList(_context.BeerStyle, "Id", "Id", collaboration.StyleId);
+            ViewData["CollaborationRequestId"] = new SelectList(_context.CollaborationRequest, "Id", "Id", collaboration.CollaborationRequestId);
             return View(collaboration);
         }
 
@@ -125,6 +136,8 @@ namespace BreweryCollaborationWebbApp.Controllers
             }
 
             var collaboration = await _context.Collaboration
+                .Include(c => c.BeerStyle)
+                .Include(c => c.CollaborationRequest)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (collaboration == null)
             {

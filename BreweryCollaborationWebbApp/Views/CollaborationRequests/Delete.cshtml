@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Delete</h2>
@@ -11,6 +12,18 @@
     <h4>CollaborationRequest</h4>
     <hr />
     <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ApplicationUser)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationUser.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Brewery)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Brewery.Id)
+        </dd>
     </dl>
     
     <form asp-action="Delete">

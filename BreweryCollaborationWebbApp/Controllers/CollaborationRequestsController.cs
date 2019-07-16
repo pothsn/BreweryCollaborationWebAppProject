@@ -22,7 +22,8 @@ namespace BreweryCollaborationWebbApp.Controllers
         // GET: CollaborationRequests
         public async Task<IActionResult> Index()
         {
-            return View(await _context.CollaborationRequest.ToListAsync());
+            var applicationDbContext = _context.CollaborationRequest.Include(c => c.ApplicationUser).Include(c => c.Brewery);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: CollaborationRequests/Details/5
@@ -33,19 +34,23 @@ namespace BreweryCollaborationWebbApp.Controllers
                 return NotFound();
             }
 
-            var CollaborationRequest = await _context.CollaborationRequest
+            var collaborationRequest = await _context.CollaborationRequest
+                .Include(c => c.ApplicationUser)
+                .Include(c => c.Brewery)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (CollaborationRequest == null)
+            if (collaborationRequest == null)
             {
                 return NotFound();
             }
 
-            return View(CollaborationRequest);
+            return View(collaborationRequest);
         }
 
         // GET: CollaborationRequests/Create
         public IActionResult Create()
         {
+            ViewData["ApplicationId"] = new SelectList(_context.ApplicationUser, "Id", "Id");
+            ViewData["BreweryId"] = new SelectList(_context.Brewery, "Id", "Id");
             return View();
         }
 
@@ -54,15 +59,17 @@ namespace BreweryCollaborationWebbApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id")] CollaborationRequest CollaborationRequest)
+        public async Task<IActionResult> Create([Bind("Id,ApplicationId,BreweryId")] CollaborationRequest collaborationRequest)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(CollaborationRequest);
+                _context.Add(collaborationRequest);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(CollaborationRequest);
+            ViewData["ApplicationId"] = new SelectList(_context.ApplicationUser, "Id", "Id", collaborationRequest.ApplicationId);
+            ViewData["BreweryId"] = new SelectList(_context.Brewery, "Id", "Id", collaborationRequest.BreweryId);
+            return View(collaborationRequest);
         }
 
         // GET: CollaborationRequests/Edit/5
@@ -73,12 +80,14 @@ namespace BreweryCollaborationWebbApp.Controllers
                 return NotFound();
             }
 
-            var CollaborationRequest = await _context.CollaborationRequest.FindAsync(id);
-            if (CollaborationRequest == null)
+            var collaborationRequest = await _context.CollaborationRequest.FindAsync(id);
+            if (collaborationRequest == null)
             {
                 return NotFound();
             }
-            return View(CollaborationRequest);
+            ViewData["ApplicationId"] = new SelectList(_context.ApplicationUser, "Id", "Id", collaborationRequest.ApplicationId);
+            ViewData["BreweryId"] = new SelectList(_context.Brewery, "Id", "Id", collaborationRequest.BreweryId);
+            return View(collaborationRequest);
         }
 
         // POST: CollaborationRequests/Edit/5
@@ -86,9 +95,9 @@ namespace BreweryCollaborationWebbApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id")] CollaborationRequest CollaborationRequest)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ApplicationId,BreweryId")] CollaborationRequest collaborationRequest)
         {
-            if (id != CollaborationRequest.Id)
+            if (id != collaborationRequest.Id)
             {
                 return NotFound();
             }
@@ -97,12 +106,12 @@ namespace BreweryCollaborationWebbApp.Controllers
             {
                 try
                 {
-                    _context.Update(CollaborationRequest);
+                    _context.Update(collaborationRequest);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CollaborationRequestExists(CollaborationRequest.Id))
+                    if (!CollaborationRequestExists(collaborationRequest.Id))
                     {
                         return NotFound();
                     }
@@ -113,7 +122,9 @@ namespace BreweryCollaborationWebbApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(CollaborationRequest);
+            ViewData["ApplicationId"] = new SelectList(_context.ApplicationUser, "Id", "Id", collaborationRequest.ApplicationId);
+            ViewData["BreweryId"] = new SelectList(_context.Brewery, "Id", "Id", collaborationRequest.BreweryId);
+            return View(collaborationRequest);
         }
 
         // GET: CollaborationRequests/Delete/5
@@ -124,14 +135,16 @@ namespace BreweryCollaborationWebbApp.Controllers
                 return NotFound();
             }
 
-            var CollaborationRequest = await _context.CollaborationRequest
+            var collaborationRequest = await _context.CollaborationRequest
+                .Include(c => c.ApplicationUser)
+                .Include(c => c.Brewery)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (CollaborationRequest == null)
+            if (collaborationRequest == null)
             {
                 return NotFound();
             }
 
-            return View(CollaborationRequest);
+            return View(collaborationRequest);
         }
 
         // POST: CollaborationRequests/Delete/5
@@ -139,8 +152,8 @@ namespace BreweryCollaborationWebbApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var CollaborationRequest = await _context.CollaborationRequest.FindAsync(id);
-            _context.CollaborationRequest.Remove(CollaborationRequest);
+            var collaborationRequest = await _context.CollaborationRequest.FindAsync(id);
+            _context.CollaborationRequest.Remove(collaborationRequest);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
