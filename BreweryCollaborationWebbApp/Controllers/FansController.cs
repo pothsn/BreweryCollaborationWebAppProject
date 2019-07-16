@@ -12,8 +12,6 @@ using System.Security.Claims;
 
 namespace BreweryCollaborationWebbApp.Controllers
 {
-    //[Authorize(Roles = "Administrator,Fan")]
-    //[Authorize(Policy ="RequireAdministratorRole")]
     public class FansController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -28,7 +26,7 @@ namespace BreweryCollaborationWebbApp.Controllers
         {
 
             return View(await _context.Fan.ToListAsync());
-            //ToListAsync()); ;
+            //ToListAsync()); 
         }
 
         public async Task<IActionResult> BreweriesIndex()
