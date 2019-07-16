@@ -14,8 +14,9 @@ namespace BreweryCollaborationWebbApp.Models
         public string Name { get; set; }
 
 
-        [NotMapped]
-        public List<BeerStyle> BeerStyles { get; set; }
+        [ForeignKey("BeerStyle")]
+        public int StyleId { get; set; }
+        public BeerStyle BeerStyle { get; set; }
 
     }
 }
