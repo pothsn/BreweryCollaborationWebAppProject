@@ -13,10 +13,14 @@ namespace BreweryCollaborationWebbApp.Models
         [Key]
         public  int Id { get; set; }
 
-        [NotMapped]
-        public List<BreweryFollow> BreweryFollows { get; set; }
-        [NotMapped]
-        public List<FanFollow> FanFollows { get; set; }
+        [ForeignKey("Fans")]
+        public int FanId { get; set; }
+        public Fan Fan { get; set; }
+
+
+        [ForeignKey("Brewery")]
+        public int BreweryId { get; set; }
+        public Brewery Brewery { get; set; }
 
 
 
