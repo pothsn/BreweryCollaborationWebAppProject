@@ -121,7 +121,7 @@ namespace BreweryCollaborationWebbApp.Migrations
                     b.ToTable("Collaboration");
                 });
 
-            modelBuilder.Entity("BreweryCollaborationWebbApp.Models.CollaborationJunction", b =>
+            modelBuilder.Entity("BreweryCollaborationWebbApp.Models.CollaborationRequest", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -129,7 +129,7 @@ namespace BreweryCollaborationWebbApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CollaborationJunction");
+                    b.ToTable("CollaborationRequest");
                 });
 
             modelBuilder.Entity("BreweryCollaborationWebbApp.Models.Fan", b =>

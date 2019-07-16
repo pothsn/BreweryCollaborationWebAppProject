@@ -52,6 +52,25 @@ namespace BreweryCollaborationWebbApp.Controllers
             return View(brewery);
         }
 
+        // GET: Breweries/Details/5
+        public async Task<IActionResult> UserDetails(int? id)
+        {
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var brewery = await _context.Brewery
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (brewery == null)
+            {
+                return NotFound();
+            }
+
+            return View(brewery);
+        }
+
         // GET: Breweries/Create
         public IActionResult Create()
         {

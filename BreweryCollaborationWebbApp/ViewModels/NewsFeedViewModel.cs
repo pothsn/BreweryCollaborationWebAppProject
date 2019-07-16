@@ -12,7 +12,7 @@ namespace BreweryCollaborationWebbApp.ViewModels
         public Brewery Brewery { get; set; }
         public BreweryBeer BreweryBeer { get; set; }
         public Collaboration Collaboration { get; set; }
-        public CollaborationJunction CollaborationJunction { get; set; }
+        public CollaborationRequest CollaborationRequest { get; set; }
 
 
     }

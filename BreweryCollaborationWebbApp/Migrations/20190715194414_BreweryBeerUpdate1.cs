@@ -100,7 +100,7 @@ namespace BreweryCollaborationWebbApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CollaborationJunction",
+                name: "CollaborationRequest",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -108,7 +108,7 @@ namespace BreweryCollaborationWebbApp.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CollaborationJunction", x => x.Id);
+                    table.PrimaryKey("PK_CollaborationRequest", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -414,7 +414,7 @@ namespace BreweryCollaborationWebbApp.Migrations
                 name: "Collaboration");
 
             migrationBuilder.DropTable(
-                name: "CollaborationJunction");
+                name: "CollaborationRequest");
 
             migrationBuilder.DropTable(
                 name: "Fan");
