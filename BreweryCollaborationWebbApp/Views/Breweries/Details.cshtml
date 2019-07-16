@@ -49,26 +49,35 @@
         </dd>
     </dl>
 </div>
-<div>
-</div>
-<body>
-    <div id="fb-root"></div>
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.3&appId=318312125714566&autoLogAppEvents=1"></script>
-    <div class="fb-like" data-href="https://www.facebook.com/BrokenBatBrewingCompany/" data-width="250" data-layout="button_count" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>    
-    <table>
-        <tr>
-            <td>Table Header</td>
-            <ul>
-                <li>
 
-                </li>
-            </ul>
-        </tr>
-    </table>
-
-</body>
-<br />
 <div>
 
     <a asp-action="Index">Back to List</a>
 </div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Beer list
+            </th>
+            <a asp-controller="BreweryBeers" asp-action="Create">Create New</a>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.BreweryBeers)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -37,19 +37,17 @@ namespace BreweryCollaborationWebbApp.Controllers
         // GET: Breweries/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-
-            if (id == null)
+        if (id == null)
             {
                 return NotFound();
             }
+            var brewery = await _context.Brewery.FirstOrDefaultAsync(b => b.Id == id);
+            brewery.BreweryBeers = _context.BreweryBeer.Where(b => b.BreweryId == brewery.Id).ToList();
 
-            var brewery = await _context.Brewery
-                .FirstOrDefaultAsync(m => m.Id == id);
             if (brewery == null)
             {
                 return NotFound();
             }
-
             return View(brewery);
         }
 
