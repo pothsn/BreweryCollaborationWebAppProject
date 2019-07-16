@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BreweryCollaborationWebbApp.Migrations
 {
-    public partial class initial : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -184,7 +184,7 @@ namespace BreweryCollaborationWebbApp.Migrations
                     ApplicationId = table.Column<string>(nullable: true),
                     latitude = table.Column<double>(nullable: false),
                     longitude = table.Column<double>(nullable: false),
-                    Logo = table.Column<string>(nullable: true)
+                    Image = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

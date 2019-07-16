@@ -138,7 +138,7 @@ namespace BreweryCollaborationWebbApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Address,City,State,Zipcode,Website,Collaboration")] Brewery brewery)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Address,City,State,Zipcode,Website,Collaboration,ApplicationId,latitude,longitude,Image")] Brewery brewery)
         {
             if (id != brewery.Id)
             {
