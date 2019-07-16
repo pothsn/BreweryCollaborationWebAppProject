@@ -54,22 +54,20 @@ namespace BreweryCollaborationWebbApp.Controllers
         }
 
         // GET: Breweries/Details/5
-        public async Task<IActionResult> UserDetails(int? id)
+        public async Task<IActionResult> UserDetails()
         {
+            //get application user's Id
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            Brewery loggedInBrewery = _context.Brewery.Where(i => i.ApplicationId == userId).SingleOrDefault();
+            //query for beers that have the matching FK, put them inICollection<BreweryBeer> BreweryBeers
+            loggedInBrewery.BreweryBeers = _context.BreweryBeer.Where(b => b.BreweryId == loggedInBrewery.Id).ToList();
 
-            if (id == null)
+            if (loggedInBrewery == null)
             {
                 return NotFound();
             }
 
-            var brewery = await _context.Brewery
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (brewery == null)
-            {
-                return NotFound();
-            }
-
-            return View(brewery);
+            return View(loggedInBrewery);
         }
 
         // GET: Breweries/Create

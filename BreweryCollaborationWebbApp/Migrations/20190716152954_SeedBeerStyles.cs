@@ -2,7 +2,7 @@
 
 namespace BreweryCollaborationWebbApp.Migrations
 {
-    public partial class seedBeerStyles : Migration
+    public partial class SeedBeerStyles : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
