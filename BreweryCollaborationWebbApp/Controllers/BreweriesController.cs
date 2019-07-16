@@ -51,6 +51,30 @@ namespace BreweryCollaborationWebbApp.Controllers
             return View(brewery);
         }
 
+<<<<<<< HEAD
+        //GET: Breweries/Details/5
+        public async Task<IActionResult> Profile(int? id)
+        {
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var brewery = await _context.Brewery
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (brewery == null)
+            {
+                return NotFound();
+            }
+            ViewModels.BreweryProfileViewModel breweryProfileViewModel = new ViewModels.BreweryProfileViewModel
+            {
+                Brewery = brewery
+            };
+
+            return View(breweryProfileViewModel);
+        }
+
+=======
         // GET: Breweries/Details/5
         public async Task<IActionResult> UserDetails()
         {
@@ -67,6 +91,7 @@ namespace BreweryCollaborationWebbApp.Controllers
 
             return View(loggedInBrewery);
         }
+>>>>>>> 61f911bffc9b1c3f8c6c0e90a906aed15ea0f922
 
         // GET: Breweries/Create
         public IActionResult Create()
@@ -121,22 +146,22 @@ namespace BreweryCollaborationWebbApp.Controllers
         // POST: Breweries/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddBeer([Bind("BeerName,StyleId")] Brewery brewery)
-        {
-            if (ModelState.IsValid)
-            {
-                // assign ApplicationId a la TrashCollector
-                brewery.ApplicationId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-                _context.Add(brewery);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> AddBeer([Bind("BeerName,StyleId")] Brewery brewery)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        // assign ApplicationId a la TrashCollector
+        //        brewery.ApplicationId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        //        _context.Add(brewery);
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
 
                 
-            }
-            return View(brewery);
-        }
+        //    }
+        //    return View(brewery);
+        //}
 
         // GET: Breweries/Edit/5
         public async Task<IActionResult> Edit(int? id)
