@@ -2,10 +2,11 @@
 
 namespace BreweryCollaborationWebbApp.Migrations
 {
-    public partial class SeedBeerStyles : Migration
+    public partial class seedBeerStyles : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+
             migrationBuilder.Sql("SET Identity_Insert BeerStyle ON INSERT INTO BeerStyle (Id, Name) VALUES (1, 'Ale')");
             migrationBuilder.Sql("SET Identity_Insert BeerStyle ON INSERT INTO BeerStyle (Id, Name) VALUES (2, 'Lager')");
             migrationBuilder.Sql("SET Identity_Insert BeerStyle ON INSERT INTO BeerStyle (Id, Name) VALUES (3, 'India Pale Ale')");

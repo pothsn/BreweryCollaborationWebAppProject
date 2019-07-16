@@ -53,30 +53,7 @@ namespace BreweryCollaborationWebbApp.Controllers
             return View(brewery);
         }
 
-<<<<<<< HEAD
-        //GET: Breweries/Details/5
-        public async Task<IActionResult> Profile(int? id)
-        {
 
-            if (id == null)
-            {
-                return NotFound();
-            }
-            var brewery = await _context.Brewery
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (brewery == null)
-            {
-                return NotFound();
-            }
-            ViewModels.BreweryProfileViewModel breweryProfileViewModel = new ViewModels.BreweryProfileViewModel
-            {
-                Brewery = brewery
-            };
-
-            return View(breweryProfileViewModel);
-        }
-
-=======
         // GET: Breweries/Details/5
         public async Task<IActionResult> UserDetails()
         {
@@ -93,7 +70,6 @@ namespace BreweryCollaborationWebbApp.Controllers
 
             return View(loggedInBrewery);
         }
->>>>>>> 61f911bffc9b1c3f8c6c0e90a906aed15ea0f922
 
         // GET: Breweries/Create
         public IActionResult Create()
