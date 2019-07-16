@@ -1,4 +1,4 @@
-﻿@model BreweryCollaborationWebbApp.Models.CollaborationRequest
+﻿@model BreweryCollaborationWebbApp.Models.Follow
 
 @{
     ViewData["Title"] = "Details";
@@ -8,20 +8,20 @@
 <h2>Details</h2>
 
 <div>
-    <h4>CollaborationRequest</h4>
+    <h4>Follow</h4>
     <hr />
     <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.brewery)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.brewery.Id)
+        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.ApplicationUser)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.ApplicationUser.Id)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Brewery)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Brewery.Id)
         </dd>
     </dl>
 </div>

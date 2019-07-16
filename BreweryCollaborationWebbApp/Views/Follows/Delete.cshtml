@@ -1,4 +1,4 @@
-﻿@model BreweryCollaborationWebbApp.Models.Collaboration
+﻿@model BreweryCollaborationWebbApp.Models.Follow
 
 @{
     ViewData["Title"] = "Delete";
@@ -9,26 +9,20 @@
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Collaboration</h4>
+    <h4>Follow</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.brewery)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Name)
+            @Html.DisplayFor(model => model.brewery.Id)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.BeerStyle)
+            @Html.DisplayNameFor(model => model.ApplicationUser)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.BeerStyle.Id)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CollaborationRequest)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CollaborationRequest.Id)
+            @Html.DisplayFor(model => model.ApplicationUser.Id)
         </dd>
     </dl>
     

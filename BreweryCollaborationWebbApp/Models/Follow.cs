@@ -7,22 +7,18 @@ using System.Threading.Tasks;
 
 namespace BreweryCollaborationWebbApp.Models
 {
-    public class BreweryFollow
+    public class Follow
     {
-
         [Key]
-        public  int Id { get; set; }
-
-        [ForeignKey("Fans")]
-        public int FanId { get; set; }
-        public Fan Fan { get; set; }
-
+        public int Id { get; set; }
 
         [ForeignKey("Brewery")]
         public int BreweryId { get; set; }
-        public Brewery Brewery { get; set; }
+        public Brewery brewery { get; set; }
 
-
+        [ForeignKey("ApplicationUser")]
+        public string ApplicationId { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
 
     }
 }

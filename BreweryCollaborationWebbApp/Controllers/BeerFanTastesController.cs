@@ -22,7 +22,8 @@ namespace BreweryCollaborationWebbApp.Controllers
         // GET: BeerFanTastes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.BeerFanTaste.ToListAsync());
+            var applicationDbContext = _context.BeerFanTaste.Include(b => b.BeerStyle).Include(b => b.Fan);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: BeerFanTastes/Details/5
@@ -34,6 +35,8 @@ namespace BreweryCollaborationWebbApp.Controllers
             }
 
             var beerFanTaste = await _context.BeerFanTaste
+                .Include(b => b.BeerStyle)
+                .Include(b => b.Fan)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (beerFanTaste == null)
             {
@@ -46,6 +49,8 @@ namespace BreweryCollaborationWebbApp.Controllers
         // GET: BeerFanTastes/Create
         public IActionResult Create()
         {
+            ViewData["BeerStyleId"] = new SelectList(_context.BeerStyle, "Id", "Id");
+            ViewData["FanId"] = new SelectList(_context.Fan, "Id", "Id");
             return View();
         }
 
@@ -54,7 +59,7 @@ namespace BreweryCollaborationWebbApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id")] BeerFanTaste beerFanTaste)
+        public async Task<IActionResult> Create([Bind("Id,FanId,BeerStyleId")] BeerFanTaste beerFanTaste)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +67,8 @@ namespace BreweryCollaborationWebbApp.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["BeerStyleId"] = new SelectList(_context.BeerStyle, "Id", "Id", beerFanTaste.BeerStyleId);
+            ViewData["FanId"] = new SelectList(_context.Fan, "Id", "Id", beerFanTaste.FanId);
             return View(beerFanTaste);
         }
 
@@ -78,6 +85,8 @@ namespace BreweryCollaborationWebbApp.Controllers
             {
                 return NotFound();
             }
+            ViewData["BeerStyleId"] = new SelectList(_context.BeerStyle, "Id", "Id", beerFanTaste.BeerStyleId);
+            ViewData["FanId"] = new SelectList(_context.Fan, "Id", "Id", beerFanTaste.FanId);
             return View(beerFanTaste);
         }
 
@@ -86,7 +95,7 @@ namespace BreweryCollaborationWebbApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id")] BeerFanTaste beerFanTaste)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,FanId,BeerStyleId")] BeerFanTaste beerFanTaste)
         {
             if (id != beerFanTaste.Id)
             {
@@ -113,6 +122,8 @@ namespace BreweryCollaborationWebbApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["BeerStyleId"] = new SelectList(_context.BeerStyle, "Id", "Id", beerFanTaste.BeerStyleId);
+            ViewData["FanId"] = new SelectList(_context.Fan, "Id", "Id", beerFanTaste.FanId);
             return View(beerFanTaste);
         }
 
@@ -125,6 +136,8 @@ namespace BreweryCollaborationWebbApp.Controllers
             }
 
             var beerFanTaste = await _context.BeerFanTaste
+                .Include(b => b.BeerStyle)
+                .Include(b => b.Fan)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (beerFanTaste == null)
             {
