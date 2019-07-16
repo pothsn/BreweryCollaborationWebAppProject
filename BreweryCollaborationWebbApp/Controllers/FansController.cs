@@ -58,16 +58,14 @@ namespace BreweryCollaborationWebbApp.Controllers
         }
 
 
-        // GET: Fans/Details/5
-        public async Task<IActionResult> Details(int? id)
+        // GET: Breweries/Details/5
+        public async Task<IActionResult> UserDetails()
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            //get application user's Id
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            Fan fan = _context.Fan.Where(f => f.ApplicationId == userId).SingleOrDefault();
 
-            var fan = await _context.Fan
-                .FirstOrDefaultAsync(m => m.Id == id);
+
             if (fan == null)
             {
                 return NotFound();

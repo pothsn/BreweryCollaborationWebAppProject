@@ -52,7 +52,7 @@ namespace BreweryCollaborationWebbApp.Controllers
         }
 
 
-        // GET: Breweries/Details/5
+        // GET: BreweryUserDetails
         public async Task<IActionResult> UserDetails()
         {
             //get application user's Id
