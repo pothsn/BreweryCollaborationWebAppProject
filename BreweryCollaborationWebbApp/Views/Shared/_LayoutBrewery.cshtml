@@ -26,12 +26,14 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Breweries" asp-action="Index" class="navbar-brand">BreweryCollaborationWebbApp</a>
+                <a asp-area="" asp-controller="Breweries" asp-action="Index" class="navbar-brand">News feed</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Breweries" asp-action="Index">Breweries Home</a></li>
-                    <li><a asp-area="" asp-controller="BreweryBeers" asp-action="Create">Add A Beer!</a></li>
+                    <li><a asp-area="" asp-controller="Breweries" asp-action="Index">Breweries</a></li>
+                    <li><a asp-area="" asp-controller="Breweries" asp-action="UserDetails">Profile</a></li>
+                    <li><a asp-area="" asp-controller="Collaborations" asp-action="Index">Collaborations</a></li>
+                    <li><a asp-area="" asp-controller="CollaborationRequests" asp-action="Contact">Requests</a></li>
                 </ul>
                 <partial name="_LoginPartial" />
             </div>

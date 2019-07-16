@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BreweryCollaborationWebbApp.Models
 {
-    public class CollaborationJunction
+    public class CollaborationRequest
     {
 
         [Key]

@@ -10,22 +10,22 @@ using BreweryCollaborationWebbApp.Models;
 
 namespace BreweryCollaborationWebbApp.Controllers
 {
-    public class CollaborationJunctionsController : Controller
+    public class CollaborationRequestsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public CollaborationJunctionsController(ApplicationDbContext context)
+        public CollaborationRequestsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: CollaborationJunctions
+        // GET: CollaborationRequests
         public async Task<IActionResult> Index()
         {
-            return View(await _context.CollaborationJunction.ToListAsync());
+            return View(await _context.CollaborationRequest.ToListAsync());
         }
 
-        // GET: CollaborationJunctions/Details/5
+        // GET: CollaborationRequests/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace BreweryCollaborationWebbApp.Controllers
                 return NotFound();
             }
 
-            var CollaborationJunction = await _context.CollaborationJunction
+            var CollaborationRequest = await _context.CollaborationRequest
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (CollaborationJunction == null)
+            if (CollaborationRequest == null)
             {
                 return NotFound();
             }
 
-            return View(CollaborationJunction);
+            return View(CollaborationRequest);
         }
 
-        // GET: CollaborationJunctions/Create
+        // GET: CollaborationRequests/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: CollaborationJunctions/Create
+        // POST: CollaborationRequests/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id")] CollaborationJunction CollaborationJunction)
+        public async Task<IActionResult> Create([Bind("Id")] CollaborationRequest CollaborationRequest)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(CollaborationJunction);
+                _context.Add(CollaborationRequest);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(CollaborationJunction);
+            return View(CollaborationRequest);
         }
 
-        // GET: CollaborationJunctions/Edit/5
+        // GET: CollaborationRequests/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace BreweryCollaborationWebbApp.Controllers
                 return NotFound();
             }
 
-            var CollaborationJunction = await _context.CollaborationJunction.FindAsync(id);
-            if (CollaborationJunction == null)
+            var CollaborationRequest = await _context.CollaborationRequest.FindAsync(id);
+            if (CollaborationRequest == null)
             {
                 return NotFound();
             }
-            return View(CollaborationJunction);
+            return View(CollaborationRequest);
         }
 
-        // POST: CollaborationJunctions/Edit/5
+        // POST: CollaborationRequests/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id")] CollaborationJunction CollaborationJunction)
+        public async Task<IActionResult> Edit(int id, [Bind("Id")] CollaborationRequest CollaborationRequest)
         {
-            if (id != CollaborationJunction.Id)
+            if (id != CollaborationRequest.Id)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace BreweryCollaborationWebbApp.Controllers
             {
                 try
                 {
-                    _context.Update(CollaborationJunction);
+                    _context.Update(CollaborationRequest);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CollaborationJunctionExists(CollaborationJunction.Id))
+                    if (!CollaborationRequestExists(CollaborationRequest.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace BreweryCollaborationWebbApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(CollaborationJunction);
+            return View(CollaborationRequest);
         }
 
-        // GET: CollaborationJunctions/Delete/5
+        // GET: CollaborationRequests/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace BreweryCollaborationWebbApp.Controllers
                 return NotFound();
             }
 
-            var CollaborationJunction = await _context.CollaborationJunction
+            var CollaborationRequest = await _context.CollaborationRequest
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (CollaborationJunction == null)
+            if (CollaborationRequest == null)
             {
                 return NotFound();
             }
 
-            return View(CollaborationJunction);
+            return View(CollaborationRequest);
         }
 
-        // POST: CollaborationJunctions/Delete/5
+        // POST: CollaborationRequests/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var CollaborationJunction = await _context.CollaborationJunction.FindAsync(id);
-            _context.CollaborationJunction.Remove(CollaborationJunction);
+            var CollaborationRequest = await _context.CollaborationRequest.FindAsync(id);
+            _context.CollaborationRequest.Remove(CollaborationRequest);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CollaborationJunctionExists(int id)
+        private bool CollaborationRequestExists(int id)
         {
-            return _context.CollaborationJunction.Any(e => e.Id == id);
+            return _context.CollaborationRequest.Any(e => e.Id == id);
         }
     }
 }

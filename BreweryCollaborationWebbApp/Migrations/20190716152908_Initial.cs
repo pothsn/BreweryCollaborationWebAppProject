@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BreweryCollaborationWebbApp.Migrations
 {
-    public partial class BreweryBeerUpdate1 : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -72,69 +72,6 @@ namespace BreweryCollaborationWebbApp.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_BeerStyle", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "BreweryFollow",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BreweryFollow", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Collaboration",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Collaboration", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CollaborationJunction",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CollaborationJunction", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "FanFollow",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_FanFollow", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Review",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ReviewText = table.Column<string>(nullable: true),
-                    Rating = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Review", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -258,7 +195,8 @@ namespace BreweryCollaborationWebbApp.Migrations
                     Collaboration = table.Column<bool>(nullable: false),
                     ApplicationId = table.Column<string>(nullable: true),
                     latitude = table.Column<double>(nullable: false),
-                    longitude = table.Column<double>(nullable: false)
+                    longitude = table.Column<double>(nullable: false),
+                    Logo = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -298,6 +236,26 @@ namespace BreweryCollaborationWebbApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Collaboration",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    StyleId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Collaboration", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Collaboration_BeerStyle_StyleId",
+                        column: x => x.StyleId,
+                        principalTable: "BeerStyle",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "BreweryBeer",
                 columns: table => new
                 {
@@ -320,6 +278,112 @@ namespace BreweryCollaborationWebbApp.Migrations
                         name: "FK_BreweryBeer_BeerStyle_StyleId",
                         column: x => x.StyleId,
                         principalTable: "BeerStyle",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BreweryFollow",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    FanId = table.Column<int>(nullable: false),
+                    BreweryId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BreweryFollow", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BreweryFollow_Brewery_BreweryId",
+                        column: x => x.BreweryId,
+                        principalTable: "Brewery",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BreweryFollow_Fan_FanId",
+                        column: x => x.FanId,
+                        principalTable: "Fan",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FanFollow",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    FanId = table.Column<int>(nullable: false),
+                    BreweryId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FanFollow", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_FanFollow_Brewery_BreweryId",
+                        column: x => x.BreweryId,
+                        principalTable: "Brewery",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_FanFollow_Fan_FanId",
+                        column: x => x.FanId,
+                        principalTable: "Fan",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CollaborationRequest",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CollaborationId = table.Column<int>(nullable: false),
+                    BreweryId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CollaborationRequest", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CollaborationRequest_Brewery_BreweryId",
+                        column: x => x.BreweryId,
+                        principalTable: "Brewery",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CollaborationRequest_Collaboration_CollaborationId",
+                        column: x => x.CollaborationId,
+                        principalTable: "Collaboration",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Review",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ReviewText = table.Column<string>(nullable: true),
+                    Rating = table.Column<int>(nullable: false),
+                    CollaborationId = table.Column<int>(nullable: false),
+                    FanId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Review", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Review_Collaboration_CollaborationId",
+                        column: x => x.CollaborationId,
+                        principalTable: "Collaboration",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Review_Fan_FanId",
+                        column: x => x.FanId,
+                        principalTable: "Fan",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -379,9 +443,54 @@ namespace BreweryCollaborationWebbApp.Migrations
                 column: "StyleId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_BreweryFollow_BreweryId",
+                table: "BreweryFollow",
+                column: "BreweryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BreweryFollow_FanId",
+                table: "BreweryFollow",
+                column: "FanId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Collaboration_StyleId",
+                table: "Collaboration",
+                column: "StyleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CollaborationRequest_BreweryId",
+                table: "CollaborationRequest",
+                column: "BreweryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CollaborationRequest_CollaborationId",
+                table: "CollaborationRequest",
+                column: "CollaborationId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Fan_ApplicationId",
                 table: "Fan",
                 column: "ApplicationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FanFollow_BreweryId",
+                table: "FanFollow",
+                column: "BreweryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FanFollow_FanId",
+                table: "FanFollow",
+                column: "FanId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Review_CollaborationId",
+                table: "Review",
+                column: "CollaborationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Review_FanId",
+                table: "Review",
+                column: "FanId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -411,13 +520,7 @@ namespace BreweryCollaborationWebbApp.Migrations
                 name: "BreweryFollow");
 
             migrationBuilder.DropTable(
-                name: "Collaboration");
-
-            migrationBuilder.DropTable(
-                name: "CollaborationJunction");
-
-            migrationBuilder.DropTable(
-                name: "Fan");
+                name: "CollaborationRequest");
 
             migrationBuilder.DropTable(
                 name: "FanFollow");
@@ -430,6 +533,12 @@ namespace BreweryCollaborationWebbApp.Migrations
 
             migrationBuilder.DropTable(
                 name: "Brewery");
+
+            migrationBuilder.DropTable(
+                name: "Collaboration");
+
+            migrationBuilder.DropTable(
+                name: "Fan");
 
             migrationBuilder.DropTable(
                 name: "BeerStyle");

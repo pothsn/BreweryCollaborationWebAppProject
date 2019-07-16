@@ -31,7 +31,7 @@ namespace BreweryCollaborationWebbApp.Data
         public DbSet<BreweryBeer> BreweryBeer { get; set; }
         public DbSet<BreweryFollow> BreweryFollow { get; set; }
         public DbSet<Collaboration> Collaboration { get; set; }
-        public DbSet<CollaborationJunction> CollaborationJunction { get; set; }
+        public DbSet<CollaborationRequest> CollaborationRequest { get; set; }
         public DbSet<Fan> Fan { get; set; }
         public DbSet<FanFollow> FanFollow { get; set; }
         public DbSet<Review> Review { get; set; }

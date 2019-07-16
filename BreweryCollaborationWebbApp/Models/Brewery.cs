@@ -25,6 +25,8 @@ namespace BreweryCollaborationWebbApp.Models
         public double latitude { get; set; }
         public double longitude { get; set; }
         public virtual ICollection<BreweryBeer> BreweryBeers { get; set;  }
+        public string Logo { get; set; }
+
 
     }
 }

@@ -53,6 +53,7 @@ namespace BreweryCollaborationWebbApp.Controllers
             return View(brewery);
         }
 
+<<<<<<< HEAD
         //GET: Breweries/Details/5
         public async Task<IActionResult> Profile(int? id)
         {
@@ -75,6 +76,24 @@ namespace BreweryCollaborationWebbApp.Controllers
             return View(breweryProfileViewModel);
         }
 
+=======
+        // GET: Breweries/Details/5
+        public async Task<IActionResult> UserDetails()
+        {
+            //get application user's Id
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            Brewery loggedInBrewery = _context.Brewery.Where(i => i.ApplicationId == userId).SingleOrDefault();
+            //query for beers that have the matching FK, put them inICollection<BreweryBeer> BreweryBeers
+            loggedInBrewery.BreweryBeers = _context.BreweryBeer.Where(b => b.BreweryId == loggedInBrewery.Id).ToList();
+
+            if (loggedInBrewery == null)
+            {
+                return NotFound();
+            }
+
+            return View(loggedInBrewery);
+        }
+>>>>>>> 61f911bffc9b1c3f8c6c0e90a906aed15ea0f922
 
         // GET: Breweries/Create
         public IActionResult Create()
