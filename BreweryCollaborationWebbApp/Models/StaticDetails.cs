@@ -10,7 +10,6 @@ namespace BreweryCollaborationWebbApp.Models
         //Creating roles
         public const string AdminEndUser = "Admin";
         public const string BreweryUser = "Brewery";
-        public const string FanUser = "Fan";
-        
+        public const string FanUser = "Fan";        
     }
 }

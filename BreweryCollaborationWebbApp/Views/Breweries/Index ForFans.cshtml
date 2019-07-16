@@ -25,12 +25,10 @@
                 document.getElementById('map'), { zoom: 10, center: milwaukee });
             for (var i = 0; i < breweries.length; i++) {
                 console.log("brewery", breweries[i]);
-                if (breweries[i].collaboration == true) {
-                    var marker = new google.maps.Marker({
-                        position: { lat: breweries[i].latitude, lng: breweries[i].longitude },
-                        map: map
-                    });
-                };
+                var marker = new google.maps.Marker({
+                    position: { lat: breweries[i].latitude, lng: breweries[i].longitude },
+                    map: map
+                });
             }
         };
 
@@ -93,10 +91,9 @@
                 @Html.DisplayFor(modelItem => item.Collaboration)
             </td>
             <td>
-
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }

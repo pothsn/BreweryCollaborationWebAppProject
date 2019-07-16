@@ -68,9 +68,7 @@ namespace BreweryCollaborationWebbApp.Controllers
         public async Task<IActionResult> Create(Brewery brewery)
         {
             if (ModelState.IsValid)
-            {
-                
-
+            {              
                 // assign ApplicationId a la TrashCollector
                 brewery.ApplicationId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 _context.Add(brewery);
