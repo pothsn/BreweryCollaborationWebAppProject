@@ -69,7 +69,6 @@ namespace BreweryCollaborationWebbApp.Controllers
             return View(loggedInBrewery);
         }
 
-
         // GET: Breweries/Create
         public IActionResult Create()
         {

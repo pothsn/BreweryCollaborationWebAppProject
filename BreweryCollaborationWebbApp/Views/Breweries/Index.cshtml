@@ -93,10 +93,10 @@
                 @Html.DisplayFor(modelItem => item.Collaboration)
             </td>
             <td>
+                <img src="@Url.Content(item.Logo)"/>
+            </td>
+            <td>
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-
-                <a asp-action="Profile" asp-route-id="@item.Id">Profile</a> |
-
 
             </td>
         </tr>
