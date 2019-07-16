@@ -24,8 +24,8 @@ namespace BreweryCollaborationWebbApp.Controllers
         // GET: BreweryBeers
         public async Task<IActionResult> Index()
         {
-            return View();
-            //return View(await _context.BreweryBeer.ToListAsync());
+            //return View();
+            return View(await _context.BreweryBeer.ToListAsync());
         }
 
         // GET: BreweryBeers/Details/5
@@ -53,10 +53,8 @@ namespace BreweryCollaborationWebbApp.Controllers
             li = _context.BeerStyle.ToList();
             ViewBag.listofitems = li;
 
-            //IEnumerable<Models.BeerStyle> beerStyles = _context.BeerStyle.ToList();
             ViewModels.BreweryBeersViewModel breweryBeersViewModel = new ViewModels.BreweryBeersViewModel
             {
-
                 BeerStyles = li
             };
 
