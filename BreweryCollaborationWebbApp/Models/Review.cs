@@ -16,10 +16,14 @@ namespace BreweryCollaborationWebbApp.Models
         public string ReviewText { get; set; }
 
         public int Rating { get; set; }
-        [NotMapped]
-        public List<Collaboration> Collaborations { get; set; }
-        [NotMapped]
-        public List<Fan> Fans { get; set; }
+
+        [ForeignKey("Collaborations")]
+        public int CollaborationId { get; set; }
+        public Collaboration Collaboration { get; set; }
+
+        [ForeignKey("Fans")]
+        public int FanId { get; set; }
+        public Fan Fan { get; set; }
 
 
     }

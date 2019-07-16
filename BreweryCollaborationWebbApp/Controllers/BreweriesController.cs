@@ -11,6 +11,7 @@ using System.Security.Claims;
 using System.Net.Http;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using BreweryCollaborationWebbApp.ViewModels;
 
 namespace BreweryCollaborationWebbApp.Controllers
 {
@@ -51,6 +52,7 @@ namespace BreweryCollaborationWebbApp.Controllers
 
             return View(brewery);
         }
+
 
         // GET: Breweries/Create
         public IActionResult Create()
