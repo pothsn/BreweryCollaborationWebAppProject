@@ -37,19 +37,17 @@ namespace BreweryCollaborationWebbApp.Controllers
         // GET: Breweries/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-
-            if (id == null)
+        if (id == null)
             {
                 return NotFound();
             }
+            var brewery = await _context.Brewery.FirstOrDefaultAsync(b => b.Id == id);
+            brewery.BreweryBeers = _context.BreweryBeer.Where(b => b.BreweryId == brewery.Id).ToList();
 
-            var brewery = await _context.Brewery
-                .FirstOrDefaultAsync(m => m.Id == id);
             if (brewery == null)
             {
                 return NotFound();
             }
-
             return View(brewery);
         }
 
@@ -100,9 +98,7 @@ namespace BreweryCollaborationWebbApp.Controllers
 
         static async Task Geocode(Brewery brewery)
         {
-
             string breweryURL = ("https://maps.googleapis.com/maps/api/geocode/json?address=" + brewery.Address + brewery.City + brewery.State + APIKeys.GoogleGeocodingAPI);
-
             try
             {
                 HttpResponseMessage response = await client.GetAsync(breweryURL);
@@ -120,26 +116,6 @@ namespace BreweryCollaborationWebbApp.Controllers
                 Console.WriteLine("Message :{0} ", e.Message);
             }
         }
-
-        // POST: Breweries/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> AddBeer([Bind("BeerName,StyleId")] Brewery brewery)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        // assign ApplicationId a la TrashCollector
-        //        brewery.ApplicationId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-        //        _context.Add(brewery);
-        //        await _context.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
-
-                
-        //    }
-        //    return View(brewery);
-        //}
 
         // GET: Breweries/Edit/5
         public async Task<IActionResult> Edit(int? id)

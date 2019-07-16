@@ -16,5 +16,6 @@ namespace BreweryCollaborationWebbApp.ViewModels
         public CollaborationRequest CollaborationRequest { get; set; }
 
 
+
     }
 }
