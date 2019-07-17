@@ -65,7 +65,7 @@ namespace BreweryCollaborationWebbApp.Migrations
 
                     b.Property<bool>("Collaboration");
 
-                    b.Property<string>("Logo");
+                    b.Property<string>("Image");
 
                     b.Property<string>("Name");
 

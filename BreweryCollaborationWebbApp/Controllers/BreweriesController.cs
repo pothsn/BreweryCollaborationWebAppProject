@@ -57,7 +57,7 @@ namespace BreweryCollaborationWebbApp.Controllers
         {
             //get application user's Id
             string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            Brewery loggedInBrewery = _context.Brewery.Where(i => i.ApplicationId == userId).SingleOrDefault();
+            Brewery loggedInBrewery =  _context.Brewery.Where(i => i.ApplicationId == userId).SingleOrDefault();
             //query for beers that have the matching FK, put them inICollection<BreweryBeer> BreweryBeers
             loggedInBrewery.BreweryBeers = _context.BreweryBeer.Where(b => b.BreweryId == loggedInBrewery.Id).ToList();
 
@@ -138,7 +138,7 @@ namespace BreweryCollaborationWebbApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Address,City,State,Zipcode,Website,Collaboration")] Brewery brewery)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Address,City,State,Zipcode,Website,Collaboration,ApplicationId,latitude,longitude,Image")] Brewery brewery)
         {
             if (id != brewery.Id)
             {

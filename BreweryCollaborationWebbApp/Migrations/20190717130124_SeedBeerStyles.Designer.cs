@@ -10,8 +10,13 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BreweryCollaborationWebbApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
+<<<<<<< HEAD:BreweryCollaborationWebbApp/Migrations/20190717130124_SeedBeerStyles.Designer.cs
     [Migration("20190717130124_SeedBeerStyles")]
     partial class SeedBeerStyles
+=======
+    [Migration("20190716204243_seedBeerStyles")]
+    partial class seedBeerStyles
+>>>>>>> d7545fd832f50779ace6ff190bc4ec60d3ca50ec:BreweryCollaborationWebbApp/Migrations/20190716204243_seedBeerStyles.Designer.cs
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -67,7 +72,7 @@ namespace BreweryCollaborationWebbApp.Migrations
 
                     b.Property<bool>("Collaboration");
 
-                    b.Property<string>("Logo");
+                    b.Property<string>("Image");
 
                     b.Property<string>("Name");
 

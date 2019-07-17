@@ -9,6 +9,8 @@
 <div>
     <h4>Brewery</h4>
     <hr />
+    <input type="hidden" asp-for="ApplicationId"/>
+    <input type="hidden" asp-for="ApplicationUser"/>
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Name)
@@ -44,10 +46,14 @@
             @Html.DisplayNameFor(model => model.Website)
 
         </dt>
+
         <dd>
             <a href="@Html.DisplayNameFor(model => model.Website)"> @Html.DisplayFor(model => model.Website)</a>
         </dd>
     </dl>
+    <td>
+        <img src=" @Url.Content(Model.Image)" style=" width:250px;height:275px;"/>
+    </td>
 </div>
 <div>
 </div>
