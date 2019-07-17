@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BreweryCollaborationWebbApp.Data;
 using BreweryCollaborationWebbApp.Models;
+using BreweryCollaborationWebbApp.ViewModels;
+using System.Security.Claims;
 
 namespace BreweryCollaborationWebbApp.Controllers
 {
@@ -47,29 +49,84 @@ namespace BreweryCollaborationWebbApp.Controllers
         }
 
         // GET: Collaborations/Create
+        //public IActionResult Create()
+        //{
+        //    ViewData["StyleId"] = new SelectList(_context.BeerStyle, "Id", "Id");
+        //    ViewData["CollaborationRequestId"] = new SelectList(_context.CollaborationRequest, "Id", "Id");
+        //    List<BeerStyle> li = new List<BeerStyle>();
+        //    li = _context.BeerStyle.ToList();
+        //    ViewBag.listofitems = li;
+
+        //    ViewModels.CollabBeersViewModel collabBeersViewModel = new ViewModels.CollabBeersViewModel
+        //    {
+        //        BeerStyles = li
+        //    };
+
+        //    return View(collabBeersViewModel);
+
+        //}
+
         public IActionResult Create()
         {
-            ViewData["StyleId"] = new SelectList(_context.BeerStyle, "Id", "Id");
-            ViewData["CollaborationRequestId"] = new SelectList(_context.CollaborationRequest, "Id", "Id");
-            return View();
+
+            List<BeerStyle> li = new List<BeerStyle>();
+            li = _context.BeerStyle.ToList();
+            ViewBag.listofitems = li;
+
+            ViewModels.CollabBeersViewModel collabBeersViewModel = new ViewModels.CollabBeersViewModel
+            {
+                BeerStyles = li
+            };
+
+            return View(collabBeersViewModel);
+
         }
+
+        // POST: Collaborations/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create([Bind("Id,Name,StyleId,CollaborationRequestId")] Collaboration collaboration)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _context.Add(collaboration);
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    ViewData["StyleId"] = new SelectList(_context.BeerStyle, "Id", "Id", collaboration.StyleId);
+        //    ViewData["CollaborationRequestId"] = new SelectList(_context.CollaborationRequest, "Id", "Id", collaboration.CollaborationRequestId);
+        //    return View(collaboration);
+        //}
 
         // POST: Collaborations/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,StyleId,CollaborationRequestId")] Collaboration collaboration)
+        public async Task<IActionResult> Create(CollabBeersViewModel collabBeersViewModel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(collaboration);
+                Collaboration newCollabBeer = new Collaboration();
+
+
+                string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                Brewery loggedInBrewery = _context.Brewery.Where(i => i.ApplicationId == userId).SingleOrDefault();
+                newCollabBeer.CollaborationRequestId = loggedInBrewery.Id;
+                newCollabBeer.StyleId = collabBeersViewModel.BeerStyle.Id;
+                newCollabBeer.Name = collabBeersViewModel.CollabBeerName;
+
+
+
+                _context.Add(newCollabBeer);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "breweries");
+
             }
-            ViewData["StyleId"] = new SelectList(_context.BeerStyle, "Id", "Id", collaboration.StyleId);
-            ViewData["CollaborationRequestId"] = new SelectList(_context.CollaborationRequest, "Id", "Id", collaboration.CollaborationRequestId);
-            return View(collaboration);
+
+            return View();
         }
 
         // GET: Collaborations/Edit/5
