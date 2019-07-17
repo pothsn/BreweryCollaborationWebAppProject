@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using BreweryCollaborationWebbApp.Models;
+﻿using BreweryCollaborationWebbApp.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using BreweryCollaborationWebbApp.Models;
 
 namespace BreweryCollaborationWebbApp.Data
 {
