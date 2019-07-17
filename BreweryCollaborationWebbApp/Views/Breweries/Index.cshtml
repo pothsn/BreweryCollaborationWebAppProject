@@ -98,6 +98,7 @@
             <td>
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-controller="Follows" asp-action="Follow" asp-route-id="@item.Id">Follow</a> |
+                <a asp-controller="CollaborationRequests" asp-action="SendCollaborationRequest" asp-route-id="@item.Id">Collaboration Request</a>
             </td>
         </tr>
 }

@@ -59,7 +59,8 @@ namespace BreweryCollaborationWebbApp.Migrations
 
                     b.Property<string>("Address");
 
-                    b.Property<string>("ApplicationId");
+                    b.Property<string>("ApplicationId")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("City");
 
@@ -113,6 +114,8 @@ namespace BreweryCollaborationWebbApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("BrewSite");
+
                     b.Property<int>("CollaborationRequestId");
 
                     b.Property<string>("Name");
@@ -156,6 +159,8 @@ namespace BreweryCollaborationWebbApp.Migrations
                     b.Property<string>("Address");
 
                     b.Property<string>("ApplicationId");
+
+                    b.Property<string>("City");
 
                     b.Property<string>("Email");
 
