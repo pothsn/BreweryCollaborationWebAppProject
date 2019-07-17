@@ -18,10 +18,13 @@ namespace BreweryCollaborationWebbApp.Models
         public string State { get; set; }
         public int Zipcode { get; set; }
         [ForeignKey("ApplicationUser")]
+        //  [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string ApplicationId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
+
+        public ICollection<BeerFanTaste> BeerFanTastes { get; set; }
 
     }
 }

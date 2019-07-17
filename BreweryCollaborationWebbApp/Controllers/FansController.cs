@@ -9,6 +9,7 @@ using BreweryCollaborationWebbApp.Data;
 using BreweryCollaborationWebbApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using BreweryCollaborationWebbApp.ViewModels;
 
 namespace BreweryCollaborationWebbApp.Controllers
 {
@@ -98,19 +99,24 @@ namespace BreweryCollaborationWebbApp.Controllers
         }
 
         // GET: Fans/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? id )
         {
+
+
             if (id == null)
             {
                 return NotFound();
             }
 
             var fan = await _context.Fan.FindAsync(id);
+            ViewModels.BeerFanTasteViewModel beerFanTasteViewModel = new ViewModels.BeerFanTasteViewModel();
+
             if (fan == null)
             {
                 return NotFound();
             }
             return View(fan);
+
         }
 
         // POST: Fans/Edit/5
