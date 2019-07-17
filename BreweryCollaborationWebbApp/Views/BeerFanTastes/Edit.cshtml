@@ -1,26 +1,86 @@
-﻿@model BreweryCollaborationWebbApp.Models.BeerFanTaste
+﻿@model BreweryCollaborationWebbApp.ViewModels.BeerFanTasteViewModel
 
 @{
     ViewData["Title"] = "Edit";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Edit</h2>
 
 <h4>BeerFanTaste</h4>
 <hr />
+
 <div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <input asp-for="Fan.ApplicationId" type="hidden" />
+            <input asp-for="Fan.ApplicationUser" type="hidden" />
+            <input asp-for="Fan.latitude" type="hidden" />
+            <input asp-for="Fan.longitude" type="hidden" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Fan.Name" class="control-label"></label>
+                <input asp-for="Fan.Name" class="form-control" />
+                <span asp-validation-for="Fan.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fan.Address" class="control-label"></label>
+                <input asp-for="Fan.Address" class="form-control" />
+                <span asp-validation-for="Fan.Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fan.City" class="control-label"></label>
+                <input asp-for="Fan.City" class="form-control" />
+                <span asp-validation-for="Fan.City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fan.State" class="control-label"></label>
+                <input asp-for="Fan.State" class="form-control" />
+                <span asp-validation-for="Fan.State" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fan.Zipcode" class="control-label"></label>
+                <input asp-for="Fan.Zipcode" class="form-control" />
+                <span asp-validation-for="Fan.Zipcode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fan.Email" class="control-label"></label>
+                <input asp-for="Fan.Email" class="form-control" />
+                <span asp-validation-for="Fan.Email" class="text-danger"></span>
+            </div>
+            <div id="checkboxes">
+                <label>User Beer Style Preference?!?!</label>
+                <ul>
+                    <li>
+                        <input type="checkbox" data-val="true"
+                               data-val-required="The IsChecked field is required."
+                               id="Ale" name="Ale" value="true">Ale
+                    </li>
+                    <li>
+                        <input type="checkbox" data-val="true"
+                               data-val-required="The IsChecked field is required."
+                               id="Lager" name="Lager" value="true">Lager
+                    </li>
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-default" />
+                    </div>
+                </ul>
+            </div>
+        </form>
+    </div>
+</div>
+
+@*<div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="FanId" class="control-label"></label>
-                <select asp-for="FanId" class="form-control" asp-items="ViewBag.FanId"></select>
-                <span asp-validation-for="FanId" class="text-danger"></span>
+                <label asp-for="Fan.ApplicationId" class="control-label"></label>
+                <select asp-for="Fan.ApplicationId" class="form-control" asp-items="ViewBag.FanId"></select>
+                <span asp-validation-for="Fan.ApplicationId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="BeerStyleId" class="control-label"></label>
+                <label asp-for="BeerStyle.Id" class="control-label"></label>
                 <select asp-for="BeerStyleId" class="form-control" asp-items="ViewBag.BeerStyleId"></select>
                 <span asp-validation-for="BeerStyleId" class="text-danger"></span>
             </div>
@@ -28,8 +88,33 @@
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </form>
-    </div>
-</div>
+    </div>*@
+
+
+    @*<form method="post">
+        <table class="table">
+            <tr>
+                <th>Beer Style</th>
+            </tr>
+            @for (var i = 0; i < Model.BeerPreferences.Count(); i++)
+            {
+                <tr>
+                    <td>
+                        <input type="hidden" asp-for="BeerPreferences[i].BeerStyleId"/>
+                        <input type="hidden" asp-for="BeerPreferences[i].Fan"/>
+                        @Model.BeerPreferences[i].BeerStyle
+                    </td>
+                    <td><input asp-for="BeerPreferences[i].IsChecked"/>Beer Preference</td>
+                </tr>
+            }
+
+        </table>
+        <button>Update</button>
+
+    </form>
+
+
+</div>*@
 
 <div>
     <a asp-action="Index">Back to List</a>

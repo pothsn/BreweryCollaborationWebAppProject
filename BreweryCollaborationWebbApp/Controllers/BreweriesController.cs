@@ -44,12 +44,6 @@ namespace BreweryCollaborationWebbApp.Controllers
             }
         }
 
-        // GET: Breweries
-        public async Task<IActionResult> IndexForFans()
-        {
-            ViewBag.GoogleMapsAPIKey = APIKeys.GoogleMapsAPIKey;
-            return View(await _context.Brewery.ToListAsync());
-        }
 
         // GET Brewies (For fans)
         public async Task<IActionResult> IndexForFans()

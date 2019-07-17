@@ -11,6 +11,10 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
+            <input asp-for="ApplicationId" type="hidden" />
+            <input asp-for="ApplicationUser" type="hidden" />
+            <input asp-for="latitude" type="hidden" />
+            <input asp-for="longitude" type="hidden" />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
@@ -22,6 +26,11 @@
                 <label asp-for="Address" class="control-label"></label>
                 <input asp-for="Address" class="form-control" />
                 <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="City" class="control-label"></label>
+                <input asp-for="City" class="form-control" />
+                <span asp-validation-for="City" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="State" class="control-label"></label>
@@ -38,23 +47,30 @@
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
+
+
+
+            }
             <div id="checkboxes">
-                <label>User Beer Style Preference. Select as many as you like?!!?</label>
-                <ul>
-                    <li><input type="checkbox"> Amber Lager</li>
-                    <li><input type="checkbox"> Amber Ale</li>
-                    <li><input type="checkbox"> Pilsner</li>
-                    <li><input type="checkbox"> Porter</li>
-                    <li><input type="checkbox"> Stout</li>
-                    <li><input type="checkbox"> Wheat</li>
-                    <li><input type="checkbox"> Sour</li>
-                    <li><input type="checkbox"> IPA</li>
-                    <li><input type="checkbox"> Pale Ale</li>
-                    <li><input type="checkbox"> Dark Lager</li>
+                <label>User Beer Style Preference?!?!</label>
+                    @*<input id="Ale" name="Ale" value="true" type="checkbox"/>*@
+                    @Html.CheckBox("Ale") Ale
+                    @Html.CheckBox("Lager") Lager
+
+              
+            <input type="checkbox" data-val="true"
+                   data-val-required="The IsChecked field is required."
+                   id="Ale" name="Ale" value="true">Ale
+        </li>
+        <li>
+            <input type="checkbox" data-val="true"
+                   data-val-required="The IsChecked field is required."
+                   id="Lager" name="Lager" value="true">Lager
+        </li>
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-default" />
+                    </div>
                 </ul>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </form>
     </div>

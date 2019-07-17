@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BreweryCollaborationWebbApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190717143255_SeedBeerStyles")]
+    [Migration("20190717195811_SeedBeerStyles")]
     partial class SeedBeerStyles
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,11 +27,17 @@ namespace BreweryCollaborationWebbApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("BeerFanTasteId");
+
                     b.Property<int>("BeerStyleId");
 
                     b.Property<int>("FanId");
 
+                    b.Property<bool>("IsChecked");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("BeerFanTasteId");
 
                     b.HasIndex("BeerStyleId");
 
@@ -46,9 +52,13 @@ namespace BreweryCollaborationWebbApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("BeerFanTasteId");
+
                     b.Property<string>("Name");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BeerFanTasteId");
 
                     b.ToTable("BeerStyle");
                 });
@@ -61,8 +71,7 @@ namespace BreweryCollaborationWebbApp.Migrations
 
                     b.Property<string>("Address");
 
-                    b.Property<string>("ApplicationId")
-                        .ValueGeneratedOnAdd();
+                    b.Property<string>("ApplicationId");
 
                     b.Property<string>("City");
 
@@ -404,15 +413,26 @@ namespace BreweryCollaborationWebbApp.Migrations
 
             modelBuilder.Entity("BreweryCollaborationWebbApp.Models.BeerFanTaste", b =>
                 {
+                    b.HasOne("BreweryCollaborationWebbApp.Models.BeerFanTaste")
+                        .WithMany("BeerPreferences")
+                        .HasForeignKey("BeerFanTasteId");
+
                     b.HasOne("BreweryCollaborationWebbApp.Models.BeerStyle", "BeerStyle")
                         .WithMany()
                         .HasForeignKey("BeerStyleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("BreweryCollaborationWebbApp.Models.Fan", "Fan")
-                        .WithMany()
+                        .WithMany("BeerFanTastes")
                         .HasForeignKey("FanId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("BreweryCollaborationWebbApp.Models.BeerStyle", b =>
+                {
+                    b.HasOne("BreweryCollaborationWebbApp.Models.BeerFanTaste")
+                        .WithMany("BeerStyles")
+                        .HasForeignKey("BeerFanTasteId");
                 });
 
             modelBuilder.Entity("BreweryCollaborationWebbApp.Models.Brewery", b =>
