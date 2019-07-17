@@ -12,6 +12,8 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
+
+            @Html.HiddenFor(model => model.CollaborationRequest.Id)
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="CollabBeerName" class="control-label">Collaboration Beer Name</label>
@@ -21,10 +23,6 @@
                 <label asp-for="BrewSite" class="control-label">Brew Site</label>
                 <input asp-for="BrewSite" class="form-control" />
                 <span asp-validation-for="CollabBeerName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CollaborationRequest" class="control-label"></label>
-                <select asp-for="CollaborationRequest" class="form-control" asp-items="ViewBag.CollaborationRequestId"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />

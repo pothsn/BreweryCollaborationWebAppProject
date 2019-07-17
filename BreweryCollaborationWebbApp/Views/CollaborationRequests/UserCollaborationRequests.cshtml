@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_LayoutBrewery.cshtml";
+
 }
 
 <table class="table">
@@ -23,7 +23,7 @@
                 @Html.DisplayFor(modelItem => item.SenderName)
             </td>
             <td>
-                <a asp-controller="Collaboration" asp-action="Create" asp-route-id="@item.Id">Accept</a> |
+                <a asp-controller="Collaborations" asp-action="Create" asp-route-id="@item.Id">Accept</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Reject</a>
             </td>
         </tr>
