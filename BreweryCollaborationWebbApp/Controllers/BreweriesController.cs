@@ -125,9 +125,9 @@ namespace BreweryCollaborationWebbApp.Controllers
                 string responseBody = await response.Content.ReadAsStringAsync();
                 var thisResult = JsonConvert.DeserializeObject<JObject>(responseBody);
                 var latitude = thisResult["results"][0]["geometry"]["location"]["lat"];
-                brewery.latitude = latitude.ToObject<double>();
+                brewery.Latitude = latitude.ToObject<double>();
                 var longitude = thisResult["results"][0]["geometry"]["location"]["lng"];
-                brewery.longitude = longitude.ToObject<double>();
+                brewery.Longitude = longitude.ToObject<double>();
             }
             catch (HttpRequestException e)
             {
@@ -157,7 +157,7 @@ namespace BreweryCollaborationWebbApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Address,City,State,Zipcode,Website,Collaboration,ApplicationId,latitude,longitude,Image")] Brewery brewery)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Address,City,State,Zipcode,Website,Collaboration,ApplicationId,Latitude,Longitude,Image")] Brewery brewery)
         {
             if (id != brewery.Id)
             {

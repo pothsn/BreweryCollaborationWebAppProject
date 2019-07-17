@@ -23,8 +23,8 @@ namespace BreweryCollaborationWebbApp.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string ApplicationId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
-        public double latitude { get; set; }
-        public double longitude { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
         public virtual ICollection<BreweryBeer> BreweryBeers { get; set;  }
         public string Image { get; set; }
         public virtual ICollection<CollaborationRequest> CollaborationRequests { get; set; }

@@ -182,8 +182,8 @@ namespace BreweryCollaborationWebbApp.Migrations
                     Website = table.Column<string>(nullable: true),
                     Collaboration = table.Column<bool>(nullable: false),
                     ApplicationId = table.Column<string>(nullable: true),
-                    latitude = table.Column<double>(nullable: false),
-                    longitude = table.Column<double>(nullable: false),
+                    Latitude = table.Column<double>(nullable: false),
+                    Longitude = table.Column<double>(nullable: false),
                     Image = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -208,10 +208,9 @@ namespace BreweryCollaborationWebbApp.Migrations
                     City = table.Column<string>(nullable: true),
                     State = table.Column<string>(nullable: true),
                     Zipcode = table.Column<int>(nullable: false),
-                    Email = table.Column<string>(nullable: true),
                     ApplicationId = table.Column<string>(nullable: true),
-                    latitude = table.Column<double>(nullable: false),
-                    longitude = table.Column<double>(nullable: false)
+                    Latitude = table.Column<double>(nullable: false),
+                    Longitude = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
                 {

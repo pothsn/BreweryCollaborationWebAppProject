@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BreweryCollaborationWebbApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190717171559_SeedBeerStyles")]
+    [Migration("20190717211052_SeedBeerStyles")]
     partial class SeedBeerStyles
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -70,6 +70,10 @@ namespace BreweryCollaborationWebbApp.Migrations
 
                     b.Property<string>("Image");
 
+                    b.Property<double>("Latitude");
+
+                    b.Property<double>("Longitude");
+
                     b.Property<string>("Name");
 
                     b.Property<string>("State");
@@ -77,10 +81,6 @@ namespace BreweryCollaborationWebbApp.Migrations
                     b.Property<string>("Website");
 
                     b.Property<int>("Zipcode");
-
-                    b.Property<double>("latitude");
-
-                    b.Property<double>("longitude");
 
                     b.HasKey("Id");
 
@@ -166,17 +166,15 @@ namespace BreweryCollaborationWebbApp.Migrations
 
                     b.Property<string>("City");
 
-                    b.Property<string>("Email");
+                    b.Property<double>("Latitude");
+
+                    b.Property<double>("Longitude");
 
                     b.Property<string>("Name");
 
                     b.Property<string>("State");
 
                     b.Property<int>("Zipcode");
-
-                    b.Property<double>("latitude");
-
-                    b.Property<double>("longitude");
 
                     b.HasKey("Id");
 

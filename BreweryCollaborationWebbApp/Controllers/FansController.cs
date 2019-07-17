@@ -85,7 +85,7 @@ namespace BreweryCollaborationWebbApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Address,State,Zipcode,Email")] Fan fan)
+        public async Task<IActionResult> Create([Bind("Id,Name,Address,City,State,Zipcode,ApplicationId,ApplicationUser,Latitude,Longitude")] Fan fan)
         {
             if (ModelState.IsValid)
             {
@@ -118,7 +118,7 @@ namespace BreweryCollaborationWebbApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Address,State,Zipcode,Email")] Fan fan)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Address,City,State,Zipcode,ApplicationId,ApplicationUser,Latitude,Longitude")] Fan fan)
         {
             if (id != fan.Id)
             {

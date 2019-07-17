@@ -17,12 +17,11 @@ namespace BreweryCollaborationWebbApp.Models
         public string City { get; set; }
         public string State { get; set; }
         public int Zipcode { get; set; }
-        public string Email { get; set; }
         [ForeignKey("ApplicationUser")]
         public string ApplicationId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
-        public double latitude { get; set; }
-        public double longitude { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
 
     }
 }
