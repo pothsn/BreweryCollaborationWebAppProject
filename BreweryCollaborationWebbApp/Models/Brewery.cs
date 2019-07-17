@@ -17,6 +17,7 @@ namespace BreweryCollaborationWebbApp.Models
         public string City { get; set; }
         public string State { get; set; }
         public int Zipcode { get; set; }
+        public string Email { get; set; }
         public string Website { get; set; }
         public bool Collaboration { get; set; }
         [ForeignKey("ApplicationUser")]

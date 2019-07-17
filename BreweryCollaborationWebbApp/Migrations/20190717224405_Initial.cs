@@ -50,19 +50,6 @@ namespace BreweryCollaborationWebbApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BeerStyle",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BeerStyle", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -179,6 +166,7 @@ namespace BreweryCollaborationWebbApp.Migrations
                     City = table.Column<string>(nullable: true),
                     State = table.Column<string>(nullable: true),
                     Zipcode = table.Column<int>(nullable: false),
+                    Email = table.Column<string>(nullable: true),
                     Website = table.Column<string>(nullable: true),
                     Collaboration = table.Column<bool>(nullable: false),
                     ApplicationId = table.Column<string>(nullable: true),
@@ -208,6 +196,7 @@ namespace BreweryCollaborationWebbApp.Migrations
                     City = table.Column<string>(nullable: true),
                     State = table.Column<string>(nullable: true),
                     Zipcode = table.Column<int>(nullable: false),
+                    Email = table.Column<string>(nullable: true),
                     ApplicationId = table.Column<string>(nullable: true),
                     Latitude = table.Column<double>(nullable: false),
                     Longitude = table.Column<double>(nullable: false)
@@ -221,33 +210,6 @@ namespace BreweryCollaborationWebbApp.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "BreweryBeer",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true),
-                    StyleId = table.Column<int>(nullable: false),
-                    BreweryId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BreweryBeer", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_BreweryBeer_Brewery_BreweryId",
-                        column: x => x.BreweryId,
-                        principalTable: "Brewery",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_BreweryBeer_BeerStyle_StyleId",
-                        column: x => x.StyleId,
-                        principalTable: "BeerStyle",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -304,17 +266,39 @@ namespace BreweryCollaborationWebbApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BeerStyle",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    BeerFanTasteId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BeerStyle", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "BeerFanTaste",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     FanId = table.Column<int>(nullable: false),
-                    BeerStyleId = table.Column<int>(nullable: false)
+                    BeerStyleId = table.Column<int>(nullable: false),
+                    IsChecked = table.Column<bool>(nullable: false),
+                    BeerFanTasteId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_BeerFanTaste", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BeerFanTaste_BeerFanTaste_BeerFanTasteId",
+                        column: x => x.BeerFanTasteId,
+                        principalTable: "BeerFanTaste",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_BeerFanTaste_BeerStyle_BeerStyleId",
                         column: x => x.BeerStyleId,
@@ -325,6 +309,33 @@ namespace BreweryCollaborationWebbApp.Migrations
                         name: "FK_BeerFanTaste_Fan_FanId",
                         column: x => x.FanId,
                         principalTable: "Fan",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BreweryBeer",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    StyleId = table.Column<int>(nullable: false),
+                    BreweryId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BreweryBeer", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BreweryBeer_Brewery_BreweryId",
+                        column: x => x.BreweryId,
+                        principalTable: "Brewery",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BreweryBeer_BeerStyle_StyleId",
+                        column: x => x.StyleId,
+                        principalTable: "BeerStyle",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -425,6 +436,11 @@ namespace BreweryCollaborationWebbApp.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_BeerFanTaste_BeerFanTasteId",
+                table: "BeerFanTaste",
+                column: "BeerFanTasteId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_BeerFanTaste_BeerStyleId",
                 table: "BeerFanTaste",
                 column: "BeerStyleId");
@@ -433,6 +449,11 @@ namespace BreweryCollaborationWebbApp.Migrations
                 name: "IX_BeerFanTaste_FanId",
                 table: "BeerFanTaste",
                 column: "FanId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BeerStyle_BeerFanTasteId",
+                table: "BeerStyle",
+                column: "BeerFanTasteId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Brewery_ApplicationId",
@@ -493,10 +514,26 @@ namespace BreweryCollaborationWebbApp.Migrations
                 name: "IX_Review_FanId",
                 table: "Review",
                 column: "FanId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_BeerStyle_BeerFanTaste_BeerFanTasteId",
+                table: "BeerStyle",
+                column: "BeerFanTasteId",
+                principalTable: "BeerFanTaste",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_Fan_AspNetUsers_ApplicationId",
+                table: "Fan");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_BeerFanTaste_BeerStyle_BeerStyleId",
+                table: "BeerFanTaste");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -511,9 +548,6 @@ namespace BreweryCollaborationWebbApp.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
-
-            migrationBuilder.DropTable(
-                name: "BeerFanTaste");
 
             migrationBuilder.DropTable(
                 name: "BreweryBeer");
@@ -531,19 +565,22 @@ namespace BreweryCollaborationWebbApp.Migrations
                 name: "Collaboration");
 
             migrationBuilder.DropTable(
-                name: "Fan");
-
-            migrationBuilder.DropTable(
                 name: "CollaborationRequest");
-
-            migrationBuilder.DropTable(
-                name: "BeerStyle");
 
             migrationBuilder.DropTable(
                 name: "Brewery");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "BeerStyle");
+
+            migrationBuilder.DropTable(
+                name: "BeerFanTaste");
+
+            migrationBuilder.DropTable(
+                name: "Fan");
         }
     }
 }
