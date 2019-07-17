@@ -48,82 +48,39 @@ namespace BreweryCollaborationWebbApp.Controllers
             return View(collaboration);
         }
 
-        // GET: Collaborations/Create
-        //public IActionResult Create()
-        //{
-        //    ViewData["StyleId"] = new SelectList(_context.BeerStyle, "Id", "Id");
-        //    ViewData["CollaborationRequestId"] = new SelectList(_context.CollaborationRequest, "Id", "Id");
-        //    List<BeerStyle> li = new List<BeerStyle>();
-        //    li = _context.BeerStyle.ToList();
-        //    ViewBag.listofitems = li;
-
-        //    ViewModels.CollabBeersViewModel collabBeersViewModel = new ViewModels.CollabBeersViewModel
-        //    {
-        //        BeerStyles = li
-        //    };
-
-        //    return View(collabBeersViewModel);
-
-        //}
-
-        public IActionResult Create()
+        public IActionResult Create(int id)
         {
 
             List<BeerStyle> li = new List<BeerStyle>();
             li = _context.BeerStyle.ToList();
             ViewBag.listofitems = li;
 
+            CollaborationRequest currentRequest = _context.CollaborationRequest.Where(cr => cr.Id == id).FirstOrDefault();
+
             ViewModels.CollabBeersViewModel collabBeersViewModel = new ViewModels.CollabBeersViewModel
             {
-                BeerStyles = li
+                BeerStyles = li,
+                CollaborationRequest = currentRequest
             };
 
             return View(collabBeersViewModel);
 
         }
 
-        // POST: Collaborations/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("Id,Name,StyleId,CollaborationRequestId")] Collaboration collaboration)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _context.Add(collaboration);
-        //        await _context.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    ViewData["StyleId"] = new SelectList(_context.BeerStyle, "Id", "Id", collaboration.StyleId);
-        //    ViewData["CollaborationRequestId"] = new SelectList(_context.CollaborationRequest, "Id", "Id", collaboration.CollaborationRequestId);
-        //    return View(collaboration);
-        //}
-
-        // POST: Collaborations/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CollabBeersViewModel collabBeersViewModel)
         {
             if (ModelState.IsValid)
             {
-                Collaboration newCollabBeer = new Collaboration();
-
-
-                string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-                Brewery loggedInBrewery = _context.Brewery.Where(i => i.ApplicationId == userId).SingleOrDefault();
-                newCollabBeer.CollaborationRequestId = loggedInBrewery.Id;
+                Collaboration newCollabBeer = new Collaboration();             
+                newCollabBeer.CollaborationRequestId = collabBeersViewModel.CollaborationRequest.Id;
                 newCollabBeer.StyleId = collabBeersViewModel.BeerStyle.Id;
                 newCollabBeer.Name = collabBeersViewModel.CollabBeerName;
-
-
-
+                newCollabBeer.BrewSite = collabBeersViewModel.BrewSite;
                 _context.Add(newCollabBeer);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index", "breweries");
-
             }
 
             return View();
@@ -136,7 +93,6 @@ namespace BreweryCollaborationWebbApp.Controllers
             {
                 return NotFound();
             }
-
             var collaboration = await _context.Collaboration.FindAsync(id);
             if (collaboration == null)
             {

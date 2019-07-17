@@ -11,8 +11,6 @@ namespace BreweryCollaborationWebbApp.ViewModels
 
         public BeerStyle BeerStyle { get; set; }
         public IEnumerable<Models.BeerStyle> BeerStyles { get; set; }
-        public Brewery Brewery { get; set; }
-        public Collaboration Collaboration{ get; set; }
         public CollaborationRequest CollaborationRequest { get; set; }
         public string CollabBeerName { get; set; }
         public string BrewSite { get; set; }

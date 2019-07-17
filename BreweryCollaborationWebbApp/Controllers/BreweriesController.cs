@@ -34,7 +34,7 @@ namespace BreweryCollaborationWebbApp.Controllers
             await _context.Brewery.ToListAsync();
             if (this.User.IsInRole("Fan"))
             {
-                return RedirectToAction("IndexForFans","Breweries");
+                return RedirectToAction("IndexForFans", "Breweries");
             }
             else
             {
@@ -44,8 +44,7 @@ namespace BreweryCollaborationWebbApp.Controllers
             }
         }
 
-
-        // GET Brewies (For fans)
+        // GET: Breweries index for fans
         public async Task<IActionResult> IndexForFans()
         {
             ViewBag.GoogleMapsAPIKey = APIKeys.GoogleMapsAPIKey;

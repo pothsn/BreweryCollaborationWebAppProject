@@ -1,0 +1,32 @@
+﻿@model BreweryCollaborationWebbApp.Models.Brewery
+
+@{
+    ViewData["Title"] = "Index";
+
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Collaboration requests
+            </th>
+            
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.CollaborationRequests)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SenderName)
+            </td>
+            <td>
+                <a asp-controller="Collaborations" asp-action="Create" asp-route-id="@item.Id">Accept</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Reject</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

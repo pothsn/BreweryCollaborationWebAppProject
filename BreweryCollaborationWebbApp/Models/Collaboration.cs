@@ -14,6 +14,7 @@ namespace BreweryCollaborationWebbApp.Models
 
         public string Name { get; set; }
 
+        [Display(Name = "Brew site")]
         public string BrewSite { get; set; }
 
         [ForeignKey("BeerStyle")]
