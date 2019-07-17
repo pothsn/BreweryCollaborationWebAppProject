@@ -12,7 +12,6 @@ namespace BreweryCollaborationWebbApp.Models
 
         [Key]
         public int Id { get; set; }
-        [Display(Name = "Fan")]
         public string Name { get; set; }
         public string Address { get; set; }
         public string City { get; set; }

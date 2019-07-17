@@ -55,6 +55,23 @@ namespace BreweryCollaborationWebbApp.Controllers
             return View();
         }
 
+        // GET: Brewery get relevant collaboration requests
+        public IActionResult UserCollaborationRequests()
+        {
+            //get application user's Id
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            Brewery loggedInBrewery = _context.Brewery.Where(i => i.ApplicationId == userId).SingleOrDefault();
+            //query for requests that have the matching FK, put them in ICollection<CollaborationRequest> CollaborationRequests
+            loggedInBrewery.CollaborationRequests = _context.CollaborationRequest.Where(c => c.BreweryId == loggedInBrewery.Id).ToList();
+
+            if (loggedInBrewery == null)
+            {
+                return NotFound();
+            }
+
+            return View(loggedInBrewery);
+        }
+
         // POST: CollaborationRequests/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -79,7 +96,9 @@ namespace BreweryCollaborationWebbApp.Controllers
             CollaborationRequest collaborationRequest = new CollaborationRequest();
             //set applicationid as fk
             string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            Brewery loggedInBrewery = _context.Brewery.Where(i => i.ApplicationId == userId).SingleOrDefault();
             collaborationRequest.ApplicationId = userId;
+            collaborationRequest.SenderName = loggedInBrewery.Name;
             //set breweryid as fk
             collaborationRequest.BreweryId = id;
             //add to table

@@ -257,6 +257,7 @@ namespace BreweryCollaborationWebbApp.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    SenderName = table.Column<string>(nullable: true),
                     ApplicationId = table.Column<string>(nullable: true),
                     BreweryId = table.Column<int>(nullable: false)
                 },

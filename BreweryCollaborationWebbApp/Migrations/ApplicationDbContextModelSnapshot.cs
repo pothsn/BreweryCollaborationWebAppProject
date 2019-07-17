@@ -141,6 +141,8 @@ namespace BreweryCollaborationWebbApp.Migrations
 
                     b.Property<int>("BreweryId");
 
+                    b.Property<string>("SenderName");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ApplicationId");
@@ -453,7 +455,7 @@ namespace BreweryCollaborationWebbApp.Migrations
                         .HasForeignKey("ApplicationId");
 
                     b.HasOne("BreweryCollaborationWebbApp.Models.Brewery", "Brewery")
-                        .WithMany()
+                        .WithMany("CollaborationRequests")
                         .HasForeignKey("BreweryId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
