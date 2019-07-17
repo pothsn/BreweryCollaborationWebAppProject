@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BreweryCollaborationWebbApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190716204152_init")]
+    [Migration("20190717124110_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -61,7 +61,8 @@ namespace BreweryCollaborationWebbApp.Migrations
 
                     b.Property<string>("Address");
 
-                    b.Property<string>("ApplicationId");
+                    b.Property<string>("ApplicationId")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("City");
 
