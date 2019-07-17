@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BreweryCollaborationWebbApp.Data;
 using BreweryCollaborationWebbApp.Models;
+using System.Security.Claims;
 
 namespace BreweryCollaborationWebbApp.Controllers
 {
@@ -70,6 +71,23 @@ namespace BreweryCollaborationWebbApp.Controllers
             ViewData["ApplicationId"] = new SelectList(_context.ApplicationUser, "Id", "Id", collaborationRequest.ApplicationId);
             ViewData["BreweryId"] = new SelectList(_context.Brewery, "Id", "Id", collaborationRequest.BreweryId);
             return View(collaborationRequest);
+        }
+
+        public IActionResult SendCollaborationRequest(int id)
+        {
+            //instatiate a follow
+            CollaborationRequest collaborationRequest = new CollaborationRequest();
+            //set applicationid as fk
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            collaborationRequest.ApplicationId = userId;
+            //set breweryid as fk
+            collaborationRequest.BreweryId = id;
+            //add to table
+            _context.Add(collaborationRequest);
+            //save changes
+            _context.SaveChanges();
+            //return to same view (redirect to index action)           
+            return RedirectToAction("Index", "Breweries");
         }
 
         // GET: CollaborationRequests/Edit/5

@@ -160,6 +160,8 @@ namespace BreweryCollaborationWebbApp.Migrations
 
                     b.Property<string>("ApplicationId");
 
+                    b.Property<string>("City");
+
                     b.Property<string>("Email");
 
                     b.Property<string>("Name");

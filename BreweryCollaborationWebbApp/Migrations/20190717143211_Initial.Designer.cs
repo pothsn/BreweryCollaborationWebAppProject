@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BreweryCollaborationWebbApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190717124110_init")]
-    partial class init
+    [Migration("20190717143211_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -116,6 +116,8 @@ namespace BreweryCollaborationWebbApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("BrewSite");
+
                     b.Property<int>("CollaborationRequestId");
 
                     b.Property<string>("Name");
@@ -159,6 +161,8 @@ namespace BreweryCollaborationWebbApp.Migrations
                     b.Property<string>("Address");
 
                     b.Property<string>("ApplicationId");
+
+                    b.Property<string>("City");
 
                     b.Property<string>("Email");
 
