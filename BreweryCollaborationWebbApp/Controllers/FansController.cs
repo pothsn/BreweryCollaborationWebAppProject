@@ -98,7 +98,7 @@ namespace BreweryCollaborationWebbApp.Controllers
                 _context.Add(fan);
                 await Geocode(fan);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Create","BeerFanTastes");
+                return RedirectToAction(nameof(Index));
             }
             return View(fan);
         }
@@ -215,11 +215,27 @@ namespace BreweryCollaborationWebbApp.Controllers
 
             //need the "OrDefault" thinger at the end of the query
             //if fanUpdate == null then create a new instance of the thingy
-            if (id == null)
+            if (fanUpdate == null)
             {
-                RedirectToAction("Create", "Fans");
-                //return to Fan Registration page for the User to create an account?!
-                 //fanUpdate = new BeerFanTaste();
+                fanUpdate = new BeerFanTaste();
+                fanUpdate.BeerStyle = beerFanTasteViewModel.BeerStyle;
+                fanUpdate.FanId.ToString();
+                fanUpdate.FanId = beerFanTasteViewModel.Fan.Id;
+                fanUpdate.Ale = beerFanTasteViewModel.BeerFanTaste.Ale;
+                fanUpdate.Lager = beerFanTasteViewModel.BeerFanTaste.Lager;
+                fanUpdate.IndiaPaleAle = beerFanTasteViewModel.BeerFanTaste.IndiaPaleAle;
+                fanUpdate.Stout = beerFanTasteViewModel.BeerFanTaste.Stout;
+                fanUpdate.PaleAle = beerFanTasteViewModel.BeerFanTaste.PaleAle;
+                fanUpdate.WheatBeer = beerFanTasteViewModel.BeerFanTaste.WheatBeer;
+                fanUpdate.Pilsner = beerFanTasteViewModel.BeerFanTaste.Pilsner;
+                fanUpdate.Porter = beerFanTasteViewModel.BeerFanTaste.Porter;
+                fanUpdate.Sour = beerFanTasteViewModel.BeerFanTaste.Sour;
+                fanUpdate.Saison = beerFanTasteViewModel.BeerFanTaste.Saison;
+                _context.Add(fanUpdate);
+                await _context.SaveChangesAsync();
+
+
+                //fanUpdate = new BeerFanTaste();
                 //fanUpdate = new BeerFanTaste();
                 //create new instance and give it values as seen below
                 //If fanUpdate==null is reached, then _context.Add(derp);
@@ -240,10 +256,12 @@ namespace BreweryCollaborationWebbApp.Controllers
 
                 _context.Update(beerFanTasteViewModel);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("UserDetails", "Fans");
+                return View(beerFanTasteViewModel);
+                //return RedirectToAction("BeerTastes", "Fans");
 
             }
-            return View("UserDetails", "Fans");
+            return View(beerFanTasteViewModel);
+            //return View("UserDetails", "Fans");
        
 
             // int countOfAleLovers = _context.BeerFanTaste.Where(bft => bft.Ale == true).Count();
