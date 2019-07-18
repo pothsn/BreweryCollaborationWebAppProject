@@ -48,7 +48,9 @@ namespace BreweryCollaborationWebbApp.Controllers
         public async Task<IActionResult> IndexForFans()
         {
             ViewBag.GoogleMapsAPIKey = APIKeys.GoogleMapsAPIKey;
-            return View(await _context.Brewery.ToListAsync());
+            //This lambda looks through all breweries and adds ones that share an id with a SenderId OR a ReceiverId located on any CollaborationRequest object
+            IEnumerable<Brewery> breweriesWithCollaborations = _context.Brewery.Where(b => (_context.CollaborationRequest.Where(c => c.SenderId == b.Id).Select(c => c.SenderId).Contains(b.Id)) || (_context.CollaborationRequest.Where(c => c.ReceiverId == b.Id).Select(c => c.ReceiverId).Contains(b.Id))).ToList();
+            return View(breweriesWithCollaborations);
         }
 
 

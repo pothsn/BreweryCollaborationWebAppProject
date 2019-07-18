@@ -13,10 +13,6 @@ namespace BreweryCollaborationWebbApp.Models
         public int Id { get; set; }
         public string SenderName { get; set; }
 
-        //[ForeignKey("ApplicationUser")]
-        //public string ApplicationId { get; set; }
-        //public ApplicationUser ApplicationUser { get; set; }
-
         [ForeignKey("Brewery")]
         public int SenderId { get; set; }
         public Brewery Brewery { get; set; }
