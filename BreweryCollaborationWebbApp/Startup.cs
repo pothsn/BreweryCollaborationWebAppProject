@@ -73,7 +73,7 @@ namespace BreweryCollaborationWebbApp
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseCookiePolicy();
+            //app.UseCookiePolicy();
 
             app.UseAuthentication();
 

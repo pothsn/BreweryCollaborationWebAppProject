@@ -10,12 +10,16 @@ using BreweryCollaborationWebbApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using BreweryCollaborationWebbApp.ViewModels;
+using System.Net.Http;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace BreweryCollaborationWebbApp.Controllers
 {
     public class FansController : Controller
     {
         private readonly ApplicationDbContext _context;
+        static readonly HttpClient client = new HttpClient();
 
         public FansController(ApplicationDbContext context)
         {
@@ -92,10 +96,32 @@ namespace BreweryCollaborationWebbApp.Controllers
             {
                 fan.ApplicationId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 _context.Add(fan);
+                await Geocode(fan);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Create","BeerFanTastes");
             }
             return View(fan);
+        }
+
+        static async Task Geocode(Fan fan)
+        {
+            string fanURL = ("https://maps.googleapis.com/maps/api/geocode/json?address=" + fan.Address + fan.City + fan.State + APIKeys.GoogleGeocodingAPI);
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync(fanURL);
+                response.EnsureSuccessStatusCode();
+                string responseBody = await response.Content.ReadAsStringAsync();
+                var thisResult = JsonConvert.DeserializeObject<JObject>(responseBody);
+                var latitude = thisResult["results"][0]["geometry"]["location"]["lat"];
+                fan.Latitude = latitude.ToObject<double>();
+                var longitude = thisResult["results"][0]["geometry"]["location"]["lng"];
+                fan.Longitude = longitude.ToObject<double>();
+            }
+            catch (HttpRequestException e)
+            {
+                Console.WriteLine("\nException Caught!");
+                Console.WriteLine("Message :{0} ", e.Message);
+            }
         }
 
         // GET: Fans/Edit/5
