@@ -20,6 +20,7 @@ namespace BreweryCollaborationWebbApp.Models
         [ForeignKey("BeerStyle")]
         public int BeerStyleId { get; set; }
         public BeerStyle BeerStyle { get; set; }
+
         [BindProperty]
         public List<BeerFanTaste> BeerPreferences { get; set; } = new List<BeerFanTaste>();
         public bool IsChecked { get; set; }
@@ -35,8 +36,5 @@ namespace BreweryCollaborationWebbApp.Models
         //public bool Porter { get; set; }
         //public bool Sour { get; set; }
         //public bool Saison { get; set; }
-
-
-
     }
 }
