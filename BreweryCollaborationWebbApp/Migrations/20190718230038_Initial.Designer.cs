@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BreweryCollaborationWebbApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190718142403_Initial")]
+    [Migration("20190718230038_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -174,6 +174,26 @@ namespace BreweryCollaborationWebbApp.Migrations
                     b.Property<string>("City");
 
                     b.Property<double>("Latitude");
+
+                    b.Property<bool>("LikesAle");
+
+                    b.Property<bool>("LikesIPA");
+
+                    b.Property<bool>("LikesLager");
+
+                    b.Property<bool>("LikesPaleAle");
+
+                    b.Property<bool>("LikesPilsner");
+
+                    b.Property<bool>("LikesPorter");
+
+                    b.Property<bool>("LikesSaison");
+
+                    b.Property<bool>("LikesSour");
+
+                    b.Property<bool>("LikesStout");
+
+                    b.Property<bool>("LikesWheatBeer");
 
                     b.Property<double>("Longitude");
 

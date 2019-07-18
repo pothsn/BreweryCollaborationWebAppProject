@@ -90,7 +90,7 @@ namespace BreweryCollaborationWebbApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Address,City,State,Zipcode,Email,ApplicationId,ApplicationUser,Latitude,Longitude")] Fan fan)
+        public async Task<IActionResult> Create([Bind("Id,Name,Address,City,State,Zipcode,Email,ApplicationId,ApplicationUser,Latitude,Longitude,LikesAle,LikesLager,LikesIPA,LikesStout,LikesPaleAle,LikesWheatBeer,LikesPilsner,LikesPorter,LikesSour,LikesSaison")] Fan fan)
         {
             if (ModelState.IsValid)
             {
@@ -135,8 +135,7 @@ namespace BreweryCollaborationWebbApp.Controllers
             }
 
             var fan = await _context.Fan.FindAsync(id);
-            ViewModels.BeerFanTasteViewModel beerFanTasteViewModel = new ViewModels.BeerFanTasteViewModel();
-
+            
             if (fan == null)
             {
                 return NotFound();
@@ -150,7 +149,7 @@ namespace BreweryCollaborationWebbApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Address,City,State,Zipcode,Email,ApplicationId,ApplicationUser,Latitude,Longitude")] Fan fan)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Address,City,State,Zipcode,Email,ApplicationId,ApplicationUser,Latitude,Longitude,LikesAle,LikesLager,LikesIPA,LikesStout,LikesPaleAle,LikesWheatBeer,LikesPilsner,LikesPorter,LikesSour,LikesSaison")] Fan fan)
         {
             if (id != fan.Id)
             {
@@ -175,7 +174,7 @@ namespace BreweryCollaborationWebbApp.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(UserDetails));
             }
             return View(fan);
         }

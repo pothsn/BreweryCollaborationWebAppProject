@@ -173,6 +173,26 @@ namespace BreweryCollaborationWebbApp.Migrations
 
                     b.Property<double>("Latitude");
 
+                    b.Property<bool>("LikesAle");
+
+                    b.Property<bool>("LikesIPA");
+
+                    b.Property<bool>("LikesLager");
+
+                    b.Property<bool>("LikesPaleAle");
+
+                    b.Property<bool>("LikesPilsner");
+
+                    b.Property<bool>("LikesPorter");
+
+                    b.Property<bool>("LikesSaison");
+
+                    b.Property<bool>("LikesSour");
+
+                    b.Property<bool>("LikesStout");
+
+                    b.Property<bool>("LikesWheatBeer");
+
                     b.Property<double>("Longitude");
 
                     b.Property<string>("Name");

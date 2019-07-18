@@ -11,7 +11,7 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
-            <input asp-for="Id"  type="hidden"/>
+            <input asp-for="Id" type="hidden" />
             <input asp-for="ApplicationId" type="hidden" />
             <input asp-for="ApplicationUser" type="hidden" />
             <input asp-for="Latitude" type="hidden" />
@@ -42,28 +42,79 @@
                 <label asp-for="Zipcode" class="control-label"></label>
                 <input asp-for="Zipcode" class="form-control" />
                 <span asp-validation-for="Zipcode" class="text-danger"></span>
-            </div>          
-
-            <div id="checkboxes">
-                <label>User Beer Style Preference?!?!</label>
-                    @*<input id="Ale" name="Ale" value="true" type="checkbox"/>*@
-                    @Html.CheckBox("Ale") Ale
-                    @Html.CheckBox("Lager") Lager
-
-              
-            <input type="checkbox" data-val="true"
-                   data-val-required="The IsChecked field is required."
-                   id="Ale" name="Ale" value="true">Ale
-        </li>
-        <li>
-            <input type="checkbox" data-val="true"
-                   data-val-required="The IsChecked field is required."
-                   id="Lager" name="Lager" value="true">Lager
-        </li>
-                    <div class="form-group">
-                        <input type="submit" value="Save" class="btn btn-default" />
-                    </div>
-                </ul>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="LikesAle" /> @Html.DisplayNameFor(model => model.LikesAle)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="LikesLager" /> @Html.DisplayNameFor(model => model.LikesLager)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="LikesIPA" /> @Html.DisplayNameFor(model => model.LikesIPA)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="LikesStout" /> @Html.DisplayNameFor(model => model.LikesStout)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="LikesPaleAle" /> @Html.DisplayNameFor(model => model.LikesPaleAle)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="LikesWheatBeer" /> @Html.DisplayNameFor(model => model.LikesWheatBeer)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="LikesPilsner" /> @Html.DisplayNameFor(model => model.LikesPilsner)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="LikesPorter" /> @Html.DisplayNameFor(model => model.LikesPorter)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="LikesSour" /> @Html.DisplayNameFor(model => model.LikesSour)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="LikesSaison" /> @Html.DisplayNameFor(model => model.LikesSaison)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </form>
     </div>

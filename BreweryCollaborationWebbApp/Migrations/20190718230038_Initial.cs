@@ -197,7 +197,17 @@ namespace BreweryCollaborationWebbApp.Migrations
                     Zipcode = table.Column<int>(nullable: false),
                     ApplicationId = table.Column<string>(nullable: true),
                     Latitude = table.Column<double>(nullable: false),
-                    Longitude = table.Column<double>(nullable: false)
+                    Longitude = table.Column<double>(nullable: false),
+                    LikesAle = table.Column<bool>(nullable: false),
+                    LikesLager = table.Column<bool>(nullable: false),
+                    LikesIPA = table.Column<bool>(nullable: false),
+                    LikesStout = table.Column<bool>(nullable: false),
+                    LikesPaleAle = table.Column<bool>(nullable: false),
+                    LikesWheatBeer = table.Column<bool>(nullable: false),
+                    LikesPilsner = table.Column<bool>(nullable: false),
+                    LikesPorter = table.Column<bool>(nullable: false),
+                    LikesSour = table.Column<bool>(nullable: false),
+                    LikesSaison = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
