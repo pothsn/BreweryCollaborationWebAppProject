@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BreweryCollaborationWebbApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190717224502_SeedBeerStyles")]
-    partial class SeedBeerStyles
+    [Migration("20190718142403_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -76,8 +76,6 @@ namespace BreweryCollaborationWebbApp.Migrations
                     b.Property<string>("City");
 
                     b.Property<bool>("Collaboration");
-
-                    b.Property<string>("Email");
 
                     b.Property<string>("Image");
 
@@ -150,17 +148,15 @@ namespace BreweryCollaborationWebbApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ApplicationId");
+                    b.Property<int>("ReceiverId");
 
-                    b.Property<int>("BreweryId");
+                    b.Property<int>("SenderId");
 
                     b.Property<string>("SenderName");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationId");
-
-                    b.HasIndex("BreweryId");
+                    b.HasIndex("SenderId");
 
                     b.ToTable("CollaborationRequest");
                 });
@@ -176,8 +172,6 @@ namespace BreweryCollaborationWebbApp.Migrations
                     b.Property<string>("ApplicationId");
 
                     b.Property<string>("City");
-
-                    b.Property<string>("Email");
 
                     b.Property<double>("Latitude");
 
@@ -474,13 +468,9 @@ namespace BreweryCollaborationWebbApp.Migrations
 
             modelBuilder.Entity("BreweryCollaborationWebbApp.Models.CollaborationRequest", b =>
                 {
-                    b.HasOne("BreweryCollaborationWebbApp.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("ApplicationId");
-
                     b.HasOne("BreweryCollaborationWebbApp.Models.Brewery", "Brewery")
                         .WithMany("CollaborationRequests")
-                        .HasForeignKey("BreweryId")
+                        .HasForeignKey("SenderId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

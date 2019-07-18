@@ -166,7 +166,6 @@ namespace BreweryCollaborationWebbApp.Migrations
                     City = table.Column<string>(nullable: true),
                     State = table.Column<string>(nullable: true),
                     Zipcode = table.Column<int>(nullable: false),
-                    Email = table.Column<string>(nullable: true),
                     Website = table.Column<string>(nullable: true),
                     Collaboration = table.Column<bool>(nullable: false),
                     ApplicationId = table.Column<string>(nullable: true),
@@ -196,7 +195,6 @@ namespace BreweryCollaborationWebbApp.Migrations
                     City = table.Column<string>(nullable: true),
                     State = table.Column<string>(nullable: true),
                     Zipcode = table.Column<int>(nullable: false),
-                    Email = table.Column<string>(nullable: true),
                     ApplicationId = table.Column<string>(nullable: true),
                     Latitude = table.Column<double>(nullable: false),
                     Longitude = table.Column<double>(nullable: false)
@@ -219,21 +217,15 @@ namespace BreweryCollaborationWebbApp.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     SenderName = table.Column<string>(nullable: true),
-                    ApplicationId = table.Column<string>(nullable: true),
-                    BreweryId = table.Column<int>(nullable: false)
+                    SenderId = table.Column<int>(nullable: false),
+                    ReceiverId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CollaborationRequest", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CollaborationRequest_AspNetUsers_ApplicationId",
-                        column: x => x.ApplicationId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_CollaborationRequest_Brewery_BreweryId",
-                        column: x => x.BreweryId,
+                        name: "FK_CollaborationRequest_Brewery_SenderId",
+                        column: x => x.SenderId,
                         principalTable: "Brewery",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -481,14 +473,9 @@ namespace BreweryCollaborationWebbApp.Migrations
                 column: "StyleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CollaborationRequest_ApplicationId",
+                name: "IX_CollaborationRequest_SenderId",
                 table: "CollaborationRequest",
-                column: "ApplicationId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CollaborationRequest_BreweryId",
-                table: "CollaborationRequest",
-                column: "BreweryId");
+                column: "SenderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Fan_ApplicationId",

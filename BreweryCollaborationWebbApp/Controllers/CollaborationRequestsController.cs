@@ -23,7 +23,7 @@ namespace BreweryCollaborationWebbApp.Controllers
         // GET: CollaborationRequests
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.CollaborationRequest.Include(c => c.ApplicationUser).Include(c => c.Brewery);
+            var applicationDbContext = _context.CollaborationRequest.Include(c => c.SenderId).Include(c => c.ReceiverId);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -36,8 +36,8 @@ namespace BreweryCollaborationWebbApp.Controllers
             }
 
             var collaborationRequest = await _context.CollaborationRequest
-                .Include(c => c.ApplicationUser)
-                .Include(c => c.Brewery)
+                .Include(c => c.SenderId)
+                .Include(c => c.ReceiverId)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (collaborationRequest == null)
             {
@@ -55,14 +55,14 @@ namespace BreweryCollaborationWebbApp.Controllers
             return View();
         }
 
-        // GET: Brewery get relevant collaboration requests
+        //GET: Brewery get relevant collaboration requests
         public IActionResult UserCollaborationRequests()
         {
             //get application user's Id
             string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             Brewery loggedInBrewery = _context.Brewery.Where(i => i.ApplicationId == userId).SingleOrDefault();
             //query for requests that have the matching FK, put them in ICollection<CollaborationRequest> CollaborationRequests
-            loggedInBrewery.CollaborationRequests = _context.CollaborationRequest.Where(c => c.BreweryId == loggedInBrewery.Id).ToList();
+            loggedInBrewery.CollaborationRequests = _context.CollaborationRequest.Where(c => c.ReceiverId == loggedInBrewery.Id).ToList();
 
             if (loggedInBrewery == null)
             {
@@ -72,23 +72,23 @@ namespace BreweryCollaborationWebbApp.Controllers
             return View(loggedInBrewery);
         }
 
-        // POST: CollaborationRequests/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ApplicationId,BreweryId")] CollaborationRequest collaborationRequest)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(collaborationRequest);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["ApplicationId"] = new SelectList(_context.ApplicationUser, "Id", "Id", collaborationRequest.ApplicationId);
-            ViewData["BreweryId"] = new SelectList(_context.Brewery, "Id", "Id", collaborationRequest.BreweryId);
-            return View(collaborationRequest);
-        }
+        //// POST: CollaborationRequests/Create
+        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create([Bind("Id,ApplicationId,BreweryId")] CollaborationRequest collaborationRequest)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _context.Add(collaborationRequest);
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    ViewData["ApplicationId"] = new SelectList(_context.ApplicationUser, "Id", "Id", collaborationRequest.ApplicationId);
+        //    ViewData["BreweryId"] = new SelectList(_context.Brewery, "Id", "Id", collaborationRequest.BreweryId);
+        //    return View(collaborationRequest);
+        //}
 
         public IActionResult SendCollaborationRequest(int id)
         {
@@ -97,10 +97,10 @@ namespace BreweryCollaborationWebbApp.Controllers
             //set applicationid as fk
             string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             Brewery loggedInBrewery = _context.Brewery.Where(i => i.ApplicationId == userId).SingleOrDefault();
-            collaborationRequest.ApplicationId = userId;
+            collaborationRequest.SenderId = loggedInBrewery.Id;
             collaborationRequest.SenderName = loggedInBrewery.Name;
             //set breweryid as fk
-            collaborationRequest.BreweryId = id;
+            collaborationRequest.ReceiverId = id;
             //add to table
             _context.Add(collaborationRequest);
             //save changes
@@ -122,8 +122,8 @@ namespace BreweryCollaborationWebbApp.Controllers
             {
                 return NotFound();
             }
-            ViewData["ApplicationId"] = new SelectList(_context.ApplicationUser, "Id", "Id", collaborationRequest.ApplicationId);
-            ViewData["BreweryId"] = new SelectList(_context.Brewery, "Id", "Id", collaborationRequest.BreweryId);
+            ViewData["ApplicationId"] = new SelectList(_context.ApplicationUser, "Id", "Id", collaborationRequest.SenderId);
+            ViewData["BreweryId"] = new SelectList(_context.Brewery, "Id", "Id", collaborationRequest.ReceiverId);
             return View(collaborationRequest);
         }
 
@@ -159,8 +159,8 @@ namespace BreweryCollaborationWebbApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ApplicationId"] = new SelectList(_context.ApplicationUser, "Id", "Id", collaborationRequest.ApplicationId);
-            ViewData["BreweryId"] = new SelectList(_context.Brewery, "Id", "Id", collaborationRequest.BreweryId);
+            ViewData["ApplicationId"] = new SelectList(_context.ApplicationUser, "Id", "Id", collaborationRequest.SenderId);
+            ViewData["BreweryId"] = new SelectList(_context.Brewery, "Id", "Id", collaborationRequest.ReceiverId);
             return View(collaborationRequest);
         }
 
@@ -173,8 +173,8 @@ namespace BreweryCollaborationWebbApp.Controllers
             }
 
             var collaborationRequest = await _context.CollaborationRequest
-                .Include(c => c.ApplicationUser)
-                .Include(c => c.Brewery)
+                .Include(c => c.SenderId)
+                .Include(c => c.ReceiverId)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (collaborationRequest == null)
             {
