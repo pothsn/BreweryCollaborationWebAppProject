@@ -12,65 +12,69 @@
     <div class="col-md-4">
         <form asp-action="BeerTastes">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @*<div class="form-group">
-                    <label asp-for="Id" class="control-label"></label>
-                    <input asp-for="Id" class="form-control" />
-                    <span asp-validation-for="Id" class="text-danger"></span>
-                </div>*@
+            <input asp-for="Fan.ApplicationId" type="hidden" />
+            <input asp-for="Fan.ApplicationUser" type="hidden" />
+            <input asp-for="Fan.Latitude" type="hidden" />
+            <input asp-for="Fan.Longitude" type="hidden" />
+            <input asp-for="BeerStyle.BreweryBeers" type="hidden" />
+            <input asp-for="BeerStyle.Id" type="hidden" />
+            <input asp-for="BeerStyle.Name" type="hidden" />
+            <input asp-for="BeerFanTaste.Id" type="hidden" />
+            <input asp-for="BeerFanTaste.FanId" type="hidden" />
+            <input asp-for="BeerFanTaste.BeerStyleId" type="hidden" />
 
-            <div id="checkboxes">
-                <label>User Beer Style Preference. Select as many as you like?!!?</label>
-                <ul>
-                    <li>
-                        <input type="checkbox" data-val="true"
-                               data-val-required="The IsChecked field is required."
-                               id="Ale" name="Ale" value="true">Ale
-                    </li>
-                    <li>
-                        <input type="checkbox" data-val="true"
-                               data-val-required="The IsChecked field is required."
-                               id="Lager" name="Lager" value="true">Lager
-                    </li>
-
-
-                    <li><input name="Ale" type="hidden" value="false" /></li>
-
-                    @*<li><input type="checkbox" checked="" name="Lager">Lager</li>
-                    <li><input type="checkbox" checked="" name="IndiaPaleAle"> India Pale Ale</li>
-                    <li><input type="checkbox" checked="" name="Stout"> Stout</li>
-                    <li><input type="checkbox" checked="" name="PaleAle"> Pale Ale</li>
-                    <li><input type="checkbox" checked="" name="WheatBeer"> Wheat Beer</li>
-                    <li><input type="checkbox" checked="" name="Pilsner"> Pilsner</li>
-                    <li><input type="checkbox" checked="" name="Porter"> Porter</li>
-                    <li><input type="checkbox" checked="" name="Sour"> Sour</li>
-                    <li><input type="checkbox" checked="" name="Saison"> Saison</li>*@
-                </ul>
+            <div class="form-group">
+                <label asp-for="Fan.Name" class="control-label"></label>
+                <input asp-for="Fan.Name" class="form-control" />
+                <span asp-validation-for="Fan.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fan.Address" class="control-label"></label>
+                <input asp-for="Fan.Address" class="form-control" />
+                <span asp-validation-for="Fan.Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fan.City" class="control-label"></label>
+                <input asp-for="Fan.City" class="form-control" />
+                <span asp-validation-for="Fan.City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fan.State" class="control-label"></label>
+                <input asp-for="Fan.State" class="form-control" />
+                <span asp-validation-for="Fan.State" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fan.Zipcode" class="control-label"></label>
+                <input asp-for="Fan.Zipcode" class="form-control" />
+                <span asp-validation-for="Fan.Zipcode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fan.Email" class="control-label"></label>
+                <input asp-for="Fan.Email" class="form-control" />
+                <span asp-validation-for="Fan.Email" class="text-danger"></span>
             </div>
 
-            @*<form method="post">
-                    <table class="table">
-                        <tr>
-                            <th>Beer Style</th>
-                        </tr>
-                        @for (var i = 0; i < Model.; i++)
-                        {
-
-                        }
-
-                    </table>
-
-                </form>*@
-
-
-
+            <div id="checkboxes">
+                <label>Select Beer Style Preferences.</label>
+                @Html.CheckBoxFor(m => m.BeerFanTaste.Ale) Ale
+                @Html.CheckBoxFor(m => m.BeerFanTaste.Lager) Lager
+                @Html.CheckBoxFor(m => m.BeerFanTaste.IndiaPaleAle) India Pale Ale
+                @Html.CheckBoxFor(m => m.BeerFanTaste.Stout) Stout
+                @Html.CheckBoxFor(m => m.BeerFanTaste.PaleAle) Pale Ale
+                @Html.CheckBoxFor(m => m.BeerFanTaste.WheatBeer) Wheat Beer
+                @Html.CheckBoxFor(m => m.BeerFanTaste.Pilsner) Pilsner
+                @Html.CheckBoxFor(m => m.BeerFanTaste.Porter) Porter
+                @Html.CheckBoxFor(m => m.BeerFanTaste.Sour) Sour
+                @Html.CheckBoxFor(m => m.BeerFanTaste.Saison) Saison
+            </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </form>
     </div>
-
-
 </div>
+
+
 
 <div>
     <a asp-action="Index">Back to List</a>

@@ -93,7 +93,7 @@ namespace BreweryCollaborationWebbApp.Controllers
                 fan.ApplicationId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 _context.Add(fan);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Create","BeerFanTastes");
             }
             return View(fan);
         }
@@ -122,36 +122,106 @@ namespace BreweryCollaborationWebbApp.Controllers
         // POST: Fans/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Address,City,State,Zipcode,Email,ApplicationId,ApplicationUser,Latitude,Longitude")] Fan fan)
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Address,City,State,Zipcode,Email,ApplicationId,ApplicationUser,Latitude,Longitude")] Fan fan)
+        //{
+        //    if (id != fan.Id)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            _context.Update(fan);
+        //            await _context.SaveChangesAsync();
+        //        }
+        //        catch (DbUpdateConcurrencyException)
+        //        {
+        //            if (!FanExists(fan.Id))
+        //            {
+        //                return NotFound();
+        //            }
+        //            else
+        //            {
+        //                throw;
+        //            }
+        //        }
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(fan);
+        //}
+
+
+        // GET: Fans/Edit/5
+        public async Task<IActionResult> BeerTastes(int? id, BeerFanTasteViewModel beerFanTasteViewModel)
         {
-            if (id != fan.Id)
+
+
+            if (id == null)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            var fan = await _context.Fan.FindAsync(id);
+            beerFanTasteViewModel.Fan = fan;
+ 
+
+            if (beerFanTasteViewModel.Fan == null)
             {
-                try
-                {
-                    _context.Update(fan);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!FanExists(fan.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                return NotFound();
             }
-            return View(fan);
+            return View(beerFanTasteViewModel);
+
+        }
+
+        // POST: Fans/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> BeerTastes(int id, BeerFanTasteViewModel beerFanTasteViewModel)
+        {
+            //query for the BeerFanTaste object that has a FanId of int id
+            BeerFanTaste fanUpdate = _context.BeerFanTaste.Where(f => f.FanId == id).SingleOrDefault();
+
+            //need the "OrDefault" thinger at the end of the query
+            //if fanUpdate == null then create a new instance of the thingy
+            if (id == null)
+            {
+                RedirectToAction("Create", "Fans");
+                //return to Fan Registration page for the User to create an account?!
+                 //fanUpdate = new BeerFanTaste();
+                //fanUpdate = new BeerFanTaste();
+                //create new instance and give it values as seen below
+                //If fanUpdate==null is reached, then _context.Add(derp);
+            }
+            else
+            {
+                fanUpdate.BeerStyle = beerFanTasteViewModel.BeerStyle;
+                fanUpdate.Ale = beerFanTasteViewModel.BeerFanTaste.Ale;
+                fanUpdate.Lager = beerFanTasteViewModel.BeerFanTaste.Lager;
+                fanUpdate.IndiaPaleAle = beerFanTasteViewModel.BeerFanTaste.IndiaPaleAle;
+                fanUpdate.Stout = beerFanTasteViewModel.BeerFanTaste.Stout;
+                fanUpdate.PaleAle = beerFanTasteViewModel.BeerFanTaste.PaleAle;
+                fanUpdate.WheatBeer = beerFanTasteViewModel.BeerFanTaste.WheatBeer;
+                fanUpdate.Pilsner = beerFanTasteViewModel.BeerFanTaste.Pilsner;
+                fanUpdate.Porter = beerFanTasteViewModel.BeerFanTaste.Porter;
+                fanUpdate.Sour = beerFanTasteViewModel.BeerFanTaste.Sour;
+                fanUpdate.Saison = beerFanTasteViewModel.BeerFanTaste.Saison;
+
+                _context.Update(beerFanTasteViewModel);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("UserDetails", "Fans");
+
+            }
+            return View("UserDetails", "Fans");
+       
+
+            // int countOfAleLovers = _context.BeerFanTaste.Where(bft => bft.Ale == true).Count();
+
         }
 
         // GET: Fans/Delete/5

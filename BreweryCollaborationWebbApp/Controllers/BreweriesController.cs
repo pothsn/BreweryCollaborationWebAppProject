@@ -220,5 +220,12 @@ namespace BreweryCollaborationWebbApp.Controllers
         {
             return _context.Brewery.Any(e => e.Id == id);
         }
+
+        //public Task<IActionResult> DataAnalysis(BeerFanTaste beerFanTaste)
+        //{
+        //    // int countOfAleLovers = _context.BeerFanTaste.Where(bft => bft.Ale == true).Count();
+
+        //}
+
     }
 }
