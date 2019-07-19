@@ -43,33 +43,7 @@
                 <input asp-for="Fan.Zipcode" class="form-control" />
                 <span asp-validation-for="Fan.Zipcode" class="text-danger"></span>
             </div>
-            <div id="checkboxes">
-                <label>User Beer Style Preference?!?!</label>
-                <div id="checkboxes">
-                    <label>User Beer Style Preference?!?!</label>
-                    @Html.CheckBox("Ale", true) Ale
-                    @Html.CheckBox("Lager", true) Lager
-                    @Html.CheckBoxFor(m => m.BeerFanTaste.Stout) Stout
 
-                </div>
-
-
-                    <ul>
-                        <li>
-                            <input type="checkbox" data-val="true"
-                                   data-val-required="The IsChecked field is required."
-                                   id="Ale" name="Ale" value="true">Ale
-                        </li>
-                        <li>
-                            <input type="checkbox" data-val="true"
-                                   data-val-required="The IsChecked field is required."
-                                   id="Lager" name="Lager" value="true">Lager
-                        </li>
-                        <div class="form-group">
-                            <input type="submit" value="Save" class="btn btn-default" />
-                        </div>
-                    </ul>
-                </div>
 </form>
     </div>
 </div>

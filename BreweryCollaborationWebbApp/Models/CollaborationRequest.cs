@@ -18,5 +18,7 @@ namespace BreweryCollaborationWebbApp.Models
         public Brewery Brewery { get; set; }
 
         public int ReceiverId { get; set; }
+        public string ReceiverName { get; set; }
+
     }
 }

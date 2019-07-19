@@ -99,8 +99,10 @@ namespace BreweryCollaborationWebbApp.Controllers
             Brewery loggedInBrewery = _context.Brewery.Where(i => i.ApplicationId == userId).SingleOrDefault();
             collaborationRequest.SenderId = loggedInBrewery.Id;
             collaborationRequest.SenderName = loggedInBrewery.Name;
+            Brewery receivingBrewery = _context.Brewery.Where(i => i.Id == id).SingleOrDefault();
             //set breweryid as fk
             collaborationRequest.ReceiverId = id;
+            collaborationRequest.ReceiverName = receivingBrewery.Name;
             //add to table
             _context.Add(collaborationRequest);
             //save changes
@@ -165,14 +167,14 @@ namespace BreweryCollaborationWebbApp.Controllers
         }
 
         // GET: CollaborationRequests/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? id, CollaborationRequest collaborationRequest)
         {
             if (id == null)
             {
                 return NotFound();
             }
-
-            var collaborationRequest = await _context.CollaborationRequest
+            CollaborationRequest collabReq = _context.CollaborationRequest.Where(i => i.Id == id).SingleOrDefault();
+            collabReq = await _context.CollaborationRequest
                 .Include(c => c.SenderId)
                 .Include(c => c.ReceiverId)
                 .FirstOrDefaultAsync(m => m.Id == id);

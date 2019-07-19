@@ -20,13 +20,19 @@
             @Html.DisplayNameFor(model => model.BeerStyle)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.BeerStyle.Id)
+            @Html.DisplayFor(model => model.BeerStyle.Name)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.CollaborationRequest)
+            <label asp-for="CollaborationRequest.SenderName">Brewery: </label>
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.CollaborationRequest.Id)
+            @Html.DisplayFor(model => model.CollaborationRequest.SenderName)
+        </dd>
+        <dt>
+            <label asp-for="CollaborationRequest.ReceiverName">Brewery: </label>
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CollaborationRequest.ReceiverName)
         </dd>
     </dl>
 </div>
