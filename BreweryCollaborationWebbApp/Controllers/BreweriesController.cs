@@ -234,10 +234,11 @@ namespace BreweryCollaborationWebbApp.Controllers
             return _context.Brewery.Any(e => e.Id == id);
         }
 
-        //public Task<IActionResult> DataAnalysis(BeerFanTaste beerFanTaste)
+        //public Task<IActionResult> DataAnalysis(NewsFeedViewModel newsFeedViewModel)
         //{
+        //    var followersCount = _context.Follow.Where(bf => bf.brewery == true)
         //    // int countOfAleLovers = _context.BeerFanTaste.Where(bft => bft.Ale == true).Count();
-
+        //    return null;
         //}
 
     }
