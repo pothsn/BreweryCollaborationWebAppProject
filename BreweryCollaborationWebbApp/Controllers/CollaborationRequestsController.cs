@@ -195,6 +195,15 @@ namespace BreweryCollaborationWebbApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        //Create action for rejecting requests
+        public async Task <IActionResult> RejectCollaborationRequest(int id)
+        {
+            var collaborationRequest = await _context.CollaborationRequest.FirstOrDefaultAsync(m => m.Id == id);
+            _context.CollaborationRequest.Remove(collaborationRequest);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(UserCollaborationRequests));
+        }
+
         private bool CollaborationRequestExists(int id)
         {
             return _context.CollaborationRequest.Any(e => e.Id == id);

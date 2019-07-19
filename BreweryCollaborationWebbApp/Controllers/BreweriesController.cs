@@ -90,6 +90,12 @@ namespace BreweryCollaborationWebbApp.Controllers
             return View(loggedInBrewery);
         }
 
+        // Add fan to brewery followers collection
+        //public async Task <IActionResult> AddFollowerToBreweryFollowers(Fan fan)
+        //{
+
+        //}
+
         // GET: Breweries/Create
         public IActionResult Create()
         {
@@ -159,7 +165,7 @@ namespace BreweryCollaborationWebbApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Address,City,State,Zipcode,Email,Website,Collaboration,ApplicationId,Latitude,Longitude,Image")] Brewery brewery)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Address,City,State,Zipcode,Email,Website,Collaboration,ApplicationId,Latitude,Longitude,Image,CollaborationRequests,Followers")] Brewery brewery)
         {
             if (id != brewery.Id)
             {

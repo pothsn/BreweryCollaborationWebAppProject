@@ -75,11 +75,22 @@ namespace BreweryCollaborationWebbApp.Controllers
 
         public IActionResult Follow(int id)
         {
+            //Brewery breweryBeingFollowed = _context.Brewery.Where(b => b.Id == follow.BreweryId).FirstOrDefault();
+            //string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            //Fan fanFollowing = _context.Fan.Where(f => f.ApplicationId == userId).FirstOrDefault();
+            //breweryBeingFollowed.Followers.Add(fanFollowing);
+
             //instatiate a follow
             Follow follow = new Follow();
             //set applicationid as fk
             string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             follow.ApplicationId = userId;
+
+            Fan fanFollowing = _context.Fan.Where(f => f.ApplicationId == userId).FirstOrDefault();
+            Brewery breweryBeingFollowed = _context.Brewery.Where(b => b.Id == id).FirstOrDefault();
+            breweryBeingFollowed.Followers = new List<Fan>();
+            breweryBeingFollowed.Followers.Add(fanFollowing);
+            follow.Fan = fanFollowing;
             //set breweryid as fk
             follow.BreweryId = id;
             //add to table
