@@ -39,7 +39,12 @@ namespace BreweryCollaborationWebbApp.Controllers
             else
             {
                 ViewBag.GoogleMapsAPIKey = APIKeys.GoogleMapsAPIKey;
-                return View(await _context.Brewery.ToListAsync());
+                IEnumerable<Brewery> BreweryList = await _context.Brewery.Include(s=>s.Followers).ToListAsync();
+                foreach(Brewery brewery in BreweryList)
+                {
+                  //brewery.Followers = _context.Fan.Where(s=> s.Id== brewery).ToListAsync();
+                }
+                return View(BreweryList);
 
             }
         }

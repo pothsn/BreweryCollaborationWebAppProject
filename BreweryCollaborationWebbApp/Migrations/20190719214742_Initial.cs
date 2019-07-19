@@ -362,7 +362,8 @@ namespace BreweryCollaborationWebbApp.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     BreweryId = table.Column<int>(nullable: false),
                     ApplicationId = table.Column<string>(nullable: true),
-                    FanId = table.Column<int>(nullable: true)
+                    FanId = table.Column<int>(nullable: true),
+                    IsFollowed = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {

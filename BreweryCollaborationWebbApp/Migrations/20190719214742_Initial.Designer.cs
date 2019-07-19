@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BreweryCollaborationWebbApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190719180429_SeedBeerStyles")]
-    partial class SeedBeerStyles
+    [Migration("20190719214742_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -239,6 +239,8 @@ namespace BreweryCollaborationWebbApp.Migrations
                     b.Property<int>("BreweryId");
 
                     b.Property<int?>("FanId");
+
+                    b.Property<bool>("IsFollowed");
 
                     b.HasKey("Id");
 

@@ -238,6 +238,8 @@ namespace BreweryCollaborationWebbApp.Migrations
 
                     b.Property<int?>("FanId");
 
+                    b.Property<bool>("IsFollowed");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ApplicationId");
