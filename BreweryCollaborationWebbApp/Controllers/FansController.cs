@@ -271,5 +271,6 @@ namespace BreweryCollaborationWebbApp.Controllers
         {
             return _context.Fan.Any(e => e.Id == id);
         }
+
     }
 }

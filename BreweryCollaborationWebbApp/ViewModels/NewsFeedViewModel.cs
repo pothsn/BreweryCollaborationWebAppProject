@@ -11,6 +11,7 @@ namespace BreweryCollaborationWebbApp.ViewModels
         public Brewery Brewery { get; set; }
         public BeerStyle BeerStyle { get; set; }
         public BreweryBeer BreweryBeer { get; set; }
+        public BeerFanTaste BeerFanTaste { get; set; }
         public Collaboration Collaboration { get; set; }
         public CollaborationRequest CollaborationRequest { get; set; }
         public  Fan Fan { get; set; }

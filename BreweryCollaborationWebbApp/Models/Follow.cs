@@ -21,6 +21,10 @@ namespace BreweryCollaborationWebbApp.Models
         public ApplicationUser ApplicationUser { get; set; }
 
         public Fan Fan { get; set; }
+        public bool IsFollowed { get; set; }
+        //public bool BrokenBatBrewery { get; set; }
+        //public bool MobCraftBrewery { get; set; }
+        //public bool LakefrontBrewery { get; set; }
 
     }
 }
