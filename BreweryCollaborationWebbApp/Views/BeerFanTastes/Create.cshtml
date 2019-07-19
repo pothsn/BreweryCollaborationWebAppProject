@@ -14,12 +14,32 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="FanId" class="control-label"></label>
-                <select asp-for="FanId" class ="form-control" asp-items="ViewBag.FanId"></select>
+                <input asp-for="FanId" type="hidden"/>
+                <input asp-for="BeerStyleId" type="hidden"/>
+
+
+                <input asp-for="Fan.ApplicationId" type="hidden" />
+                <input asp-for="Fan.ApplicationUser" type="hidden" />
+                <input asp-for="Fan.Latitude" type="hidden" />
+                <input asp-for="Fan.Longitude" type="hidden" />
+                <input asp-for="BeerStyle.BreweryBeers" type="hidden" />
+                <input asp-for="BeerStyle.Id" type="hidden" />
+                <input asp-for="BeerStyle.Name" type="hidden" />
+
             </div>
-            <div class="form-group">
-                <label asp-for="BeerStyleId" class="control-label"></label>
-                <select asp-for="BeerStyleId" class ="form-control" asp-items="ViewBag.BeerStyleId"></select>
+
+            <div id="checkboxes">
+                <label>Select Beer Style Preferences.</label>
+                @Html.CheckBoxFor(m => m.Ale) Ale
+                @Html.CheckBoxFor(m => m.Lager) Lager
+                @Html.CheckBoxFor(m => m.IndiaPaleAle) India Pale Ale
+                @Html.CheckBoxFor(m => m.Stout) Stout
+                @Html.CheckBoxFor(m => m.PaleAle) Pale Ale
+                @Html.CheckBoxFor(m => m.WheatBeer) Wheat Beer
+                @Html.CheckBoxFor(m => m.Pilsner) Pilsner
+                @Html.CheckBoxFor(m => m.Porter) Porter
+                @Html.CheckBoxFor(m => m.Sour) Sour
+                @Html.CheckBoxFor(m => m.Saison) Saison
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />

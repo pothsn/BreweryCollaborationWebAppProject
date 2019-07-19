@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BreweryCollaborationWebbApp.Data;
 using BreweryCollaborationWebbApp.Models;
+using System.Security.Claims;
 
 namespace BreweryCollaborationWebbApp.Controllers
 {
@@ -49,6 +50,8 @@ namespace BreweryCollaborationWebbApp.Controllers
         // GET: BeerFanTastes/Create
         public IActionResult Create()
         {
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            Fan fan = _context.Fan.Where(f => f.ApplicationId == userId).SingleOrDefault();
             ViewData["BeerStyleId"] = new SelectList(_context.BeerStyle, "Id", "Id");
             ViewData["FanId"] = new SelectList(_context.Fan, "Id", "Id");
             return View();
@@ -59,16 +62,27 @@ namespace BreweryCollaborationWebbApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FanId,BeerStyleId")] BeerFanTaste beerFanTaste)
+        public async Task<IActionResult> Create(BeerFanTaste beerFanTaste)
         {
+            //gets here after Fan user creates a profile. 
+            //Needs to create an object of the BeerFanTaste with the FanId as the foreign key
+            //
+            BeerFanTaste fanTaste = new BeerFanTaste();
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            Fan fan = _context.Fan.Where(f => f.ApplicationId == userId).SingleOrDefault();
+
+            fanTaste.Fan.ApplicationId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
             if (ModelState.IsValid)
             {
-                _context.Add(beerFanTaste);
+
+                _context.Add(fanTaste);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("IndexForFans", "Breweries");
             }
             ViewData["BeerStyleId"] = new SelectList(_context.BeerStyle, "Id", "Id", beerFanTaste.BeerStyleId);
             ViewData["FanId"] = new SelectList(_context.Fan, "Id", "Id", beerFanTaste.FanId);
+            
             return View(beerFanTaste);
         }
 

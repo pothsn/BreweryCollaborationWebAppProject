@@ -127,8 +127,6 @@ namespace BreweryCollaborationWebbApp.Controllers
         // GET: Fans/Edit/5
         public async Task<IActionResult> Edit(int? id )
         {
-
-
             if (id == null)
             {
                 return NotFound();
@@ -143,6 +141,10 @@ namespace BreweryCollaborationWebbApp.Controllers
             return View(fan);
 
         }
+
+        // POST: Fans/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
 
         // POST: Fans/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -177,6 +179,71 @@ namespace BreweryCollaborationWebbApp.Controllers
                 return RedirectToAction(nameof(UserDetails));
             }
             return View(fan);
+        }
+
+        // POST: Fans/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> BeerTastes(int id, BeerFanTasteViewModel beerFanTasteViewModel)
+        {
+            //query for the BeerFanTaste object that has a FanId of int id
+            BeerFanTaste fanUpdate = _context.BeerFanTaste.Where(f => f.FanId == id).SingleOrDefault();
+
+            //need the "OrDefault" thinger at the end of the query
+            //if fanUpdate == null then create a new instance of the thingy
+            if (fanUpdate == null)
+            {
+                fanUpdate = new BeerFanTaste();
+                fanUpdate.BeerStyle = beerFanTasteViewModel.BeerStyle;
+                fanUpdate.FanId.ToString();
+                fanUpdate.FanId = beerFanTasteViewModel.Fan.Id;
+                fanUpdate.Ale = beerFanTasteViewModel.BeerFanTaste.Ale;
+                fanUpdate.Lager = beerFanTasteViewModel.BeerFanTaste.Lager;
+                fanUpdate.IndiaPaleAle = beerFanTasteViewModel.BeerFanTaste.IndiaPaleAle;
+                fanUpdate.Stout = beerFanTasteViewModel.BeerFanTaste.Stout;
+                fanUpdate.PaleAle = beerFanTasteViewModel.BeerFanTaste.PaleAle;
+                fanUpdate.WheatBeer = beerFanTasteViewModel.BeerFanTaste.WheatBeer;
+                fanUpdate.Pilsner = beerFanTasteViewModel.BeerFanTaste.Pilsner;
+                fanUpdate.Porter = beerFanTasteViewModel.BeerFanTaste.Porter;
+                fanUpdate.Sour = beerFanTasteViewModel.BeerFanTaste.Sour;
+                fanUpdate.Saison = beerFanTasteViewModel.BeerFanTaste.Saison;
+                _context.Add(fanUpdate);
+                await _context.SaveChangesAsync();
+
+
+                //fanUpdate = new BeerFanTaste();
+                //fanUpdate = new BeerFanTaste();
+                //create new instance and give it values as seen below
+                //If fanUpdate==null is reached, then _context.Add(derp);
+            }
+            else
+            {
+                fanUpdate.BeerStyle = beerFanTasteViewModel.BeerStyle;
+                fanUpdate.Ale = beerFanTasteViewModel.BeerFanTaste.Ale;
+                fanUpdate.Lager = beerFanTasteViewModel.BeerFanTaste.Lager;
+                fanUpdate.IndiaPaleAle = beerFanTasteViewModel.BeerFanTaste.IndiaPaleAle;
+                fanUpdate.Stout = beerFanTasteViewModel.BeerFanTaste.Stout;
+                fanUpdate.PaleAle = beerFanTasteViewModel.BeerFanTaste.PaleAle;
+                fanUpdate.WheatBeer = beerFanTasteViewModel.BeerFanTaste.WheatBeer;
+                fanUpdate.Pilsner = beerFanTasteViewModel.BeerFanTaste.Pilsner;
+                fanUpdate.Porter = beerFanTasteViewModel.BeerFanTaste.Porter;
+                fanUpdate.Sour = beerFanTasteViewModel.BeerFanTaste.Sour;
+                fanUpdate.Saison = beerFanTasteViewModel.BeerFanTaste.Saison;
+
+                _context.Update(beerFanTasteViewModel);
+                await _context.SaveChangesAsync();
+                return View(beerFanTasteViewModel);
+                //return RedirectToAction("BeerTastes", "Fans");
+
+            }
+            return View(beerFanTasteViewModel);
+            //return View("UserDetails", "Fans");
+       
+
+            // int countOfAleLovers = _context.BeerFanTaste.Where(bft => bft.Ale == true).Count();
+
         }
 
         // GET: Fans/Delete/5
