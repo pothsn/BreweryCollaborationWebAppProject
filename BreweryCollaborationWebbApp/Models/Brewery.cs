@@ -11,7 +11,6 @@ namespace BreweryCollaborationWebbApp.Models
     {
         [Key]
         public int Id { get; set; }
-        [Display(Name = "Brewery")]
         public string Name { get; set; }
         public string Address { get; set; }
         public string City { get; set; }
@@ -20,7 +19,6 @@ namespace BreweryCollaborationWebbApp.Models
         public string Website { get; set; }
         public bool Collaboration { get; set; }
         [ForeignKey("ApplicationUser")]
-        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string ApplicationId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
         public double Latitude { get; set; }
