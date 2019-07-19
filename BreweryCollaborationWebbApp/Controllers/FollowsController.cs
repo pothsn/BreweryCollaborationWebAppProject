@@ -81,12 +81,18 @@ namespace BreweryCollaborationWebbApp.Controllers
             string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             follow.ApplicationId = userId;
 
-            //Next five lines were how I was trying to populate a list of followers on a brewery object but it does not persist
-            //Fan fanFollowing = _context.Fan.Where(f => f.ApplicationId == userId).FirstOrDefault();
-            //Brewery breweryBeingFollowed = _context.Brewery.Where(b => b.Id == id).FirstOrDefault();
-            //breweryBeingFollowed.Followers = new List<Fan>();
-            //breweryBeingFollowed.Followers.Add(fanFollowing);
-            //follow.Fan = fanFollowing;
+            //Set follower of Fan type's Id as FK
+            if (this.User.IsInRole("Fan"))
+            {
+                Fan fanFollower = _context.Fan.Where(f => f.ApplicationId == userId).FirstOrDefault();
+                follow.FanFollowerId = fanFollower.Id;
+            }
+            //Set follower of type Brewery type's Id as soft FK
+            if (this.User.IsInRole("Brewery"))
+            {
+                Brewery breweryFollower = _context.Brewery.Where(b => b.ApplicationId == userId).FirstOrDefault();
+                follow.BreweryFollowerId = breweryFollower.Id;
+            }
 
             //set breweryid as fk
             follow.BreweryId = id;

@@ -362,7 +362,8 @@ namespace BreweryCollaborationWebbApp.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     BreweryId = table.Column<int>(nullable: false),
                     ApplicationId = table.Column<string>(nullable: true),
-                    FanId = table.Column<int>(nullable: true)
+                    FanFollowerId = table.Column<int>(nullable: true),
+                    BreweryFollowerId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -380,8 +381,8 @@ namespace BreweryCollaborationWebbApp.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Follow_Fan_FanId",
-                        column: x => x.FanId,
+                        name: "FK_Follow_Fan_FanFollowerId",
+                        column: x => x.FanFollowerId,
                         principalTable: "Fan",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -515,9 +516,9 @@ namespace BreweryCollaborationWebbApp.Migrations
                 column: "BreweryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Follow_FanId",
+                name: "IX_Follow_FanFollowerId",
                 table: "Follow",
-                column: "FanId");
+                column: "FanFollowerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Review_CollaborationId",

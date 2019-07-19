@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BreweryCollaborationWebbApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190719211515_SeedBeerStyles")]
+    [Migration("20190719222013_SeedBeerStyles")]
     partial class SeedBeerStyles
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -236,9 +236,11 @@ namespace BreweryCollaborationWebbApp.Migrations
 
                     b.Property<string>("ApplicationId");
 
+                    b.Property<int?>("BreweryFollowerId");
+
                     b.Property<int>("BreweryId");
 
-                    b.Property<int?>("FanId");
+                    b.Property<int?>("FanFollowerId");
 
                     b.HasKey("Id");
 
@@ -246,7 +248,7 @@ namespace BreweryCollaborationWebbApp.Migrations
 
                     b.HasIndex("BreweryId");
 
-                    b.HasIndex("FanId");
+                    b.HasIndex("FanFollowerId");
 
                     b.ToTable("Follow");
                 });
@@ -528,8 +530,8 @@ namespace BreweryCollaborationWebbApp.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("BreweryCollaborationWebbApp.Models.Fan", "Fan")
-                        .WithMany()
-                        .HasForeignKey("FanId");
+                        .WithMany("Follows")
+                        .HasForeignKey("FanFollowerId");
                 });
 
             modelBuilder.Entity("BreweryCollaborationWebbApp.Models.Review", b =>
