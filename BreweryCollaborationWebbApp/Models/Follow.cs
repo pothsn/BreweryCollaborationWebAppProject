@@ -20,6 +20,8 @@ namespace BreweryCollaborationWebbApp.Models
         public string ApplicationId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
 
+        [ForeignKey("Fan")]
+        public int? FanId { get; set; }
         public Fan Fan { get; set; }
 
     }

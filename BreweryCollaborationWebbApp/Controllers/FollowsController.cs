@@ -75,26 +75,23 @@ namespace BreweryCollaborationWebbApp.Controllers
 
         public IActionResult Follow(int id)
         {
-            //Brewery breweryBeingFollowed = _context.Brewery.Where(b => b.Id == follow.BreweryId).FirstOrDefault();
-            //string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            //Fan fanFollowing = _context.Fan.Where(f => f.ApplicationId == userId).FirstOrDefault();
-            //breweryBeingFollowed.Followers.Add(fanFollowing);
-
             //instatiate a follow
             Follow follow = new Follow();
             //set applicationid as fk
             string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             follow.ApplicationId = userId;
 
-            Fan fanFollowing = _context.Fan.Where(f => f.ApplicationId == userId).FirstOrDefault();
-            Brewery breweryBeingFollowed = _context.Brewery.Where(b => b.Id == id).FirstOrDefault();
-            breweryBeingFollowed.Followers = new List<Fan>();
-            breweryBeingFollowed.Followers.Add(fanFollowing);
-            follow.Fan = fanFollowing;
+            //Next five lines were how I was trying to populate a list of followers on a brewery object but it does not persist
+            //Fan fanFollowing = _context.Fan.Where(f => f.ApplicationId == userId).FirstOrDefault();
+            //Brewery breweryBeingFollowed = _context.Brewery.Where(b => b.Id == id).FirstOrDefault();
+            //breweryBeingFollowed.Followers = new List<Fan>();
+            //breweryBeingFollowed.Followers.Add(fanFollowing);
+            //follow.Fan = fanFollowing;
+
             //set breweryid as fk
             follow.BreweryId = id;
             //add to table
-            _context.Add(follow);
+            _context.Follow.Add(follow);
             //save changes
             _context.SaveChanges();
             //return to same view (redirect to index action)           
