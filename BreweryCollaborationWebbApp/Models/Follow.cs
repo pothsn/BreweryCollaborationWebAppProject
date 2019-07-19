@@ -23,6 +23,10 @@ namespace BreweryCollaborationWebbApp.Models
         [ForeignKey("Fan")]
         public int? FanFollowerId { get; set; }
         public Fan Fan { get; set; }
+        public bool IsFollowed { get; set; }
+        //public bool BrokenBatBrewery { get; set; }
+        //public bool MobCraftBrewery { get; set; }
+        //public bool LakefrontBrewery { get; set; }
 
         //Soft FK
         public int? BreweryFollowerId { get; set; }

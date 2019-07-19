@@ -1,0 +1,103 @@
+﻿@model BreweryCollaborationWebbApp.ViewModels.NewsFeedViewModel
+
+@{
+    ViewData["Title"] = "FollowersCount";
+}
+
+<h2>FollowersCount</h2>
+
+<div>
+    <h4>Brewery</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Brewery.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Brewery.Name)
+        </dd>
+        @*<dt>
+            @Html.DisplayNameFor(model => model.Follow.BrokenBatBrewery)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Follow.BrokenBatBrewery)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Follow.LakefrontBrewery)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Follow.LakefrontBrewery)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Follow.MobCraftBrewery)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Follow.MobCraftBrewery)
+        </dd>*@
+        <dt>
+            @Html.DisplayNameFor(model => model.BeerFanTaste.Ale)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.BeerFanTaste.Ale)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.BeerFanTaste.Lager)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.BeerFanTaste.Lager)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.BeerFanTaste.IndiaPaleAle)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.BeerFanTaste.IndiaPaleAle)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.BeerFanTaste.Stout)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.BeerFanTaste.Stout)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.BeerFanTaste.PaleAle)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.BeerFanTaste.PaleAle)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.BeerFanTaste.WheatBeer)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.BeerFanTaste.WheatBeer)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.BeerFanTaste.Pilsner)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.BeerFanTaste.Pilsner)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.BeerFanTaste.Porter)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.BeerFanTaste.Porter)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.BeerFanTaste.Sour)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.BeerFanTaste.Sour)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.BeerFanTaste.Saison)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.BeerFanTaste.Saison)
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Back to List</a>
+</div>

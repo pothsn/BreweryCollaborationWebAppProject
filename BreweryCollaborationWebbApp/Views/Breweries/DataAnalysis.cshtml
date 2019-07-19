@@ -6,9 +6,11 @@
 
 <h2>DataAnalysis</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<div>
+    <h4>NewsFeedViewModel</h4>
+    <hr />
+    <dl class="dl-horizontal"></dl>
+</div>
 
 <div class="row">
     <div class="col-md-4">
@@ -70,6 +72,12 @@
                 @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
             </td>
         </tr>
-}
+        }
     </tbody>
 </table>
+
+
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Back to List</a>
+</div>
