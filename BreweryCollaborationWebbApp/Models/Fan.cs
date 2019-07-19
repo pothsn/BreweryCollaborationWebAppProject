@@ -43,6 +43,7 @@ namespace BreweryCollaborationWebbApp.Models
         public bool LikesSour { get; set; }
         [Display(Name = "Likes Saisons")]
         public bool LikesSaison { get; set; }
-
+        //public FollwedBreweries FollwedBreweries { get; set; }
+        public ICollection<Follow> Follows  { get; set; }
     }
 }
