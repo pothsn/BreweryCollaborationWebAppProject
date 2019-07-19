@@ -28,6 +28,10 @@ namespace BreweryCollaborationWebbApp.Models
         public virtual ICollection<CollaborationRequest> CollaborationRequests { get; set; }
         public virtual ICollection<Fan> Followers { get; set; }
 
+        public virtual ICollection<Follow> Follows { get; set; }
+        public string BreweryRank { get; set; }
+
+
 
     }
 }
