@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BreweryCollaborationWebbApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190719124412_initial")]
-    partial class initial
+    [Migration("20190719151733_SeedBeerStyles")]
+    partial class SeedBeerStyles
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -82,6 +82,8 @@ namespace BreweryCollaborationWebbApp.Migrations
                     b.Property<string>("Address");
 
                     b.Property<string>("ApplicationId");
+
+                    b.Property<string>("BreweryRank");
 
                     b.Property<string>("City");
 
@@ -159,6 +161,8 @@ namespace BreweryCollaborationWebbApp.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("ReceiverId");
+
+                    b.Property<string>("ReceiverName");
 
                     b.Property<int>("SenderId");
 
@@ -507,7 +511,7 @@ namespace BreweryCollaborationWebbApp.Migrations
                         .HasForeignKey("ApplicationId");
 
                     b.HasOne("BreweryCollaborationWebbApp.Models.Brewery", "brewery")
-                        .WithMany()
+                        .WithMany("Follows")
                         .HasForeignKey("BreweryId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

@@ -81,6 +81,8 @@ namespace BreweryCollaborationWebbApp.Migrations
 
                     b.Property<string>("ApplicationId");
 
+                    b.Property<string>("BreweryRank");
+
                     b.Property<string>("City");
 
                     b.Property<bool>("Collaboration");
@@ -507,7 +509,7 @@ namespace BreweryCollaborationWebbApp.Migrations
                         .HasForeignKey("ApplicationId");
 
                     b.HasOne("BreweryCollaborationWebbApp.Models.Brewery", "brewery")
-                        .WithMany()
+                        .WithMany("Follows")
                         .HasForeignKey("BreweryId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

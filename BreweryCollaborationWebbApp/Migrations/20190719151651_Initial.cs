@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BreweryCollaborationWebbApp.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -184,7 +184,8 @@ namespace BreweryCollaborationWebbApp.Migrations
                     ApplicationId = table.Column<string>(nullable: true),
                     Latitude = table.Column<double>(nullable: false),
                     Longitude = table.Column<double>(nullable: false),
-                    Image = table.Column<string>(nullable: true)
+                    Image = table.Column<string>(nullable: true),
+                    BreweryRank = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -268,7 +269,8 @@ namespace BreweryCollaborationWebbApp.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     SenderName = table.Column<string>(nullable: true),
                     SenderId = table.Column<int>(nullable: false),
-                    ReceiverId = table.Column<int>(nullable: false)
+                    ReceiverId = table.Column<int>(nullable: false),
+                    ReceiverName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
