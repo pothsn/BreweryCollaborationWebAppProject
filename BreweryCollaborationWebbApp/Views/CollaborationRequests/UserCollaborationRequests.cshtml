@@ -24,7 +24,7 @@
             </td>
             <td>
                 <a asp-controller="Collaborations" asp-action="Create" asp-route-id="@item.Id">Accept</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Reject</a>
+                <a asp-action="RejectCollaborationRequest" asp-route-id="@item.Id">Reject</a>
             </td>
         </tr>
         }
