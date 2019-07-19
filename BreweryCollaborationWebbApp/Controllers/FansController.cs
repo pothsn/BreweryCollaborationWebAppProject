@@ -212,7 +212,6 @@ namespace BreweryCollaborationWebbApp.Controllers
         {
             //query for the BeerFanTaste object that has a FanId of int id
             BeerFanTaste fanUpdate = _context.BeerFanTaste.Where(f => f.FanId == id).SingleOrDefault();
-
             //need the "OrDefault" thinger at the end of the query
             //if fanUpdate == null then create a new instance of the thingy
             if (fanUpdate == null)
@@ -233,8 +232,6 @@ namespace BreweryCollaborationWebbApp.Controllers
                 fanUpdate.Saison = beerFanTasteViewModel.BeerFanTaste.Saison;
                 _context.Add(fanUpdate);
                 await _context.SaveChangesAsync();
-
-
                 //fanUpdate = new BeerFanTaste();
                 //fanUpdate = new BeerFanTaste();
                 //create new instance and give it values as seen below
@@ -253,19 +250,14 @@ namespace BreweryCollaborationWebbApp.Controllers
                 fanUpdate.Porter = beerFanTasteViewModel.BeerFanTaste.Porter;
                 fanUpdate.Sour = beerFanTasteViewModel.BeerFanTaste.Sour;
                 fanUpdate.Saison = beerFanTasteViewModel.BeerFanTaste.Saison;
-
                 _context.Update(beerFanTasteViewModel);
                 await _context.SaveChangesAsync();
                 return View(beerFanTasteViewModel);
                 //return RedirectToAction("BeerTastes", "Fans");
-
             }
             return View(beerFanTasteViewModel);
             //return View("UserDetails", "Fans");
-       
-
             // int countOfAleLovers = _context.BeerFanTaste.Where(bft => bft.Ale == true).Count();
-
         }
 
         // GET: Fans/Delete/5
