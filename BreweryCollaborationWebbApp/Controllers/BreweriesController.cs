@@ -21,7 +21,6 @@ namespace BreweryCollaborationWebbApp.Controllers
         static readonly HttpClient client = new HttpClient();
         public List<Brewery> breweries = new List<Brewery>();
 
-
         public BreweriesController(ApplicationDbContext context)
         {
             _context = context;
@@ -42,7 +41,8 @@ namespace BreweryCollaborationWebbApp.Controllers
                 IEnumerable<Brewery> BreweryList = await _context.Brewery.Include(s=>s.Followers).ToListAsync();
                 foreach(Brewery brewery in BreweryList)
                 {
-                    //brewery.Followers = _context.Fan.Where(f => f.Id == ).ToListAsync();
+                    //Query for fans by looking at follows that have the same BreweryId as the one being looked at in that loop
+                    brewery.Followers = _context.Fan.Where(fa => (_context.Follow.Where(fo => fo.BreweryId == brewery.Id).Select(fo => fo.FanFollowerId).Contains(fa.Id))).ToList();
                 }
                 return View(BreweryList);
 
@@ -57,8 +57,6 @@ namespace BreweryCollaborationWebbApp.Controllers
             IEnumerable<Brewery> breweriesWithCollaborations = _context.Brewery.Where(b => (_context.CollaborationRequest.Where(c => c.SenderId == b.Id).Select(c => c.SenderId).Contains(b.Id)) || (_context.CollaborationRequest.Where(c => c.ReceiverId == b.Id).Select(c => c.ReceiverId).Contains(b.Id))).ToList();
             return View(breweriesWithCollaborations);
         }
-
-
 
         // GET: Breweries/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -76,7 +74,6 @@ namespace BreweryCollaborationWebbApp.Controllers
             }
             return View(brewery);
         }
-
 
         // GET: BreweryUserDetails
         public async Task<IActionResult> UserDetails()

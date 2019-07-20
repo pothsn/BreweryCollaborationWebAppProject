@@ -94,7 +94,7 @@ namespace BreweryCollaborationWebbApp.Controllers
                 follow.BreweryFollowerId = breweryFollower.Id;
             }
 
-            //set breweryid as fk
+            //set Id of brewery being followed as fk
             follow.BreweryId = id;
             //add to table
             _context.Follow.Add(follow);
