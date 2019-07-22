@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BreweryCollaborationWebbApp.Models.Brewery>
+﻿@model BreweryCollaborationWebbApp.ViewModels.BreweriesIndexViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -17,7 +17,7 @@
     <div id="map"></div>
     <script>
 
-        var breweries = @Html.Raw(Json.Serialize(Model));
+        var breweries = @Html.Raw(Json.Serialize(Model.Breweries));
 
         // Initialize and add the map
         function initMap() {
@@ -50,6 +50,8 @@
                         position: { lat: breweries[i].latitude, lng: breweries[i].longitude },
                         map: map
                     });
+
+
 
                     var loggedInBreweryFollowers = loggedInBrewery.followers;
                     var pinnedBreweryFollowers = breweries[i].followers;
@@ -151,34 +153,34 @@
 
 <H4>Registered breweries</H4>
 <table class="table">
-    <thead>              
+    <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Address)
+                Address
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.City)
+                City
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.State)
+                State
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Zipcode)
+                Zipcode
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Website)
+                Website
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Collaboration)
+                Collaborator
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.Breweries)
         {
             <tr>
                 <td>
@@ -203,9 +205,6 @@
                     @Html.DisplayFor(modelItem => item.Collaboration)
                 </td>
                 <td>
-                    @*<img src="@Url.Content(item.Image)"/>*@
-                </td>
-                <td>
                     <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                     <a asp-controller="Follows" asp-action="Follow" asp-route-id="@item.Id">Follow</a> |
                     <a asp-controller="CollaborationRequests" asp-action="SendCollaborationRequest" asp-route-id="@item.Id">Collaboration Request</a>
@@ -214,34 +213,6 @@
         }
     </tbody>
 </table>
-
-<script>
-    var matchedBreweries;
-
-    //Loop through all yes collaboration breweries
-    for (var i = 0; i < breweries.length; i++) {
-
-        //Add brewery to mathed breweries IF it has at least 3 same beer styles AND has at least 2 shared fans AND fans have at least 2 shared tastes AND breweries are < 15 miles apart
-
-
-
-
-
-
-
-
-
-
-
-
-    }
-    
-
-
-
-</script>
-
-
 
 
 <br />
@@ -253,16 +224,58 @@
             <th>
                 Name
             </th>
+            <th>
+                Address
+            </th>
+            <th>
+                City
+            </th>
+            <th>
+                State
+            </th>
+            <th>
+                Zipcode
+            </th>
+            <th>
+                Website
+            </th>
+            <th>
+                Collaboration
+            </th>
+            <th></th>
         </tr>
-
-
-
-
     </thead>
     <tbody>
-
-
-
-
+        @foreach (var item in Model.BreweryMatches)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.City)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.State)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Zipcode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Website)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Collaboration)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-controller="Follows" asp-action="Follow" asp-route-id="@item.Id">Follow</a> |
+                    <a asp-controller="CollaborationRequests" asp-action="SendCollaborationRequest" asp-route-id="@item.Id">Collaboration Request</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
