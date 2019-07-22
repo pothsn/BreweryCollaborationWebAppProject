@@ -299,11 +299,19 @@ namespace BreweryCollaborationWebbApp.Migrations
                     Name = table.Column<string>(nullable: true),
                     BrewSite = table.Column<string>(nullable: true),
                     StyleId = table.Column<int>(nullable: false),
-                    CollaborationRequestId = table.Column<int>(nullable: false)
+                    CollaborationRequestId = table.Column<int>(nullable: false),
+                    WhenCreated = table.Column<DateTime>(nullable: false),
+                    CollaborationId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Collaboration", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Collaboration_Collaboration_CollaborationId",
+                        column: x => x.CollaborationId,
+                        principalTable: "Collaboration",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Collaboration_CollaborationRequest_CollaborationRequestId",
                         column: x => x.CollaborationRequestId,
@@ -480,6 +488,11 @@ namespace BreweryCollaborationWebbApp.Migrations
                 name: "IX_BreweryBeer_StyleId",
                 table: "BreweryBeer",
                 column: "StyleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Collaboration_CollaborationId",
+                table: "Collaboration",
+                column: "CollaborationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Collaboration_CollaborationRequestId",
