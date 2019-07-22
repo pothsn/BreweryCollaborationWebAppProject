@@ -19,7 +19,6 @@
 
         var breweries = @Html.Raw(Json.Serialize(Model));
 
-        console.log("test", breweries);
         // Initialize and add the map
         function initMap() {
 
@@ -29,14 +28,11 @@
 
             //find logged in brewery and set it to loggedInBrewery
             var loggedInBrewery = FindLoggedInBrewery();
-            console.log("logged in brewery", loggedInBrewery)
 
             //loop through all breweries sent to view and make pin for those where collaboration bool is true
             for (var i = 0; i < breweries.length; i++) {
-                console.log("brewery", breweries[i]);
 
                 var numberOfSharedFollowers = 0;
-                //var sharedFollowers;
                 var fansWhoLikeAles = 0;
                 var fansWhoLikeLagers = 0;
                 var fansWhoLikeIPAs = 0;
@@ -55,8 +51,6 @@
                         map: map
                     });
 
-
-                    console.log("breweries[i]", breweries[i])
                     var loggedInBreweryFollowers = loggedInBrewery.followers;
                     var pinnedBreweryFollowers = breweries[i].followers;
 
@@ -65,9 +59,7 @@
                         for (var k = 0; k < pinnedBreweryFollowers.length; k++) {
 
                             if (loggedInBreweryFollowers[j].id == pinnedBreweryFollowers[k].id) {
-                                console.log("pinned brewery followers", pinnedBreweryFollowers);
                                 numberOfSharedFollowers++;
-                                //sharedFollowers.add(sharedFollowers);
                             }
                         }
                     }
