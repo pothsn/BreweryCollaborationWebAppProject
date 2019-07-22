@@ -38,11 +38,23 @@ namespace BreweryCollaborationWebbApp.Controllers
             else
             {
                 ViewBag.GoogleMapsAPIKey = APIKeys.GoogleMapsAPIKey;
-                IEnumerable<Brewery> BreweryList = await _context.Brewery.Include(s => s.Followers).ToListAsync();
-                foreach (Brewery brewery in BreweryList)
+
+                IEnumerable<Brewery> BreweryList = await _context.Brewery.ToListAsync();
+                foreach(Brewery brewery in BreweryList)
                 {
                     //Query for fans by looking at follows that have the same BreweryId as the one being looked at in that loop
                     brewery.Followers = _context.Fan.Where(fa => (_context.Follow.Where(fo => fo.BreweryId == brewery.Id).Select(fo => fo.FanFollowerId).Contains(fa.Id))).ToList();
+                    string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                    //Query for logged in brewery
+                    var loggedInBrewery = _context.Brewery.Where(i => i.ApplicationId == userId).SingleOrDefault();
+                    brewery.LoggedInBreweryId = loggedInBrewery.Id;
+                    //Query for each brewery's beers
+                    brewery.BreweryBeers = _context.BreweryBeer.Where(b => b.BreweryId == brewery.Id).ToList();
+                    //For some reason the Brewery brewery property (part of the FK on BreweryBeer was containing the associated brewery object, causing a bit of a looping issue. Nullifying bandaid applied below.
+                    foreach (BreweryBeer bb in brewery.BreweryBeers)
+                    {
+                        bb.Brewery = null;
+                    }
                 }
                 return View(BreweryList);
 

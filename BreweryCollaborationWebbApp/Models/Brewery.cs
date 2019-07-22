@@ -31,7 +31,6 @@ namespace BreweryCollaborationWebbApp.Models
         public virtual ICollection<Follow> Follows { get; set; }
         public string BreweryRank { get; set; }
 
-
-
+        public virtual int LoggedInBreweryId { get; set; }
     }
 }

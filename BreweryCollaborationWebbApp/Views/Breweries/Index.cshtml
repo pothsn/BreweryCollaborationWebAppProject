@@ -16,38 +16,129 @@
 <div class="row">
     <div id="map"></div>
     <script>
+
         var breweries = @Html.Raw(Json.Serialize(Model));
-        var thing = breweries.followers.length;
-        console.log("test", breweries);
+
         // Initialize and add the map
         function initMap() {
 
             var milwaukee = { lat: 43.038, lng: -87.906 };
             var map = new google.maps.Map(
                 document.getElementById('map'), { zoom: 10, center: milwaukee });
-            for (var i = 0; i < breweries.length; i++) {
-                console.log("brewery", breweries[i]);
-                if (breweries[i].collaboration == true) {
-                    var followers = breweries[i].followers;
 
-                    //THIS BRINGS UP EACH INFO WINDOW FOR EACH MARKER AND DISPLAYS THE BREWERY NAME DYNAMICALLY
-                    var infowindow = new google.maps.InfoWindow();
-                    var marker, i;
-                    for (var i = 0; i < breweries.length; i++) {
-                        marker = new google.maps.Marker({
-                            position: new google.maps.LatLng({ lat: breweries[i].latitude, lng: breweries[i].longitude }),
-                            map: map
-                        });
-                        google.maps.event.addListener(marker, 'click', (function (marker, i) {
-                            return function () {
-                                infowindow.setContent(breweries[i].name, breweries[i].website);
-                                infowindow.open(map, marker);
+            //find logged in brewery and set it to loggedInBrewery
+            var loggedInBrewery = FindLoggedInBrewery();
+
+            //loop through all breweries sent to view and make pin for those where collaboration bool is true
+            for (var i = 0; i < breweries.length; i++) {
+
+                var numberOfSharedFollowers = 0;
+                var fansWhoLikeAles = 0;
+                var fansWhoLikeLagers = 0;
+                var fansWhoLikeIPAs = 0;
+                var fansWhoLikeStouts = 0;
+                var fansWhoLikePaleAles = 0;
+                var fansWhoLikeWheatBeers = 0;
+                var fansWhoLikePilsners = 0;
+                var fansWhoLikePorters = 0;
+                var fansWhoLikeSours = 0;
+                var fansWhoLikeSaisons = 0;
+
+                //Check collaboration bool
+                if (breweries[i].collaboration == true && breweries[i].id != loggedInBrewery.id) {
+                    var marker = new google.maps.Marker({
+                        position: { lat: breweries[i].latitude, lng: breweries[i].longitude },
+                        map: map
+                    });
+
+                    var loggedInBreweryFollowers = loggedInBrewery.followers;
+                    var pinnedBreweryFollowers = breweries[i].followers;
+
+                    //find number of shared followers
+                    for (var j = 0; j < loggedInBreweryFollowers.length; j++) {
+                        for (var k = 0; k < pinnedBreweryFollowers.length; k++) {
+
+                            if (loggedInBreweryFollowers[j].id == pinnedBreweryFollowers[k].id) {
+                                numberOfSharedFollowers++;
                             }
-                        })(marker, i));
+                        }
                     }
-                }
+
+
+                    //Find tastes of pinned brewery's fans
+                    for (var l = 0; l < pinnedBreweryFollowers.length; l++) {
+
+                        console.log("pinnedBreweryFollowers[i]", pinnedBreweryFollowers[i])
+
+                        if (pinnedBreweryFollowers[l].likesAle == true) {
+                            fansWhoLikeAles++
+                        }
+                        if (pinnedBreweryFollowers[l].likesLager == true) {
+                            fansWhoLikeLagers++
+                        }
+                        if (pinnedBreweryFollowers[l].likesIPA == true) {
+                            fansWhoLikeIPAs++
+                        }
+                        if (pinnedBreweryFollowers[l].likesStout == true) {
+                            fansWhoLikeStouts++
+                        }
+                        if (pinnedBreweryFollowers[l].likesPaleAle == true) {
+                            fansWhoLikePaleAles++
+                        }
+                        if (pinnedBreweryFollowers[l].likesWheatBeer == true) {
+                            fansWhoLikeWheatBeers++
+                        }
+                        if (pinnedBreweryFollowers[l].likesPilsner == true) {
+                            fansWhoLikePilsners++
+                        }
+                        if (pinnedBreweryFollowers[l].likesPorter == true) {
+                            fansWhoLikePorters++
+                        }
+                        if (pinnedBreweryFollowers[l].likesSour == true) {
+                            fansWhoLikeSours++
+                        }
+                        if (pinnedBreweryFollowers[l].likesSaison == true) {
+                            fansWhoLikeSaisons++
+                        }
+                    }
+
+                    console.log("Shared followers", numberOfSharedFollowers)
+
+                    var infowindow = new google.maps.InfoWindow({
+
+                        content: (breweries[i].name + "<br>" +
+                            " Shared followers: " + numberOfSharedFollowers + "<br>" +
+                            " Fan style preferences: " + "<br>" +
+                            fansWhoLikeAles + " like ales, " + "<br>" +
+                            fansWhoLikeLagers + " like lagers, " + "<br>" +
+                            fansWhoLikeIPAs + " like IPAs, " + "<br>" +
+                            fansWhoLikeStouts + " like stouts, " + "<br>" +
+                            fansWhoLikePaleAles + " like pale ales, " + "<br>" +
+                            fansWhoLikeWheatBeers + " like wheat beers, " + "<br>" +
+                            fansWhoLikePilsners + " like pilsners, " + "<br>" +
+                            fansWhoLikePorters + " like porters, " + "<br>" +
+                            fansWhoLikeSours + " like sours and " + "<br>" +
+                            fansWhoLikeSaisons + " like saisons.")
+
+                    });
+                    infowindow.open(map, marker);
+                    console.log("Breweries[i]", breweries[i]);
+                };
             };
+
         };
+
+        function FindLoggedInBrewery() {
+            var loggedInBrewery;
+            for (var i = 0; i < breweries.length; i++) {
+                if (breweries[i].id == breweries[i].loggedInBreweryId) {
+                    loggedInBrewery = breweries[i];
+                }
+            }
+            return loggedInBrewery
+        }
+
+
 
     </script>
 
@@ -56,8 +147,11 @@
 
 </div>
 
+<br />
+
+<H4>Registered breweries</H4>
 <table class="table">
-    <thead>
+    <thead>              
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
@@ -79,9 +173,6 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Collaboration)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Followers)
             </th>
             <th></th>
         </tr>
@@ -112,10 +203,6 @@
                     @Html.DisplayFor(modelItem => item.Collaboration)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Followers.Count)
-
-                </td>
-                <td>
                     @*<img src="@Url.Content(item.Image)"/>*@
                 </td>
                 <td>
@@ -125,5 +212,57 @@
                 </td>
             </tr>
         }
+    </tbody>
+</table>
+
+<script>
+    var matchedBreweries;
+
+    //Loop through all yes collaboration breweries
+    for (var i = 0; i < breweries.length; i++) {
+
+        //Add brewery to mathed breweries IF it has at least 3 same beer styles AND has at least 2 shared fans AND fans have at least 2 shared tastes AND breweries are < 15 miles apart
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+    
+
+
+
+</script>
+
+
+
+
+<br />
+<h4>Matches</h4>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+        </tr>
+
+
+
+
+    </thead>
+    <tbody>
+
+
+
+
     </tbody>
 </table>
