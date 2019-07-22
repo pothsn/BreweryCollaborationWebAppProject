@@ -36,7 +36,7 @@
                 console.log("brewery", breweries[i]);
 
                 var numberOfSharedFollowers = 0;
-                var sharedFollowers;
+                //var sharedFollowers;
                 var fansWhoLikeAles = 0;
                 var fansWhoLikeLagers = 0;
                 var fansWhoLikeIPAs = 0;
@@ -73,17 +73,59 @@
                     }
 
                     //Find tastes of pinned brewery's fans
-                    //for (var l = 0; l < pinnedBreweryFollowers.length; l++) {
+                    for (var l = 0; l < pinnedBreweryFollowers.length; l++) {
 
+                        console.log("pinnedBreweryFollowers[i]", pinnedBreweryFollowers[i])
 
-                    //}
+                        if (pinnedBreweryFollowers[l].likesAle == true) {
+                            fansWhoLikeAles++
+                        }
+                        if (pinnedBreweryFollowers[l].likesLager == true) {
+                            fansWhoLikeLagers++
+                        }
+                        if (pinnedBreweryFollowers[l].likesIPA == true) {
+                            fansWhoLikeIPAs++
+                        }
+                        if (pinnedBreweryFollowers[l].likesStout == true) {
+                            fansWhoLikeStouts++
+                        }
+                        if (pinnedBreweryFollowers[l].likesPaleAle == true) {
+                            fansWhoLikePaleAles++
+                        }
+                        if (pinnedBreweryFollowers[l].likesWheatBeer == true) {
+                            fansWhoLikeWheatBeers++
+                        }
+                        if (pinnedBreweryFollowers[l].likesPilsner == true) {
+                            fansWhoLikePilsners++
+                        }
+                        if (pinnedBreweryFollowers[l].likesPorter == true) {
+                            fansWhoLikePorters++
+                        }
+                        if (pinnedBreweryFollowers[l].likesSour == true) {
+                            fansWhoLikeSours++
+                        }
+                        if (pinnedBreweryFollowers[l].likesSaison == true) {
+                            fansWhoLikeSaisons++
+                        }
+                    }
 
                     console.log("Shared followers", numberOfSharedFollowers)
 
-                    var infowindow = new google.maps.InfoWindow({
-
-                        content: breweries[i].name + " Shared followers: " + numberOfSharedFollowers
-
+                    var infowindow = new google.maps.InfoWindow({                 
+                        
+                        content: (breweries[i].name + "<br>" +
+                            " Shared followers: " + numberOfSharedFollowers + "<br>" +
+                            " Fan style preferences: " + "<br>" +
+                            fansWhoLikeAles + " like ales, " + "<br>" +
+                            fansWhoLikeLagers + " like lagers, " + "<br>" +
+                            fansWhoLikeIPAs + " like IPAs, " + "<br>" +
+                            fansWhoLikeStouts + " like stouts, " + "<br>" +
+                            fansWhoLikePaleAles + " like pale ales, " + "<br>" +
+                            fansWhoLikeWheatBeers + " like wheat beers, " + "<br>" +
+                            fansWhoLikePilsners + " like pilsners, " + "<br>" +
+                            fansWhoLikePorters + " like porters, " + "<br>" +
+                            fansWhoLikeSours + " like sours and " + "<br>" +
+                            fansWhoLikeSaisons + " like saisons.") 
 
                     });
                     infowindow.open(map, marker);
