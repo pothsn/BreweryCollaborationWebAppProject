@@ -49,15 +49,307 @@ namespace BreweryCollaborationWebbApp.Controllers
                     brewery.LoggedInBreweryId = loggedInBrewery.Id;
                     //Query for each brewery's beers
                     brewery.BreweryBeers = _context.BreweryBeer.Where(b => b.BreweryId == brewery.Id).ToList();
+                    
                     //For some reason the Brewery brewery property (part of the FK on BreweryBeer was containing the associated brewery object, causing a bit of a looping issue. Nullifying bandaid applied below.
                     foreach (BreweryBeer bb in brewery.BreweryBeers)
                     {
                         bb.Brewery = null;
                     }
-                }
-                return View(BreweryList);
 
+                    //Get matches for logged in brewery
+                    IEnumerable<Brewery> breweryMatches = await GetBreweryMatches();
+
+                    //Instantiate view model
+                    var viewModel = new BreweriesIndexViewModel();
+                    viewModel.Breweries = BreweryList;
+                    viewModel.BreweryMatches = breweryMatches;
+
+
+                    return View(viewModel);
+                }
             }
+            return View();
+        }
+
+        public async Task<IEnumerable<Brewery>> GetBreweryMatches()
+        {
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            //Query for logged in brewery
+            var loggedInBrewery = _context.Brewery.Where(i => i.ApplicationId == userId).SingleOrDefault();
+            //Query for each brewery's beers
+            loggedInBrewery.BreweryBeers = _context.BreweryBeer.Where(b => b.BreweryId == loggedInBrewery.Id).ToList();
+
+            List<Brewery> matchedBreweries = new List<Brewery>();
+
+            //This massive block takes note of the logged in breweries beer styles
+            var loggedInBreweryHasAle = false;
+            var loggedInBreweryHasLager = false;
+            var loggedInBreweryHasIPA = false;
+            var loggedInBreweryHasStout = false;
+            var loggedInBreweryHasPaleAle = false;
+            var loggedInBreweryHasWheatBeer = false;
+            var loggedInBreweryHasPilsner = false;
+            var loggedInBreweryHasPorter = false;
+            var loggedInBreweryHasSour = false;
+            var loggedInBreweryHasSaison = false;
+
+            foreach (BreweryBeer beer in loggedInBrewery.BreweryBeers)
+            {
+                if (beer.StyleId == 1)
+                {
+                    loggedInBreweryHasAle = true;
+                }
+                if (beer.StyleId == 2)
+                {
+                    loggedInBreweryHasLager = true;
+                }
+                if (beer.StyleId == 3)
+                {
+                    loggedInBreweryHasIPA = true;
+                }
+                if (beer.StyleId == 4)
+                {
+                    loggedInBreweryHasStout = true;
+                }
+                if (beer.StyleId == 5)
+                {
+                    loggedInBreweryHasPaleAle = true;
+                }
+                if (beer.StyleId == 6)
+                {
+                    loggedInBreweryHasWheatBeer = true;
+                }
+                if (beer.StyleId == 7)
+                {
+                    loggedInBreweryHasPilsner = true;
+                }
+                if (beer.StyleId == 8)
+                {
+                    loggedInBreweryHasPorter = true;
+                }
+                if (beer.StyleId == 9)
+                {
+                    loggedInBreweryHasSour = true;
+                }
+                if (beer.StyleId == 10)
+                {
+                    loggedInBreweryHasSaison = true;
+                }
+            }
+
+            IEnumerable<Brewery> breweries = await _context.Brewery.ToListAsync();
+            foreach (Brewery brewery in breweries)
+            {
+                //Query for fans by looking at follows that have the same BreweryId as the one being looked at in that loop
+                brewery.Followers = _context.Fan.Where(fa => (_context.Follow.Where(fo => fo.BreweryId == brewery.Id).Select(fo => fo.FanFollowerId).Contains(fa.Id))).ToList();
+                //Query for each brewery's beers
+                brewery.BreweryBeers = _context.BreweryBeer.Where(b => b.BreweryId == brewery.Id).ToList();
+
+                //For some reason the Brewery brewery property (part of the FK on BreweryBeer was containing the associated brewery object, causing a bit of a looping issue. Nullifying bandaid applied below.
+                foreach (BreweryBeer bb in brewery.BreweryBeers)
+                {
+                    bb.Brewery = null;
+                }
+            }
+
+
+
+            //Loop through all yes collaboration breweries
+            foreach (Brewery brewery in breweries)
+            {
+                if (brewery.Id != loggedInBrewery.Id)
+                {
+
+                    //Add brewery to mathed breweries IF it has at least 3 same beer styles AND has at least 2 shared fans AND fans have at least 2 shared tastes AND breweries are < 15 miles apart
+                    var beerStyleMatch = false;
+
+                    //This huge block takes note of breweries[i] beer styles
+                    var matchingBreweryHasAle = false;
+                    var matchingBreweryHasLager = false;
+                    var matchingBreweryHasIPA = false;
+                    var matchingBreweryHasStout = false;
+                    var matchingBreweryHasPaleAle = false;
+                    var matchingBreweryHasWheatBeer = false;
+                    var matchingBreweryHasPilsner = false;
+                    var matchingBreweryHasPorter = false;
+                    var matchingBreweryHasSour = false;
+                    var matchingBreweryHasSaison = false;
+
+                    foreach (BreweryBeer beer in brewery.BreweryBeers)
+                    {
+
+                        if (beer.StyleId == 1)
+                        {
+                            matchingBreweryHasAle = true;
+                        }
+                        if (beer.StyleId == 2)
+                        {
+                            matchingBreweryHasLager = true;
+                        }
+                        if (beer.StyleId == 3)
+                        {
+                            matchingBreweryHasIPA = true;
+                        }
+                        if (beer.StyleId == 4)
+                        {
+                            matchingBreweryHasStout = true;
+                        }
+                        if (beer.StyleId == 5)
+                        {
+                            matchingBreweryHasPaleAle = true;
+                        }
+                        if (beer.StyleId == 6)
+                        {
+                            matchingBreweryHasWheatBeer = true;
+                        }
+                        if (beer.StyleId == 7)
+                        {
+                            matchingBreweryHasPilsner = true;
+                        }
+                        if (beer.StyleId == 8)
+                        {
+                            matchingBreweryHasPorter = true;
+                        }
+                        if (beer.StyleId == 9)
+                        {
+                            matchingBreweryHasSour = true;
+                        }
+                        if (beer.StyleId == 10)
+                        {
+                            matchingBreweryHasSaison = true;
+                        }
+
+                        //Below we count the number of style matches, a match will need to share 3 beer styles
+                        var numberOfStyleMatches = 0;
+                        if (loggedInBreweryHasAle == true && matchingBreweryHasAle == true)
+                        {
+                            numberOfStyleMatches++;
+                        }
+                        if (loggedInBreweryHasLager == true && matchingBreweryHasLager == true)
+                        {
+                            numberOfStyleMatches++;
+                        }
+                        if (loggedInBreweryHasIPA == true && matchingBreweryHasIPA == true)
+                        {
+                            numberOfStyleMatches++;
+                        }
+                        if (loggedInBreweryHasStout == true && matchingBreweryHasStout == true)
+                        {
+                            numberOfStyleMatches++;
+                        }
+                        if (loggedInBreweryHasPaleAle == true && matchingBreweryHasPaleAle == true)
+                        {
+                            numberOfStyleMatches++;
+                        }
+                        if (loggedInBreweryHasWheatBeer == true && matchingBreweryHasWheatBeer == true)
+                        {
+                            numberOfStyleMatches++;
+                        }
+                        if (loggedInBreweryHasPilsner == true && matchingBreweryHasPilsner == true)
+                        {
+                            numberOfStyleMatches++;
+                        }
+                        if (loggedInBreweryHasPorter == true && matchingBreweryHasPorter == true)
+                        {
+                            numberOfStyleMatches++;
+                        }
+                        if (loggedInBreweryHasSour == true && matchingBreweryHasSour == true)
+                        {
+                            numberOfStyleMatches++;
+                        }
+                        if (loggedInBreweryHasSaison == true && matchingBreweryHasSaison == true)
+                        {
+                            numberOfStyleMatches++;
+                        }
+
+                        //find number of shared followers
+                        var numberOfSharedFollowers = 0;
+
+                        foreach (Fan loggedInBreweryFollower in loggedInBrewery.Followers)
+                        {
+                            foreach (Fan breweryFollower in brewery.Followers)
+                            {
+
+                                if (loggedInBreweryFollower.Id == breweryFollower.Id)
+                                {
+                                    numberOfSharedFollowers++;
+                                }
+                            }
+                        }
+
+                        //Compare shared followers tastes
+                        var sharedTastes = 0;
+
+                        foreach (Fan loggedInBreweryFollower in loggedInBrewery.Followers)
+                        {
+                            foreach (Fan breweryFollower in brewery.Followers)
+                            {
+
+                                if (loggedInBreweryFollower.LikesAle == true && breweryFollower.LikesAle == true)
+                                {
+                                    sharedTastes++;
+                                }
+                                if (loggedInBreweryFollower.LikesLager == true && breweryFollower.LikesLager == true)
+                                {
+                                    sharedTastes++;
+                                }
+                                if (loggedInBreweryFollower.LikesIPA == true && breweryFollower.LikesIPA == true)
+                                {
+                                    sharedTastes++;
+                                }
+                                if (loggedInBreweryFollower.LikesStout == true && breweryFollower.LikesStout == true)
+                                {
+                                    sharedTastes++;
+                                }
+                                if (loggedInBreweryFollower.LikesPaleAle == true && breweryFollower.LikesPaleAle == true)
+                                {
+                                    sharedTastes++;
+                                }
+                                if (loggedInBreweryFollower.LikesWheatBeer == true && breweryFollower.LikesWheatBeer == true)
+                                {
+                                    sharedTastes++;
+                                }
+                                if (loggedInBreweryFollower.LikesPilsner == true && breweryFollower.LikesPilsner == true)
+                                {
+                                    sharedTastes++;
+                                }
+                                if (loggedInBreweryFollower.LikesPorter == true && breweryFollower.LikesPorter == true)
+                                {
+                                    sharedTastes++;
+                                }
+                                if (loggedInBreweryFollower.LikesSour == true && breweryFollower.LikesSour == true)
+                                {
+                                    sharedTastes++;
+                                }
+                                if (loggedInBreweryFollower.LikesSaison == true && breweryFollower.LikesSaison == true)
+                                {
+                                    sharedTastes++;
+                                }
+
+                                //Determine if brewry is close enough geographically
+
+
+
+
+
+                                //Finally determine if breweries[i] is a match
+                                if (numberOfStyleMatches >= 3 && numberOfSharedFollowers >= 2 && sharedTastes >= 5)
+                                {
+                                    beerStyleMatch = true;
+                                }
+
+                                if (beerStyleMatch == true && !matchedBreweries.Contains(brewery))
+                                {
+                                    matchedBreweries.Add(brewery);
+                                }
+
+                            }
+                        }
+                    }
+
+                }               
+            }
+            return matchedBreweries;
         }
 
         // GET: Breweries index for fans

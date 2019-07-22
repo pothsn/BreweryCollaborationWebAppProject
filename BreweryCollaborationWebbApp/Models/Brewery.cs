@@ -23,14 +23,15 @@ namespace BreweryCollaborationWebbApp.Models
         public ApplicationUser ApplicationUser { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
-        public virtual ICollection<BreweryBeer> BreweryBeers { get; set;  }
+        public virtual List<BreweryBeer> BreweryBeers { get; set;  }
         public string Image { get; set; }
         public virtual ICollection<CollaborationRequest> CollaborationRequests { get; set; }
-        public virtual ICollection<Fan> Followers { get; set; }
+        public virtual List<Fan> Followers { get; set; }
 
         public virtual ICollection<Follow> Follows { get; set; }
         public string BreweryRank { get; set; }
 
         public virtual int LoggedInBreweryId { get; set; }
+
     }
 }
