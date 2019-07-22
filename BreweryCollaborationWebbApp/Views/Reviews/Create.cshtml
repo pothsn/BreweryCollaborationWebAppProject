@@ -1,4 +1,4 @@
-﻿@model BreweryCollaborationWebbApp.Models.Review
+﻿@model BreweryCollaborationWebbApp.ViewModels.CollabBeersViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -13,14 +13,14 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="ReviewText" class="control-label"></label>
-                <input asp-for="ReviewText" class="form-control" />
-                <span asp-validation-for="ReviewText" class="text-danger"></span>
+                <label asp-for="Review.ReviewText" class="control-label"></label>
+                <input asp-for="Review.ReviewText" class="form-control" />
+                <span asp-validation-for="Review.ReviewText" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Rating" class="control-label"></label>
-                <input asp-for="Rating" class="form-control" />
-                <span asp-validation-for="Rating" class="text-danger"></span>
+                <label asp-for="Review.Rating" class="control-label"></label>
+                <input asp-for="Review.Rating" class="form-control" />
+                <span asp-validation-for="Review.Rating" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
@@ -30,7 +30,8 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" asp-controller="Collaborations">Back to List</a> |
+
 </div>
 
 @section Scripts {

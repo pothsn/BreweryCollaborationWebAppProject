@@ -24,6 +24,7 @@ namespace BreweryCollaborationWebbApp.Controllers
         // GET: Collaborations
         public async Task<IActionResult> Index()
         {
+
             var applicationDbContext = _context.Collaboration.Include(c => c.BeerStyle).Include(c => c.CollaborationRequest);
             return View(await applicationDbContext.ToListAsync());
         }
@@ -81,6 +82,7 @@ namespace BreweryCollaborationWebbApp.Controllers
                 newCollabBeer.WhenCreated = DateTime.Now;
                 _context.Add(newCollabBeer);
                 await _context.SaveChangesAsync();
+                
                 return RedirectToAction("Index", "breweries");
             }
 
@@ -120,6 +122,7 @@ namespace BreweryCollaborationWebbApp.Controllers
             {
                 try
                 {
+                    collaboration.Updated = DateTime.Now;
                     _context.Update(collaboration);
                     await _context.SaveChangesAsync();
                 }
@@ -179,34 +182,27 @@ namespace BreweryCollaborationWebbApp.Controllers
 
 
         // GET: Collaborations/Details/5
-        public async Task<IActionResult> NewsFeedDetails(int? id)
+        public async Task<IActionResult> NewsFeedDetails()
         {
+ 
+            var newsFeedUpdate = _context.Collaboration.OrderByDescending(cb => cb.WhenCreated).Take(3)
+                .Include(cb => cb.BeerStyle)
+                .Include(cb => cb.CollaborationRequest).ToList();
 
-            //display newest collaboration listing
-
-
-            //send newest collaboration listing to NewsFeedViewModel
-            //return View(newsFeedViewModel);
-            if (id == null)
+            foreach (var collaboration in newsFeedUpdate)
             {
-                return NotFound();
-            }
-            var updateCollab = _context.Collaboration.Include(c => c.Name)
-                .Include(c => c.BeerStyle)
-                .Include(c => c.WhenCreated)
-                .Include(c => c.BrewSite)
-                .Include(c => c.CollaborationRequest.ReceiverName)
-                .Include(c => c.CollaborationRequest.SenderName);
-                
+                newsFeedUpdate.Sort((x, y) => DateTime.Compare(x.Updated, y.Updated));
 
-            if (updateCollab == null)
-            {
-                return NotFound("there are no collaborations at this time");
+                newsFeedUpdate.OrderBy(x => x.WhenCreated).ThenBy(y => y.Updated);
+                return View(newsFeedUpdate.ToList());
             }
+            //newsFeedUpdate.OrderBy(x => x.WhenCreated).ThenBy(y => y.Updated);
+            
+            return View( newsFeedUpdate.ToList());
 
-            return View(updateCollab);
 
         }
+
 
     }
 }

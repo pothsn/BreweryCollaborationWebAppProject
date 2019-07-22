@@ -13,10 +13,11 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
-            <input type="hidden" asp-for="CollaborationRequestId"/>
-            <input type="hidden" asp-for="WhenCreated"/>
+            <input type="hidden" asp-for="CollaborationRequestId" />
+            <input asp-for="WhenCreated" type="hidden" />
+
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+                <label asp-for="Name" class="control-label">Collaboration Beer Name</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
@@ -26,7 +27,7 @@
                 <span asp-validation-for="BrewSite" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="StyleId" class="control-label"></label>
+                <label asp-for="StyleId" class="control-label">Beer Style</label>
                 <select asp-for="StyleId" class="form-control" asp-items="ViewBag.StyleId"></select>
                 <span asp-validation-for="StyleId" class="text-danger"></span>
             </div>

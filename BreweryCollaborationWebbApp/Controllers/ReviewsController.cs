@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BreweryCollaborationWebbApp.Data;
 using BreweryCollaborationWebbApp.Models;
+using BreweryCollaborationWebbApp.ViewModels;
+using System.Security.Claims;
 
 namespace BreweryCollaborationWebbApp.Controllers
 {
@@ -54,16 +56,31 @@ namespace BreweryCollaborationWebbApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ReviewText,Rating")] Review review)
+        public async Task<IActionResult> Create(int?  id, CollabBeersViewModel collabBeersViewModel)
         {
+            Review newReview = collabBeersViewModel.Review;
             if (ModelState.IsValid)
             {
-                _context.Add(review);
+                
+                string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                Fan loggedInFan = _context.Fan.Where(i => i.ApplicationId == userId).SingleOrDefault();
+                newReview.FanId = loggedInFan.Id;
+                if (id != null)
+                {
+                    newReview.CollaborationId = (int)id;
+
+                }
+                //newBeer.Name = breweryBeersViewModel.BeerName;
+
+                _context.Add(newReview);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("index", "collaborations");
             }
-            return View(review);
+            return View();
         }
+
+ 
+        
 
         // GET: Reviews/Edit/5
         public async Task<IActionResult> Edit(int? id)
