@@ -29,22 +29,24 @@
                 console.log("brewery", breweries[i]);
                 if (breweries[i].collaboration == true) {
                     var followers = breweries[i].followers;
-                    ////this works below
-                    var marker = new google.maps.Marker({
-                        position: { lat: breweries[i].latitude, lng: breweries[i].longitude },
-                        map: map
-                    });
-                    var infowindow = new google.maps.InfoWindow({
-                        content: this.breweries[i].name + " "
 
+                    //THIS BRINGS UP EACH INFO WINDOW FOR EACH MARKER AND DISPLAYS THE BREWERY NAME DYNAMICALLY
+                    var infowindow = new google.maps.InfoWindow();
+                    var marker, i;
+                    for (var i = 0; i < breweries.length; i++) {
+                        marker = new google.maps.Marker({
+                            position: new google.maps.LatLng({ lat: breweries[i].latitude, lng: breweries[i].longitude }),
+                            map: map
+                        });
+                        google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                            return function () {
+                                infowindow.setContent(breweries[i].name, breweries[i].website);
+                                infowindow.open(map, marker);
+                            }
+                        })(marker, i));
+                    }
+                    
 
-                    });
-                    //added logic to click markers to open them
-
-                    marker.addListener('click', function () {
-                        infowindow.open(map, this)
-
-                    });
 
                
 

@@ -25,10 +25,18 @@
                 document.getElementById('map'), { zoom: 10, center: milwaukee });
             for (var i = 0; i < breweries.length; i++) {
                 console.log("brewery", breweries[i]);
+
                 var marker = new google.maps.Marker({
                     position: { lat: breweries[i].latitude, lng: breweries[i].longitude },
                     map: map
                 });
+                //this doesn't execute for some reason. problem may be in the IndexForFans method in the breweries controller?
+                google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                    return function () {
+                        infowindow.setContent(breweries[i].name);
+                        infowindow.open(map, marker);
+                    }
+                })(marker, i));
             }
         };
 
