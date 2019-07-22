@@ -32,8 +32,5 @@ namespace BreweryCollaborationWebbApp.Models
         public string BreweryRank { get; set; }
 
         public virtual int LoggedInBreweryId { get; set; }
-
-
-
     }
 }

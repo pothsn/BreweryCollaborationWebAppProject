@@ -103,8 +103,8 @@
 
                     console.log("Shared followers", numberOfSharedFollowers)
 
-                    var infowindow = new google.maps.InfoWindow({                 
-                        
+                    var infowindow = new google.maps.InfoWindow({
+
                         content: (breweries[i].name + "<br>" +
                             " Shared followers: " + numberOfSharedFollowers + "<br>" +
                             " Fan style preferences: " + "<br>" +
@@ -117,7 +117,7 @@
                             fansWhoLikePilsners + " like pilsners, " + "<br>" +
                             fansWhoLikePorters + " like porters, " + "<br>" +
                             fansWhoLikeSours + " like sours and " + "<br>" +
-                            fansWhoLikeSaisons + " like saisons.") 
+                            fansWhoLikeSaisons + " like saisons.")
 
                     });
                     infowindow.open(map, marker);
@@ -146,8 +146,11 @@
 
 </div>
 
+<br />
+
+<H4>Registered breweries</H4>
 <table class="table">
-    <thead>
+    <thead>              
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
@@ -208,5 +211,57 @@
                 </td>
             </tr>
         }
+    </tbody>
+</table>
+
+<script>
+    var matchedBreweries;
+
+    //Loop through all yes collaboration breweries
+    for (var i = 0; i < breweries.length; i++) {
+
+        //Add brewery to mathed breweries IF it has at least 3 same beer styles AND has at least 2 shared fans AND fans have at least 2 shared tastes AND breweries are < 15 miles apart
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+    
+
+
+
+</script>
+
+
+
+
+<br />
+<h4>Matches</h4>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+        </tr>
+
+
+
+
+    </thead>
+    <tbody>
+
+
+
+
     </tbody>
 </table>
