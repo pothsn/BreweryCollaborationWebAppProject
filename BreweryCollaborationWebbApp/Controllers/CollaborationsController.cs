@@ -24,6 +24,7 @@ namespace BreweryCollaborationWebbApp.Controllers
         // GET: Collaborations
         public async Task<IActionResult> Index()
         {
+
             var applicationDbContext = _context.Collaboration.Include(c => c.BeerStyle).Include(c => c.CollaborationRequest);
             return View(await applicationDbContext.ToListAsync());
         }
@@ -179,34 +180,57 @@ namespace BreweryCollaborationWebbApp.Controllers
 
 
         // GET: Collaborations/Details/5
-        public async Task<IActionResult> NewsFeedDetails(int? id)
+        public async Task<IActionResult> NewsFeedDetails()
         {
 
-            //display newest collaboration listing
+
+            var newsFeedUpdate = _context.Collaboration.OrderByDescending(cb => cb.WhenCreated).Take(3)
+                .Include(cb => cb.BeerStyle)
+                .Include(cb => cb.CollaborationRequest);
+
+            return View(await newsFeedUpdate.ToListAsync());
+            //NewsFeedViewModel newsFeedUpdate = new NewsFeedViewModel();
+
+            //var newsFeedUpdate = _context.Collaboration.OrderByDescending(cb => cb.WhenCreated).Take(3).ToList();
+            //newsFeedUpdate.Collaborations = _context.Collaboration.OrderByDescending(cb => cb.WhenCreated)
+            //    .Include(cb => cb.Collaborations)
+            //    .Include(cb => cb.Id)
+            //    .Include(cb => cb.CollaborationRequestId)
+            //    .Include(cb => cb.BeerStyle)
+            //    .Include(cb => cb.StyleId)
+            //    .Include(cb => cb.BrewSite)
+            //    .Include(cb => cb.CollaborationRequest.SenderName)
+            //    .Include(cb => cb.CollaborationRequest.ReceiverName)
+            //    .Include(cb => cb.Name)
+            //    .Take(3).ToList();
+            //return View(newsFeedUpdate);
+
+            //BELOW THIS LINE WORKS
+            //newsFeedUpdate.Collaborations = _context.Collaboration.OrderByDescending(cb => cb.WhenCreated).Take(3).ToList();
+            //return View(newsFeedUpdate);
+
+            ////display newest collaboration listing
 
 
-            //send newest collaboration listing to NewsFeedViewModel
-            //return View(newsFeedViewModel);
-            if (id == null)
-            {
-                return NotFound();
-            }
-            var updateCollab = _context.Collaboration.Include(c => c.Name)
-                .Include(c => c.BeerStyle)
-                .Include(c => c.WhenCreated)
-                .Include(c => c.BrewSite)
-                .Include(c => c.CollaborationRequest.ReceiverName)
-                .Include(c => c.CollaborationRequest.SenderName);
-                
+            ////send newest collaboration listing to NewsFeedViewModel
+            ////return View(newsFeedViewModel);
+            //if (id == null)
+            //{
+            //    return NotFound();
+            //}
+            //var updateCollab = _context.Collaboration.Include(c => c.Name)
+            //    .Include(c => c.BeerStyle)
+            //    .Include(c => c.WhenCreated)
+            //    .Include(c => c.BrewSite)
+            //    .Include(c => c.CollaborationRequest.ReceiverName)
+            //    .Include(c => c.CollaborationRequest.SenderName);
 
-            if (updateCollab == null)
-            {
-                return NotFound("there are no collaborations at this time");
-            }
 
-            return View(updateCollab);
+
+            //return View(updateCollab);
 
         }
+
 
     }
 }

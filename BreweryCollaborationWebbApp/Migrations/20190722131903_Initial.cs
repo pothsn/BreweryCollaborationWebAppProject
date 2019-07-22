@@ -301,6 +301,7 @@ namespace BreweryCollaborationWebbApp.Migrations
                     StyleId = table.Column<int>(nullable: false),
                     CollaborationRequestId = table.Column<int>(nullable: false),
                     WhenCreated = table.Column<DateTime>(nullable: false),
+                    Today = table.Column<DateTime>(nullable: false),
                     CollaborationId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>

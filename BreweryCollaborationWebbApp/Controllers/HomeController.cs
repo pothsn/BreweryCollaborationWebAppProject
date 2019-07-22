@@ -47,7 +47,7 @@ namespace BreweryCollaborationWebbApp.Controllers
 
         public  IActionResult NewsFeedViewTest(NewsFeedViewModel newsFeedViewModel)
         {
-            var timeStamp = new DateTime();
+            //var timeStamp = new DateTime();
             //timeStamp = newsFeedViewModel.Collaborations.Where(t => t.WhenCreated == DateTime.Today);
      
             //var thing = new NewsFeedViewModel();

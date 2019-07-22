@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BreweryCollaborationWebbApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190721201055_updateCollab")]
-    partial class updateCollab
+    [Migration("20190722145622_updateViewModel")]
+    partial class updateViewModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

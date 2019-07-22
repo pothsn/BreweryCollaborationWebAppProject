@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BreweryCollaborationWebbApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190721195808_Initial")]
+    [Migration("20190722131903_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -146,6 +146,8 @@ namespace BreweryCollaborationWebbApp.Migrations
                     b.Property<string>("Name");
 
                     b.Property<int>("StyleId");
+
+                    b.Property<DateTime>("Today");
 
                     b.Property<DateTime>("WhenCreated");
 

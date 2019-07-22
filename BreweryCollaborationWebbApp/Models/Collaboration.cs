@@ -28,7 +28,7 @@ namespace BreweryCollaborationWebbApp.Models
         //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy HH:MM}")]
         public DateTime WhenCreated { get; set; }
         public ICollection<Collaboration> Collaborations { get; set; }
-        public DateTime Today { get; set; }
+        //public DateTime Today { get; set; }
 
 
     }

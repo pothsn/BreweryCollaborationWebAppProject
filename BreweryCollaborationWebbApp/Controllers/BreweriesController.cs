@@ -38,8 +38,8 @@ namespace BreweryCollaborationWebbApp.Controllers
             else
             {
                 ViewBag.GoogleMapsAPIKey = APIKeys.GoogleMapsAPIKey;
-                IEnumerable<Brewery> BreweryList = await _context.Brewery.Include(s=>s.Followers).ToListAsync();
-                foreach(Brewery brewery in BreweryList)
+                IEnumerable<Brewery> BreweryList = await _context.Brewery.Include(s => s.Followers).ToListAsync();
+                foreach (Brewery brewery in BreweryList)
                 {
                     //Query for fans by looking at follows that have the same BreweryId as the one being looked at in that loop
                     brewery.Followers = _context.Fan.Where(fa => (_context.Follow.Where(fo => fo.BreweryId == brewery.Id).Select(fo => fo.FanFollowerId).Contains(fa.Id))).ToList();
@@ -54,14 +54,14 @@ namespace BreweryCollaborationWebbApp.Controllers
         {
             ViewBag.GoogleMapsAPIKey = APIKeys.GoogleMapsAPIKey;
             //This lambda looks through all breweries and adds ones that share an id with a SenderId OR a ReceiverId located on any CollaborationRequest object
-            IEnumerable<Brewery> breweriesWithCollaborations = _context.Brewery.Where(b => (_context.CollaborationRequest.Where(c => c.SenderId == b.Id).Select(c => c.SenderId).Contains(b.Id)) || (_context.CollaborationRequest.Where(c => c.ReceiverId == b.Id).Select(c => c.ReceiverId).Contains(b.Id))).ToList();
+            IEnumerable<Brewery> breweriesWithCollaborations =  _context.Brewery.Where(b => (_context.CollaborationRequest.Where(c => c.SenderId == b.Id).Select(c => c.SenderId).Contains(b.Id)) || (_context.CollaborationRequest.Where(c => c.ReceiverId == b.Id).Select(c => c.ReceiverId).Contains(b.Id))).ToList();
             return View(breweriesWithCollaborations);
         }
 
         // GET: Breweries/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-        if (id == null)
+            if (id == null)
             {
                 return NotFound();
             }
@@ -80,7 +80,7 @@ namespace BreweryCollaborationWebbApp.Controllers
         {
             //get application user's Id
             string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            Brewery loggedInBrewery =  _context.Brewery.Where(i => i.ApplicationId == userId).SingleOrDefault();
+            Brewery loggedInBrewery = _context.Brewery.Where(i => i.ApplicationId == userId).SingleOrDefault();
             //query for beers that have the matching FK, put them inICollection<BreweryBeer> BreweryBeers
             loggedInBrewery.BreweryBeers = _context.BreweryBeer.Where(b => b.BreweryId == loggedInBrewery.Id).ToList();
 
@@ -112,13 +112,13 @@ namespace BreweryCollaborationWebbApp.Controllers
         public async Task<IActionResult> Create(Brewery brewery)
         {
             if (ModelState.IsValid)
-            {              
+            {
                 // assign ApplicationId a la TrashCollector
                 brewery.ApplicationId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 _context.Add(brewery);
                 await Geocode(brewery);
                 await _context.SaveChangesAsync();
-                
+
                 return RedirectToAction(nameof(Index));
             }
             return View(brewery);
@@ -255,95 +255,85 @@ namespace BreweryCollaborationWebbApp.Controllers
         }
 
 
-        public async Task<IActionResult> CountFollowers(NewsFeedViewModel newsFeedViewModel)
+
+
+        public async Task<IActionResult> FollowersCount(NewsFeedViewModel newsFeedViewModel)
         {
-            //this is a test method so I don't break anything lol
 
-            //count total followers for each brewery
-            //Follow follow = _context.Follow.Where(f => f.Fan.Follows == Brewery).Count();
-            //display total count of followers
+            IEnumerable<Brewery> BreweryList = await _context.Brewery.Include(s => s.Followers).ToListAsync();
+            foreach (Brewery brewery in BreweryList)
+            {
+                //Query for fans by looking at follows that have the same BreweryId as the one being looked at in that loop
+                brewery.Followers = _context.Fan.Where(fa => (_context.Follow.Where(fo => fo.BreweryId == brewery.Id).Select(fo => fo.FanFollowerId).Contains(fa.Id))).ToList();
+                return View(BreweryList);
 
+            }
+
+
+            newsFeedViewModel.Brewery.ApplicationId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            //query for the Brewery object that is currently logged in
+            //string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            //Brewery loggedInBrewery = _context.Brewery.Where(i => i.ApplicationId == userId).SingleOrDefault();
+            Follow followers = _context.Follow.Where(f => f.ApplicationId == newsFeedViewModel.Brewery.ApplicationId).SingleOrDefault();
+
+            //    //query for a count of followers per each brewery
+            //int followersCount = _context.Follow.Where(bf => bf.BreweryId == true);
+
+
+
+            if (followers == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                //get id of brewery whos follows we want to count
+                //NewsFeedViewModel followBreweryId = _context.Follow.Where(f => f.BreweryId == Brewery.Id).Count();
+                //NewsFeedViewModel breweryFollowers = _context..Where(f => f.BreweryId == this. ).Count();
+                //int fansOfLakefront = _context.Follow.Where(f => f.IsFollowed == true).Count();
+                //int fansOfMobCraft = _context.Follow.Where(f => f.MobCraftBrewery == true).Count();
+                //int fansOfBrokenBat = _context.Follow.Where(f => f.BrokenBatBrewery == true).Count();
+
+                //get count of Beer Fan Taste likes
+                int countOfAleLovers = _context.BeerFanTaste.Where(bft => bft.Ale == true).Count();
+                int countOfLagerLovers = _context.BeerFanTaste.Where(bft => bft.Lager == true).Count();
+                int countOfIndiaPaleAleLovers = _context.BeerFanTaste.Where(bft => bft.IndiaPaleAle == true).Count();
+                int countOfStoutLovers = _context.BeerFanTaste.Where(bft => bft.Stout == true).Count();
+                int countOfPaleAleLovers = _context.BeerFanTaste.Where(bft => bft.PaleAle == true).Count();
+                int countOfWheatBeerLovers = _context.BeerFanTaste.Where(bft => bft.WheatBeer == true).Count();
+                int countOfPilsnerLovers = _context.BeerFanTaste.Where(bft => bft.Pilsner == true).Count();
+                int countOfPorterLovers = _context.BeerFanTaste.Where(bft => bft.Porter == true).Count();
+                int countOfSourLovers = _context.BeerFanTaste.Where(bft => bft.Sour == true).Count();
+                int countOfSaisonLovers = _context.BeerFanTaste.Where(bft => bft.Saison == true).Count();
+            }
 
             return View();
+
+            //gets followers if the followers are bools
+            //followers.BreweryId = newsFeedViewModel.Brewery.Id;
+            //followers.BrokenBatBrewery = newsFeedViewModel.Follow.BrokenBatBrewery;
+            //followers.LakefrontBrewery = newsFeedViewModel.Follow.LakefrontBrewery;
+            //followers.MobCraftBrewery = newsFeedViewModel.Follow.MobCraftBrewery;
+
+
+            //Follow followersCount = _context.Follow.Where(f => f. == id).SingleOrDefault();
+
+
+            //    // int countOfAleLovers = _context.BeerFanTaste.Where(bft => bft.Ale == true).Count();
+            //    return null;
+
+
+
+
+            //    //query for beers that have the matching FK, put them inICollection<BreweryBeer> BreweryBeers
+
+
+            //}
+
+
+
+
         }
 
-
-        //public async Task<IActionResult> FollowersCount(NewsFeedViewModel newsFeedViewModel)
-        //{
-
-        //    IEnumerable<Brewery> BreweryList = await _context.Brewery.Include(s => s.Followers).ToListAsync();
-        //    foreach (Brewery brewery in BreweryList)
-        //    {
-        //        //Query for fans by looking at follows that have the same BreweryId as the one being looked at in that loop
-        //        brewery.Followers = _context.Fan.Where(fa => (_context.Follow.Where(fo => fo.BreweryId == brewery.Id).Select(fo => fo.FanFollowerId).Contains(fa.Id))).ToList();
-        //        return View(BreweryList);
-
-        //    }
-
-
-        //    newsFeedViewModel.Brewery.ApplicationId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-        //    //query for the Brewery object that is currently logged in
-        //    //string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-        //    //Brewery loggedInBrewery = _context.Brewery.Where(i => i.ApplicationId == userId).SingleOrDefault();
-        //    Follow followers = _context.Follow.Where(f => f.ApplicationId == newsFeedViewModel.Brewery.ApplicationId).SingleOrDefault();
-
-        //    //    //query for a count of followers per each brewery
-        //    //int followersCount = _context.Follow.Where(bf => bf.BreweryId == true);
-
-
-
-        //    if (followers == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    else
-        //    {
-        //        //get id of brewery whos follows we want to count
-        //        //NewsFeedViewModel followBreweryId = _context.Follow.Where(f => f.BreweryId == Brewery.Id).Count();
-        //        //NewsFeedViewModel breweryFollowers = _context..Where(f => f.BreweryId == this. ).Count();
-        //        //int fansOfLakefront = _context.Follow.Where(f => f.IsFollowed == true).Count();
-        //        //int fansOfMobCraft = _context.Follow.Where(f => f.MobCraftBrewery == true).Count();
-        //        //int fansOfBrokenBat = _context.Follow.Where(f => f.BrokenBatBrewery == true).Count();
-
-        //        //get count of Beer Fan Taste likes
-        //        int countOfAleLovers = _context.BeerFanTaste.Where(bft => bft.Ale == true).Count();
-        //        int countOfLagerLovers = _context.BeerFanTaste.Where(bft => bft.Lager == true).Count();
-        //        int countOfIndiaPaleAleLovers = _context.BeerFanTaste.Where(bft => bft.IndiaPaleAle == true).Count();
-        //        int countOfStoutLovers = _context.BeerFanTaste.Where(bft => bft.Stout == true).Count();
-        //        int countOfPaleAleLovers = _context.BeerFanTaste.Where(bft => bft.PaleAle == true).Count();
-        //        int countOfWheatBeerLovers = _context.BeerFanTaste.Where(bft => bft.WheatBeer == true).Count();
-        //        int countOfPilsnerLovers = _context.BeerFanTaste.Where(bft => bft.Pilsner == true).Count();
-        //        int countOfPorterLovers = _context.BeerFanTaste.Where(bft => bft.Porter == true).Count();
-        //        int countOfSourLovers = _context.BeerFanTaste.Where(bft => bft.Sour == true).Count();
-        //        int countOfSaisonLovers = _context.BeerFanTaste.Where(bft => bft.Saison == true).Count();
-        //    }
-
-        //    return View();
-
-        //    //gets followers if the followers are bools
-        //    //followers.BreweryId = newsFeedViewModel.Brewery.Id;
-        //    //followers.BrokenBatBrewery = newsFeedViewModel.Follow.BrokenBatBrewery;
-        //    //followers.LakefrontBrewery = newsFeedViewModel.Follow.LakefrontBrewery;
-        //    //followers.MobCraftBrewery = newsFeedViewModel.Follow.MobCraftBrewery;
-
-
-        //    //Follow followersCount = _context.Follow.Where(f => f. == id).SingleOrDefault();
-
-
-        //    //    // int countOfAleLovers = _context.BeerFanTaste.Where(bft => bft.Ale == true).Count();
-        //    //    return null;
-
-
-
-
-        //    //query for beers that have the matching FK, put them inICollection<BreweryBeer> BreweryBeers
-
-
-        //}
-
-
-
-
     }
-
-    }
+}
