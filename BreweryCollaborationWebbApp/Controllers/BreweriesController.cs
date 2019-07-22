@@ -38,11 +38,15 @@ namespace BreweryCollaborationWebbApp.Controllers
             else
             {
                 ViewBag.GoogleMapsAPIKey = APIKeys.GoogleMapsAPIKey;
-                IEnumerable<Brewery> BreweryList = await _context.Brewery.Include(s=>s.Followers).ToListAsync();
+                IEnumerable<Brewery> BreweryList = await _context.Brewery.ToListAsync();
                 foreach(Brewery brewery in BreweryList)
                 {
                     //Query for fans by looking at follows that have the same BreweryId as the one being looked at in that loop
                     brewery.Followers = _context.Fan.Where(fa => (_context.Follow.Where(fo => fo.BreweryId == brewery.Id).Select(fo => fo.FanFollowerId).Contains(fa.Id))).ToList();
+                    string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                    var loggedInBrewery = _context.Brewery.Where(i => i.ApplicationId == userId).SingleOrDefault();
+                    brewery.LoggedInBreweryId = loggedInBrewery.Id;
+                    
                 }
                 return View(BreweryList);
 

@@ -16,8 +16,9 @@
 <div class="row">
     <div id="map"></div>
     <script>
+
         var breweries = @Html.Raw(Json.Serialize(Model));
-        var thing = breweries.followers.length;
+        
         console.log("test", breweries);
         // Initialize and add the map
         function initMap() {
@@ -25,24 +26,82 @@
             var milwaukee = { lat: 43.038, lng: -87.906 };
             var map = new google.maps.Map(
                 document.getElementById('map'), { zoom: 10, center: milwaukee });
+
+            //find logged in brewery and set it to loggedInBrewery
+            var loggedInBrewery = FindLoggedInBrewery();
+            console.log("logged in brewery", loggedInBrewery)
+
+            //loop through all breweries sent to view and make pin for those where collaboration bool is true
             for (var i = 0; i < breweries.length; i++) {
                 console.log("brewery", breweries[i]);
-                if (breweries[i].collaboration == true) {
-                    var followers = breweries[i].followers;
+
+                var numberOfSharedFollowers = 0;
+                var sharedFollowers;
+                var fansWhoLikeAles = 0;
+                var fansWhoLikeLagers = 0;
+                var fansWhoLikeIPAs = 0;
+                var fansWhoLikeStouts = 0;
+                var fansWhoLikePaleAles = 0;
+                var fansWhoLikeWheatBeers = 0;
+                var fansWhoLikePilsners = 0;
+                var fansWhoLikePorters = 0;
+                var fansWhoLikeSours = 0;
+                var fansWhoLikeSaisons = 0;
+
+                //Check collaboration bool
+                if (breweries[i].collaboration == true && breweries[i].id != loggedInBrewery.id) {
                     var marker = new google.maps.Marker({
                         position: { lat: breweries[i].latitude, lng: breweries[i].longitude },
                         map: map
                     });
+
+                    
+                    console.log("breweries[i]", breweries[i])
+                    var loggedInBreweryFollowers = loggedInBrewery.followers;
+                    var pinnedBreweryFollowers = breweries[i].followers;
+
+                    //find number of shared followers                                     
+                    for (var j = 0; j < loggedInBreweryFollowers.length; j++) {
+                        for (var k = 0; k < pinnedBreweryFollowers.length; k++) {
+
+                            if (loggedInBreweryFollowers[j].id == pinnedBreweryFollowers[k].id) {
+                                console.log("pinned brewery followers", pinnedBreweryFollowers);
+                                numberOfSharedFollowers++;
+                                //sharedFollowers.add(sharedFollowers);
+                            }
+                        }
+                    }
+
+                    //Find tastes of pinned brewery's fans
+                    //for (var l = 0; l < pinnedBreweryFollowers.length; l++) {
+
+
+                    //}
+
+                    console.log("Shared followers", numberOfSharedFollowers)
+
                     var infowindow = new google.maps.InfoWindow({
-                        content: breweries[i].name + " " + thing
+
+                        content: breweries[i].name + " Shared followers: " + numberOfSharedFollowers
                             
                         
                     });
-                    infowindow.open(map,marker);
+                    infowindow.open(map, marker);
+                    console.log("Breweries[i]", breweries[i]);
                 };
-            }
+            };
             
         };
+
+        function FindLoggedInBrewery() {
+            var loggedInBrewery;
+            for (var i = 0; i < breweries.length; i++) {
+                if (breweries[i].id == breweries[i].loggedInBreweryId) {
+                    loggedInBrewery = breweries[i];
+                }
+            }
+            return loggedInBrewery
+        }
 
 
 
