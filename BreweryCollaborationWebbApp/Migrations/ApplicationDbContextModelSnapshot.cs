@@ -4,16 +4,14 @@ using BreweryCollaborationWebbApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BreweryCollaborationWebbApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190722131903_Initial")]
-    partial class Initial
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -93,6 +91,8 @@ namespace BreweryCollaborationWebbApp.Migrations
 
                     b.Property<double>("Latitude");
 
+                    b.Property<int>("LoggedInBreweryId");
+
                     b.Property<double>("Longitude");
 
                     b.Property<string>("Name");
@@ -147,7 +147,7 @@ namespace BreweryCollaborationWebbApp.Migrations
 
                     b.Property<int>("StyleId");
 
-                    b.Property<DateTime>("Today");
+                    b.Property<DateTime>("Updated");
 
                     b.Property<DateTime>("WhenCreated");
 

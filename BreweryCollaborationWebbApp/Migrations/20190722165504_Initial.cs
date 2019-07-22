@@ -185,7 +185,8 @@ namespace BreweryCollaborationWebbApp.Migrations
                     Latitude = table.Column<double>(nullable: false),
                     Longitude = table.Column<double>(nullable: false),
                     Image = table.Column<string>(nullable: true),
-                    BreweryRank = table.Column<string>(nullable: true)
+                    BreweryRank = table.Column<string>(nullable: true),
+                    LoggedInBreweryId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -301,7 +302,7 @@ namespace BreweryCollaborationWebbApp.Migrations
                     StyleId = table.Column<int>(nullable: false),
                     CollaborationRequestId = table.Column<int>(nullable: false),
                     WhenCreated = table.Column<DateTime>(nullable: false),
-                    Today = table.Column<DateTime>(nullable: false),
+                    Updated = table.Column<DateTime>(nullable: false),
                     CollaborationId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>

@@ -121,6 +121,7 @@ namespace BreweryCollaborationWebbApp.Controllers
             {
                 try
                 {
+                    collaboration.Updated = DateTime.Now;
                     _context.Update(collaboration);
                     await _context.SaveChangesAsync();
                 }

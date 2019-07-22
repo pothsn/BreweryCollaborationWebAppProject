@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BreweryCollaborationWebbApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190722131947_SeedBeerStyles")]
-    partial class SeedBeerStyles
+    [Migration("20190722165504_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -93,6 +93,8 @@ namespace BreweryCollaborationWebbApp.Migrations
 
                     b.Property<double>("Latitude");
 
+                    b.Property<int>("LoggedInBreweryId");
+
                     b.Property<double>("Longitude");
 
                     b.Property<string>("Name");
@@ -147,7 +149,7 @@ namespace BreweryCollaborationWebbApp.Migrations
 
                     b.Property<int>("StyleId");
 
-                    b.Property<DateTime>("Today");
+                    b.Property<DateTime>("Updated");
 
                     b.Property<DateTime>("WhenCreated");
 
