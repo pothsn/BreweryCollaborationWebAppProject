@@ -82,6 +82,7 @@ namespace BreweryCollaborationWebbApp.Controllers
                 newCollabBeer.WhenCreated = DateTime.Now;
                 _context.Add(newCollabBeer);
                 await _context.SaveChangesAsync();
+                
                 return RedirectToAction("Index", "breweries");
             }
 
@@ -183,52 +184,22 @@ namespace BreweryCollaborationWebbApp.Controllers
         // GET: Collaborations/Details/5
         public async Task<IActionResult> NewsFeedDetails()
         {
-
-
+ 
             var newsFeedUpdate = _context.Collaboration.OrderByDescending(cb => cb.WhenCreated).Take(3)
                 .Include(cb => cb.BeerStyle)
-                .Include(cb => cb.CollaborationRequest);
+                .Include(cb => cb.CollaborationRequest).ToList();
 
-            return View(await newsFeedUpdate.ToListAsync());
-            //NewsFeedViewModel newsFeedUpdate = new NewsFeedViewModel();
+            foreach (var collaboration in newsFeedUpdate)
+            {
+                newsFeedUpdate.Sort((x, y) => DateTime.Compare(x.Updated, y.Updated));
 
-            //var newsFeedUpdate = _context.Collaboration.OrderByDescending(cb => cb.WhenCreated).Take(3).ToList();
-            //newsFeedUpdate.Collaborations = _context.Collaboration.OrderByDescending(cb => cb.WhenCreated)
-            //    .Include(cb => cb.Collaborations)
-            //    .Include(cb => cb.Id)
-            //    .Include(cb => cb.CollaborationRequestId)
-            //    .Include(cb => cb.BeerStyle)
-            //    .Include(cb => cb.StyleId)
-            //    .Include(cb => cb.BrewSite)
-            //    .Include(cb => cb.CollaborationRequest.SenderName)
-            //    .Include(cb => cb.CollaborationRequest.ReceiverName)
-            //    .Include(cb => cb.Name)
-            //    .Take(3).ToList();
-            //return View(newsFeedUpdate);
+                newsFeedUpdate.OrderBy(x => x.WhenCreated).ThenBy(y => y.Updated);
+                return View(newsFeedUpdate.ToList());
+            }
+            //newsFeedUpdate.OrderBy(x => x.WhenCreated).ThenBy(y => y.Updated);
+            
+            return View( newsFeedUpdate.ToList());
 
-            //BELOW THIS LINE WORKS
-            //newsFeedUpdate.Collaborations = _context.Collaboration.OrderByDescending(cb => cb.WhenCreated).Take(3).ToList();
-            //return View(newsFeedUpdate);
-
-            ////display newest collaboration listing
-
-
-            ////send newest collaboration listing to NewsFeedViewModel
-            ////return View(newsFeedViewModel);
-            //if (id == null)
-            //{
-            //    return NotFound();
-            //}
-            //var updateCollab = _context.Collaboration.Include(c => c.Name)
-            //    .Include(c => c.BeerStyle)
-            //    .Include(c => c.WhenCreated)
-            //    .Include(c => c.BrewSite)
-            //    .Include(c => c.CollaborationRequest.ReceiverName)
-            //    .Include(c => c.CollaborationRequest.SenderName);
-
-
-
-            //return View(updateCollab);
 
         }
 

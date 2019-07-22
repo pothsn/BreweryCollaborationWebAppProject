@@ -12,7 +12,10 @@ namespace BreweryCollaborationWebbApp.ViewModels
         public BeerStyle BeerStyle { get; set; }
         public IEnumerable<Models.BeerStyle> BeerStyles { get; set; }
         public CollaborationRequest CollaborationRequest { get; set; }
+        public Collaboration Collaboration { get; set; }
         public string CollabBeerName { get; set; }
         public string BrewSite { get; set; }
+        public Review Review { get; set; }
+        public IEnumerable<Models.Review> Reviews { get; set; }
     }
 }

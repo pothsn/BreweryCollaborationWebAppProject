@@ -24,13 +24,19 @@
         </dd>
 
         <dt>
-            <label asp-for="CollaborationRequest.SenderName">Brewery: </label>
+            @*<label asp-for="CollaborationRequest.SenderName">Brewery: </label>*@
+        </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.CollaborationRequest.SenderName):
         </dt>
         <dd>
             @Html.DisplayFor(model => model.CollaborationRequest.SenderName)
         </dd>
         <dt>
-            <label asp-for="CollaborationRequest.ReceiverName">Brewery: </label>
+            @*<label asp-for="CollaborationRequest.ReceiverName">Brewery: </label>*@
+        </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.CollaborationRequest.ReceiverName):
         </dt>
         <dd>
             @Html.DisplayFor(model => model.CollaborationRequest.ReceiverName)
@@ -40,6 +46,12 @@
         </dt>
         <dd>
             @Model.WhenCreated.ToLongDateString()
+        </dd>
+        <dt>
+            <label asp-for="Updated">Last Updated: </label>
+        </dt>
+        <dd>
+            @Model.Updated.ToLongDateString()
         </dd>
     </dl>
 
