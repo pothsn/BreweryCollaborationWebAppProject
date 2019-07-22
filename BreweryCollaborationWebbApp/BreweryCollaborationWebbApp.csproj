@@ -46,6 +46,9 @@
     <Content Update="Views\Fans\_ViewStart.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Views\Home\NewsFeedViewTest.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Home\NewsFeedView.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

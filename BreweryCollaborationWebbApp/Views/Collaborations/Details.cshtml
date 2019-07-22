@@ -11,17 +11,18 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.Name):
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Name)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.BeerStyle)
+            @Html.DisplayNameFor(model => model.BeerStyle):
         </dt>
         <dd>
             @Html.DisplayFor(model => model.BeerStyle.Name)
         </dd>
+
         <dt>
             <label asp-for="CollaborationRequest.SenderName">Brewery: </label>
         </dt>
@@ -34,7 +35,14 @@
         <dd>
             @Html.DisplayFor(model => model.CollaborationRequest.ReceiverName)
         </dd>
+        <dt>
+            <label asp-for="WhenCreated">Date Created: </label>
+        </dt>
+        <dd>
+            @Model.WhenCreated.ToLongDateString()
+        </dd>
     </dl>
+
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |

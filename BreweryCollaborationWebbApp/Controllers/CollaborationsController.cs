@@ -73,11 +73,12 @@ namespace BreweryCollaborationWebbApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                Collaboration newCollabBeer = new Collaboration();             
+                Collaboration newCollabBeer = new Collaboration();
                 newCollabBeer.CollaborationRequestId = collabBeersViewModel.CollaborationRequest.Id;
                 newCollabBeer.StyleId = collabBeersViewModel.BeerStyle.Id;
                 newCollabBeer.Name = collabBeersViewModel.CollabBeerName;
                 newCollabBeer.BrewSite = collabBeersViewModel.BrewSite;
+                newCollabBeer.WhenCreated = DateTime.Now;
                 _context.Add(newCollabBeer);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index", "breweries");
@@ -175,5 +176,37 @@ namespace BreweryCollaborationWebbApp.Controllers
         {
             return _context.Collaboration.Any(e => e.Id == id);
         }
+
+
+        // GET: Collaborations/Details/5
+        public async Task<IActionResult> NewsFeedDetails(int? id)
+        {
+
+            //display newest collaboration listing
+
+
+            //send newest collaboration listing to NewsFeedViewModel
+            //return View(newsFeedViewModel);
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var updateCollab = _context.Collaboration.Include(c => c.Name)
+                .Include(c => c.BeerStyle)
+                .Include(c => c.WhenCreated)
+                .Include(c => c.BrewSite)
+                .Include(c => c.CollaborationRequest.ReceiverName)
+                .Include(c => c.CollaborationRequest.SenderName);
+                
+
+            if (updateCollab == null)
+            {
+                return NotFound("there are no collaborations at this time");
+            }
+
+            return View(updateCollab);
+
+        }
+
     }
 }

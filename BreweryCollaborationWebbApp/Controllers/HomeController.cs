@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using BreweryCollaborationWebbApp.Models;
+using BreweryCollaborationWebbApp.ViewModels;
 
 namespace BreweryCollaborationWebbApp.Controllers
 {
@@ -42,6 +43,24 @@ namespace BreweryCollaborationWebbApp.Controllers
         public IActionResult NewsFeedView()
         {
             return View();
+        }
+
+        public  IActionResult NewsFeedViewTest(NewsFeedViewModel newsFeedViewModel)
+        {
+            var timeStamp = new DateTime();
+            //timeStamp = newsFeedViewModel.Collaborations.Where(t => t.WhenCreated == DateTime.Today);
+     
+            //var thing = new NewsFeedViewModel();
+            //thing = newsFeedViewModel.Collaboration.Collaborations.Where(x => x.WhenCreated == DateTime.Now); 
+            ////thing = newsFeedViewModel.Collaborations.Where(x => x.WhenCreated == DateTime.Now);
+
+            //thing = newsFeedViewModel.Collaborations.Where(x => x.WhenCreated == DateTime.Now);
+
+            //return View(thing);
+
+            
+            return View();
+ 
         }
     }
 }

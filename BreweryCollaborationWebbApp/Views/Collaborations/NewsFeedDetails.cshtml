@@ -1,0 +1,61 @@
+﻿@model BreweryCollaborationWebbApp.ViewModels.NewsFeedViewModel
+
+@{
+    ViewData["Title"] = "NewsFeedDetails";
+}
+
+<h2>NewsFeedDetails</h2>
+
+<div>
+    <h4>Collaboration</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Collaboration.Id)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Collaboration.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Collaboration.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Collaboration.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Collaboration.BrewSite)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Collaboration.BrewSite)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.BeerStyle.Id)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.BeerStyle.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Collaboration.CollaborationRequestId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Collaboration.CollaborationRequest.SenderName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Collaboration.CollaborationRequest.ReceiverId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Collaboration.CollaborationRequest.ReceiverName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Collaboration.WhenCreated)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Collaboration.WhenCreated)
+        </dd>
+
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Back to List</a>
+</div>
