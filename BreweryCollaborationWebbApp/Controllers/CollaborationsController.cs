@@ -202,6 +202,27 @@ namespace BreweryCollaborationWebbApp.Controllers
 
 
         }
+        // GET: Collaborations/Details/5
+        public async Task<IActionResult> NewsFeedFans()
+        {
+
+            var newsFeedUpdate = _context.Collaboration.OrderByDescending(cb => cb.WhenCreated).Take(3)
+                .Include(cb => cb.BeerStyle)
+                .Include(cb => cb.CollaborationRequest).ToList();
+
+            foreach (var collaboration in newsFeedUpdate)
+            {
+                newsFeedUpdate.Sort((x, y) => DateTime.Compare(x.Updated, y.Updated));
+
+                newsFeedUpdate.OrderBy(x => x.WhenCreated).ThenBy(y => y.Updated);
+                return View(newsFeedUpdate.ToList());
+            }
+            //newsFeedUpdate.OrderBy(x => x.WhenCreated).ThenBy(y => y.Updated);
+
+            return View(newsFeedUpdate.ToList());
+
+
+        }
 
 
     }
