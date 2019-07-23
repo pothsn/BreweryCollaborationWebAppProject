@@ -57,19 +57,20 @@ namespace BreweryCollaborationWebbApp.Controllers
                         bb.Brewery = null;
                     }
 
-                    //Get matches for logged in brewery
-                    IEnumerable<Brewery> breweryMatches = await GetBreweryMatches();
-
-                    //Instantiate view model
-                    var viewModel = new BreweriesIndexViewModel();
-                    viewModel.Breweries = BreweryList;
-                    viewModel.BreweryMatches = breweryMatches;
-
-
-                    return View(viewModel);
+                    
                 }
+                //Get matches for logged in brewery
+                IEnumerable<Brewery> breweryMatches = await GetBreweryMatches();
+
+                //Instantiate view model
+                var viewModel = new BreweriesIndexViewModel();
+                viewModel.Breweries = BreweryList;
+                viewModel.BreweryMatches = breweryMatches;
+
+
+                return View(viewModel);
             }
-            return View();
+
         }
 
         public async Task<IEnumerable<Brewery>> GetBreweryMatches()
@@ -483,6 +484,7 @@ namespace BreweryCollaborationWebbApp.Controllers
                 try
                 {
                     _context.Update(brewery);
+                    await Geocode(brewery);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

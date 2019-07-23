@@ -32,5 +32,6 @@ namespace BreweryCollaborationWebbApp.Data
         public DbSet<Brewery> Brewery { get; set; }
         public DbSet<ApplicationUser> ApplicationUser { get; set; }
         public DbSet<Follow> Follow { get; set; }
+        public DbSet<BreweryCollaborationWebbApp.Models.CopyOfBreweryBeer> CopyOfBreweryBeer { get; set; }
     }
 }
