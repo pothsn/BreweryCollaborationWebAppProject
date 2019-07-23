@@ -1,11 +1,8 @@
 ﻿@model IEnumerable<BreweryCollaborationWebbApp.Models.Collaboration>
-
 @{
     ViewData["Title"] = "Index";
 }
-
 <h2>Index</h2>
-
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -13,36 +10,47 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                <label>Collaboration Beer Name</label>
+                @*@Html.DisplayNameFor(model => model.Name)*@
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.BeerStyle)
+                <label>Beer Style</label>
+                @*@Html.DisplayNameFor(model => model.BeerStyle)*@
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CollaborationRequest)
+                <label>Sender Name</label>
+                @*@Html.DisplayNameFor(model => model.CollaborationRequest.SenderName)*@
+            </th>
+            <th>
+                <label>Receiver Name</label>
+                @*@Html.DisplayNameFor(model => model.CollaborationRequest.ReceiverName)*@
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BeerStyle.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CollaborationRequest.SenderName)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Create" asp-controller="Reviews" asp-route-id="@item.Id">Review</a>
-                @*<a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BeerStyle.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CollaborationRequest.SenderName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CollaborationRequest.ReceiverName)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Create" asp-controller="Reviews" asp-route-id="@item.Id">Review</a>
+                    @*<a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

@@ -184,46 +184,28 @@ namespace BreweryCollaborationWebbApp.Controllers
         // GET: Collaborations/Details/5
         public async Task<IActionResult> NewsFeedDetails()
         {
- 
-            var newsFeedUpdate = _context.Collaboration.OrderByDescending(cb => cb.WhenCreated).Take(3)
-                .Include(cb => cb.BeerStyle)
-                .Include(cb => cb.CollaborationRequest).ToList();
-
-            foreach (var collaboration in newsFeedUpdate)
+            List<Collaboration> newsFeedUpdates = new List<Collaboration>();
+            newsFeedUpdates = _context.Collaboration.ToList();
+            foreach (Collaboration item in newsFeedUpdates)
             {
-                newsFeedUpdate.Sort((x, y) => DateTime.Compare(x.Updated, y.Updated));
-
-                newsFeedUpdate.OrderBy(x => x.WhenCreated).ThenBy(y => y.Updated);
-                return View(newsFeedUpdate.ToList());
+                newsFeedUpdates.OrderByDescending(cb => cb.WhenCreated).ThenByDescending(cb => cb.Updated);
+                return View(newsFeedUpdates.Take(3).Reverse());
             }
-            //newsFeedUpdate.OrderBy(x => x.WhenCreated).ThenBy(y => y.Updated);
-            
-            return View( newsFeedUpdate.ToList());
-
-
+            return View(newsFeedUpdates);
         }
+
+        // GET: Collaborations/Details/5
         // GET: Collaborations/Details/5
         public async Task<IActionResult> NewsFeedFans()
         {
-
-            var newsFeedUpdate = _context.Collaboration.OrderByDescending(cb => cb.WhenCreated).Take(3)
-                .Include(cb => cb.BeerStyle)
-                .Include(cb => cb.CollaborationRequest).ToList();
-
-            foreach (var collaboration in newsFeedUpdate)
+            List<Collaboration> newsFeedUpdates = new List<Collaboration>();
+            newsFeedUpdates = _context.Collaboration.ToList();
+            foreach (Collaboration item in newsFeedUpdates)
             {
-                newsFeedUpdate.Sort((x, y) => DateTime.Compare(x.Updated, y.Updated));
-
-                newsFeedUpdate.OrderBy(x => x.WhenCreated).ThenBy(y => y.Updated);
-                return View(newsFeedUpdate.ToList());
+                newsFeedUpdates.OrderByDescending(cb => cb.WhenCreated).ThenByDescending(cb => cb.Updated);
+                return View(newsFeedUpdates.Take(3).Reverse());
             }
-            //newsFeedUpdate.OrderBy(x => x.WhenCreated).ThenBy(y => y.Updated);
-
-            return View(newsFeedUpdate.ToList());
-
-
+            return View(newsFeedUpdates);
         }
-
-
     }
 }
