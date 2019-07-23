@@ -1,0 +1,11 @@
+                    
+
+line 126		google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                        return function () {
+                            infowindow.open(map, marker);
+                        }
+                    })(marker, i));
+                    //infowindow.open(map, marker);
+                    console.log("Breweries[i]", breweries[i]);
+                };
+            };
