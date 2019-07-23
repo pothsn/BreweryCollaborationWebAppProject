@@ -360,7 +360,16 @@ namespace BreweryCollaborationWebbApp.Controllers
             ViewBag.GoogleMapsAPIKey = APIKeys.GoogleMapsAPIKey;
             //This lambda looks through all breweries and adds ones that share an id with a SenderId OR a ReceiverId located on any CollaborationRequest object
             IEnumerable<Brewery> breweriesWithCollaborations =  _context.Brewery.Where(b => (_context.CollaborationRequest.Where(c => c.SenderId == b.Id).Select(c => c.SenderId).Contains(b.Id)) || (_context.CollaborationRequest.Where(c => c.ReceiverId == b.Id).Select(c => c.ReceiverId).Contains(b.Id))).ToList();
-            return View(breweriesWithCollaborations);
+            IEnumerable<Brewery> breweries = await _context.Brewery.ToListAsync();
+
+
+            //Instantiate view model
+            var viewModel = new BreweriesIndexForFansViewModel();
+            viewModel.breweriesWithCollaborations = breweriesWithCollaborations;
+            viewModel.Breweries = breweries;
+
+
+            return View(viewModel);
         }
 
         // GET: Breweries/Details/5

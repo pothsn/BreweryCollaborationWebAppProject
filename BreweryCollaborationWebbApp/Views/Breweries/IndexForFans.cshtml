@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BreweryCollaborationWebbApp.Models.Brewery>
+﻿@model BreweryCollaborationWebbApp.ViewModels.BreweriesIndexForFansViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -16,7 +16,7 @@
 <div class="row">
     <div id="map"></div>
     <script>
-        var breweries = @Html.Raw(Json.Serialize(Model));
+        var breweries = @Html.Raw(Json.Serialize(Model.breweriesWithCollaborations));
         // Initialize and add the map
         function initMap() {
             var milwaukee = { lat: 43.038, lng: -87.906 };
@@ -48,31 +48,31 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Address)
+                Address
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.City)
+                City
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.State)
+                State
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Zipcode)
+                Zipcode
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Website)
+                Website
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Collaboration)
+                Collaboration
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.Breweries)
         {
             <tr>
                 <td>
