@@ -7,7 +7,7 @@
 <h2>Details</h2>
 
 <div>
-    <h4>Brewery</h4>
+    
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -47,22 +47,22 @@
         <dd>
             <a href="@Html.DisplayNameFor(model => model.Website)"> @Html.DisplayFor(model => model.Website)</a>
         </dd>
+
+        <br />
+        
         <td>
-            <img src=" @Url.Content(Model.Image)" style=" width:250px;height:275px;" />
+            <img src="@Url.Content(Model.Image)" style="height:85px;" />
         </td>
     </dl>
 </div>
 
-<div>
-
-    <a asp-action="Index">Back to List</a>
-</div>
+<br />
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                Beer list
+                Beer List
             </th>
             <th></th>
         </tr>
@@ -83,3 +83,8 @@
         }
     </tbody>
 </table>
+
+<div>
+
+    <a asp-action="Index">Back to List</a>
+</div>
